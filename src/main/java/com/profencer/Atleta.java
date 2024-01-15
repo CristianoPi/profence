@@ -42,8 +42,5 @@ public class Atleta {
         Cognome = cognome;
         CF = cF;
         Genere = genere;
-    }
-    
-
-    
+    }   
 }
