@@ -5,6 +5,8 @@ public class FormulaDiGara {
 	private int PercEliminati;
 	private int NumeroStoccateDirette;
 	private int Codice;
+    private int maxDimGirone;
+
     public int getNumeroStoccateGironi() {
         return NumeroStoccateGironi;
     }
@@ -29,12 +31,20 @@ public class FormulaDiGara {
     public void setCodice(int codice) {
         Codice = codice;
     }
-    public FormulaDiGara(int numeroTurniDiGironi, int numeroStoccateGironi, int percEliminati,
-            int numeroStoccateDirette, int codice) {
+    public int getMaxDimGirone() {
+        return maxDimGirone;
+    }
+    public void setMaxDimGirone(int maxDimGirone) {
+        this.maxDimGirone = maxDimGirone;
+    }
+    public FormulaDiGara(int numeroStoccateGironi, int percEliminati, int numeroStoccateDirette, int codice,
+            int maxDimGirone) {
         NumeroStoccateGironi = numeroStoccateGironi;
         PercEliminati = percEliminati;
         NumeroStoccateDirette = numeroStoccateDirette;
         Codice = codice;
+        this.maxDimGirone = maxDimGirone;
     }
+    
     
 }
