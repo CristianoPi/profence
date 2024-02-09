@@ -1,82 +1,133 @@
 package com.profencer;
 
 import java.util.Date;
+import java.util.List;
 
 public class Competizione {
-    private int Codice;
-	private String Nome;
-	private String Descrizione;
-	private Date Data;
-	private boolean Individuale;
-	private String Categoria;
-	private String Arma;
-	private float QuotaParticipazione;
-	private FormulaDiGara fdg;
-    public int getCodice() {
-        return Codice;
+	private int codCompetizione;
+
+	private String nome;
+
+	private String descrizione;
+
+	private Date data;
+
+	private String categoria;
+
+	private String arma;
+
+	private float quotaParticipazione;
+
+	private FormulaDiGara FormulaDiGara;
+
+	private List<Girone> Gironi;
+
+    private List<Atleta> Iscrizioni;
+
+    private List<Atleta> Accettazioni;
+
+    public int getCodCompetizione() {
+        return codCompetizione;
     }
+
+    public void setCodCompetizione(int codCompetizione) {
+        this.codCompetizione = codCompetizione;
+    }
+
     public String getNome() {
-        return Nome;
+        return nome;
     }
-    public String getDescrizione() {
-        return Descrizione;
-    }
-    public Date getData() {
-        return Data;
-    }
-    public boolean isIndividuale() {
-        return Individuale;
-    }
-    public String getCategoria() {
-        return Categoria;
-    }
-    public String getArma() {
-        return Arma;
-    }
-    public float getQuotaParticipazione() {
-        return QuotaParticipazione;
-    }
-    public FormulaDiGara getFdg() {
-        return fdg;
-    }
-    public void setCodice(int codice) {
-        Codice = codice;
-    }
+
     public void setNome(String nome) {
-        Nome = nome;
+        this.nome = nome;
     }
+
+    public String getDescrizione() {
+        return descrizione;
+    }
+
     public void setDescrizione(String descrizione) {
-        Descrizione = descrizione;
+        this.descrizione = descrizione;
     }
+
+    public Date getData() {
+        return data;
+    }
+
     public void setData(Date data) {
-        Data = data;
+        this.data = data;
     }
-    public void setIndividuale(boolean individuale) {
-        Individuale = individuale;
+
+    public String getCategoria() {
+        return categoria;
     }
+
     public void setCategoria(String categoria) {
-        Categoria = categoria;
+        this.categoria = categoria;
     }
+
+    public String getArma() {
+        return arma;
+    }
+
     public void setArma(String arma) {
-        Arma = arma;
+        this.arma = arma;
     }
+
+    public float getQuotaParticipazione() {
+        return quotaParticipazione;
+    }
+
     public void setQuotaParticipazione(float quotaParticipazione) {
-        QuotaParticipazione = quotaParticipazione;
+        this.quotaParticipazione = quotaParticipazione;
     }
-    public void setFdg(FormulaDiGara fdg) {
-        this.fdg = fdg;
+
+    public FormulaDiGara getFormulaDiGara() {
+        return FormulaDiGara;
     }
-    public Competizione(int codice, String nome, String descrizione, Date data, boolean individuale, String categoria,
-            String arma, float quotaParticipazione, FormulaDiGara fdg) {
-        Codice = codice;
-        Nome = nome;
-        Descrizione = descrizione;
-        Data = data;
-        Individuale = individuale;
-        Categoria = categoria;
-        Arma = arma;
-        QuotaParticipazione = quotaParticipazione;
-        this.fdg = fdg;
+
+    public void setFormulaDiGara(FormulaDiGara formulaDiGara) {
+        FormulaDiGara = formulaDiGara;
+    }
+
+    public List<Girone> getGironi() {
+        return Gironi;
+    }
+
+    public void setGironi(List<Girone> gironi) {
+        Gironi = gironi;
+    }
+
+    public List<Atleta> getIscrizioni() {
+        return Iscrizioni;
+    }
+
+    public void setIscrizioni(List<Atleta> iscrizioni) {
+        Iscrizioni = iscrizioni;
+    }
+
+    public List<Atleta> getAccettazioni() {
+        return Accettazioni;
+    }
+
+    public void setAccettazioni(List<Atleta> accettazioni) {
+        Accettazioni = accettazioni;
+    }
+
+    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
+            float quotaParticipazione, com.profencer.FormulaDiGara formulaDiGara, List<Girone> gironi,
+            List<Atleta> iscrizioni, List<Atleta> accettazioni) {
+        this.codCompetizione = codCompetizione;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.categoria = categoria;
+        this.arma = arma;
+        this.quotaParticipazione = quotaParticipazione;
+        FormulaDiGara = formulaDiGara;
+        Gironi = gironi;
+        Iscrizioni = iscrizioni;
+        Accettazioni = accettazioni;
     }
     
     
