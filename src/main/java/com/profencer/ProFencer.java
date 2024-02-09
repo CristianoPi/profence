@@ -6,11 +6,11 @@ import java.util.List;
 public class ProFencer {
     private List<Atleta> tesserati;
 
-    private Atleta AtletaCorrente; //Serve sicuro?
+    private Atleta atletaCorrente; //Serve sicuro?
 
 	private List<Competizione> Competizioni;
 
-	private Competizione CompetizioneCorrente;
+	private Competizione competizioneCorrente;
 
 
 
@@ -23,11 +23,11 @@ public class ProFencer {
     }
 
     public Atleta getAtletaCorrente() {
-        return AtletaCorrente;
+        return atletaCorrente;
     }
 
     public void setAtletaCorrente(Atleta atletaCorrente) {
-        AtletaCorrente = atletaCorrente;
+        atletaCorrente = atletaCorrente;
     }
 
     public List<Competizione> getCompetizioni() {
@@ -39,59 +39,66 @@ public class ProFencer {
     }
 
     public Competizione getCompetizioneCorrente() {
-        return CompetizioneCorrente;
+        return competizioneCorrente;
     }
 
-    public void setCompetizioneCorrente(Competizione competizioneCorrente) {
-        CompetizioneCorrente = competizioneCorrente;
+    public void setCompetizioneCorrente(Competizione CompetizioneCorrente) {
+        competizioneCorrente = CompetizioneCorrente;
     }
 
 
     public ProFencer(List<Atleta> tesserati, Atleta atletaCorrente, List<Competizione> competizioni,
-            Competizione competizioneCorrente) {
+            Competizione CompetizioneCorrente) {
         this.tesserati = tesserati;
-        AtletaCorrente = atletaCorrente;
+        this.atletaCorrente = atletaCorrente;
         Competizioni = competizioni;
-        CompetizioneCorrente = competizioneCorrente;
+        competizioneCorrente = CompetizioneCorrente;
     }
 
     //Operazioni
     public void InserimentoCodiceCompetizione(int codCompetizione) {
-
+		competizioneCorrente = new Competizione(codCompetizione);
 	}
 
 	public void InserimentoDatiCompetizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, float quotaPartecipazione) {
-
+		competizioneCorrente.setNome(nome);
+		competizioneCorrente.setDescrizione(descrizione);
+		competizioneCorrente.setData(data);
+		competizioneCorrente.setCategoria(categoria);
+		competizioneCorrente.setArma(arma);
+		competizioneCorrente.setQuotaParticipazione(quotaPartecipazione);
 	}
 
-	public void ScegliFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi) {
-
-	}
-
-	/**
-	 *  
-	 */
-	public void CreaFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi) {
-
+	public void ScegliFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) {
+		FormulaDiGara f=new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
+		competizioneCorrente.setFormulaDiGara(f);
 	}
 
 	public void ConfermaInserimento() {
-
+		Competizioni.add(competizioneCorrente);
 	}
 
-	public void CreaTesseramento(String Nome, String Cognome, Date data_nascita, String CF) {
-
+	public void CreaTesseramento(int codFIS, String Nome, String Cognome, Date data_nascita, String CF, boolean genere) {
+		Atleta a= new Atleta(codFIS, Nome, Cognome, CF, genere);
+		atletaCorrente=a;
 	}
 
 	public void ConfermaTesseramento() {
-
+		tesserati.add(atletaCorrente);
 	}
 
 	public List<Competizione> MostraCompetizioni() {
-		return null;
+		return Competizioni;
 	}
 
-	public void Iscrizione(int codFIS, int codCompetizione, float quota) {
+	public boolean Iscrizione(int codFIS, int codCompetizione) {
+		boolean b=false;
+		Competizione c=new Competizione(0);
+		for (Competizione competizione : Competizioni) {
+			if(competizione.getCodCompetizione()==codCompetizione)
+				c=competizione;
+		}
+		b=c.IscrizioneAtleta(codFIS);
 
 	}
 

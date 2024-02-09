@@ -1,7 +1,10 @@
 package com.profencer;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class Competizione {
 	private int codCompetizione;
@@ -22,9 +25,26 @@ public class Competizione {
 
 	private List<Girone> Gironi;
 
-    private List<Atleta> Iscrizioni;
+    private Map<Integer, Set<Integer>> iscritti = new HashMap<>();
 
-    private List<Atleta> Accettazioni;
+    private Map<Integer, Set<Integer>> accettazioni = new HashMap<>();
+
+    
+    public Map<Integer, Set<Integer>> getIscritti() {
+        return iscritti;
+    } 
+
+    public Map<Integer, Set<Integer>> getAccettazioni() {
+        return accettazioni;
+    } 
+
+    public void setIscritti(Map<Integer, Set<Integer>> iscritti) {
+        this.iscritti = iscritti;
+    }
+
+    public void setAccettazioni(Map<Integer, Set<Integer>> accettazioni) {
+        this.accettazioni = accettazioni;
+    }
 
     public int getCodCompetizione() {
         return codCompetizione;
@@ -98,37 +118,19 @@ public class Competizione {
         Gironi = gironi;
     }
 
-    public List<Atleta> getIscrizioni() {
-        return Iscrizioni;
-    }
 
-    public void setIscrizioni(List<Atleta> iscrizioni) {
-        Iscrizioni = iscrizioni;
-    }
 
-    public List<Atleta> getAccettazioni() {
-        return Accettazioni;
-    }
+ 
 
-    public void setAccettazioni(List<Atleta> accettazioni) {
-        Accettazioni = accettazioni;
-    }
 
-    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
-            float quotaParticipazione, com.profencer.FormulaDiGara formulaDiGara, List<Girone> gironi,
-            List<Atleta> iscrizioni, List<Atleta> accettazioni) {
+    public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.data = data;
-        this.categoria = categoria;
-        this.arma = arma;
-        this.quotaParticipazione = quotaParticipazione;
-        FormulaDiGara = formulaDiGara;
-        Gironi = gironi;
-        Iscrizioni = iscrizioni;
-        Accettazioni = accettazioni;
     }
-    
-    
+
+    public boolean IscrizioneAtleta(int codFIS){
+    if (iscritti == null) {
+        iscritti = new HashMap<>();
+    }
+    iscritti.put(this.codCompetizione, codFIS);
+    }
 }
