@@ -1,14 +1,10 @@
 package com.profencer;
 
 public class FormulaDiGara {
-    private int NumeroTurniDiGironi;
 	private int NumeroStoccateGironi;
 	private int PercEliminati;
 	private int NumeroStoccateDirette;
 	private int Codice;
-    public int getNumeroTurniDiGironi() {
-        return NumeroTurniDiGironi;
-    }
     public int getNumeroStoccateGironi() {
         return NumeroStoccateGironi;
     }
@@ -20,9 +16,6 @@ public class FormulaDiGara {
     }
     public int getCodice() {
         return Codice;
-    }
-    public void setNumeroTurniDiGironi(int numeroTurniDiGironi) {
-        NumeroTurniDiGironi = numeroTurniDiGironi;
     }
     public void setNumeroStoccateGironi(int numeroStoccateGironi) {
         NumeroStoccateGironi = numeroStoccateGironi;
@@ -38,7 +31,6 @@ public class FormulaDiGara {
     }
     public FormulaDiGara(int numeroTurniDiGironi, int numeroStoccateGironi, int percEliminati,
             int numeroStoccateDirette, int codice) {
-        NumeroTurniDiGironi = numeroTurniDiGironi;
         NumeroStoccateGironi = numeroStoccateGironi;
         PercEliminati = percEliminati;
         NumeroStoccateDirette = numeroStoccateDirette;
