@@ -9,46 +9,39 @@ import java.util.Set;
 
 public class Competizione {
 	private int codCompetizione;
-
 	private String nome;
-
 	private String descrizione;
-
 	private Date data;
-
 	private String categoria;
-
 	private String arma;
-
 	private float quotaParticipazione;
-
 	private FormulaDiGara FormulaDiGara;
-
 	private List<Girone> Gironi;
-
-    private Map<Integer, Set<Integer>> iscritti = new HashMap<>();
-
-    private Map<Integer, Set<Integer>> accettazioni = new HashMap<>();
-
-    
-    public Map<Integer, Set<Integer>> getIscritti() {
-        return iscritti;
-    } 
-
-    public Map<Integer, Set<Integer>> getAccettazioni() {
-        return accettazioni;
-    } 
-
-    public void setIscritti(Map<Integer, Set<Integer>> iscritti) {
-        this.iscritti = iscritti;
-    }
-
-    public void setAccettazioni(Map<Integer, Set<Integer>> accettazioni) {
-        this.accettazioni = accettazioni;
-    }
+    //private Map<Integer, Set<Integer>> iscritti = new HashMap<>();
+    private List<Atleta> iscritti;
+    //private Map<Integer, Set<Integer>> accettazioni = new HashMap<>();
+    private List<Atleta> accettazioni;
+  
+    //gettere and setter
 
     public int getCodCompetizione() {
         return codCompetizione;
+    }
+
+    public List<Atleta> getIscritti() {
+        return iscritti;
+    }
+
+    public void setIscritti(List<Atleta> iscritti) {
+        this.iscritti = iscritti;
+    }
+
+    public List<Atleta> getAccettazioni() {
+        return accettazioni;
+    }
+
+    public void setAccettazioni(List<Atleta> accettazioni) {
+        this.accettazioni = accettazioni;
     }
 
     public void setCodCompetizione(int codCompetizione) {
@@ -119,6 +112,7 @@ public class Competizione {
         Gironi = gironi;
     }
 
+    //costruttori
     public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
     }
@@ -139,29 +133,26 @@ public class Competizione {
         this.accettazioni = accettazioni;
     }
     
-
     public Competizione() {
         
     }
 
-    public boolean Iscrizione(int codFIS){
-        try {
-            Integer chiave_competizione= this.codCompetizione;
+    //operazioni
+    public void Iscrizione(Atleta atleta){
+        iscritti.add(atleta);
+    }
 
-            Integer elemento_atleta = codFIS;
-
-            // Ottieni il Set dalla mappa
-            Set<Integer> set = iscritti.get(chiave_competizione);
-            // Se il Set non esiste, crealo(prima iscrizione)
-            if (set == null) {
-                set = new HashSet<>();
-                iscritti.put(chiave_competizione, set);
+    public void AccettazioneAtleta(int codFIS)
+    {
+        for (Atleta atleta : iscritti) {
+            if (atleta.getCodFIS()==codFIS) {
+                accettazioni.add(atleta);
             }
-            set.add(elemento_atleta);
-            return true;
-        } catch (Exception e) {
-            return false;
         }
+        //gestire errori
+    }
 
+    public void CreazioneGironi(){
+        
     }
 }

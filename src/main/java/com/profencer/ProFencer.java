@@ -5,15 +5,11 @@ import java.util.List;
 
 public class ProFencer {
     private List<Atleta> tesserati;
-
     private Atleta atletaCorrente; //Serve sicuro?
-
 	private List<Competizione> Competizioni;
-
 	private Competizione competizioneCorrente;
 
-
-
+	//gettter and setter
 	public List<Atleta> getTesserati() {
         return tesserati;
     }
@@ -26,8 +22,8 @@ public class ProFencer {
         return atletaCorrente;
     }
 
-    public void setAtletaCorrente(Atleta atletaCorrente) {
-        atletaCorrente = atletaCorrente;
+    public void setAtletaCorrente(Atleta AtletaCorrente) {
+        atletaCorrente = AtletaCorrente;
     }
 
     public List<Competizione> getCompetizioni() {
@@ -46,7 +42,7 @@ public class ProFencer {
         competizioneCorrente = CompetizioneCorrente;
     }
 
-
+	//costruttori
     public ProFencer(List<Atleta> tesserati, Atleta atletaCorrente, List<Competizione> competizioni,
             Competizione CompetizioneCorrente) {
         this.tesserati = tesserati;
@@ -55,7 +51,7 @@ public class ProFencer {
         competizioneCorrente = CompetizioneCorrente;
     }
 
-    //Operazioni
+    //operazioni
     public void InserimentoCodiceCompetizione(int codCompetizione) {
 		competizioneCorrente = new Competizione(codCompetizione);
 	}
@@ -101,11 +97,22 @@ public class ProFencer {
 				r=true;
 			}
 		}
-		if(r)
-			r=c.Iscrizione(codFIS);
+		//trovo l'atleta
+		if(r){
+			for (Atleta atleta : tesserati) {
+				if (atleta.getCodFIS()==codFIS) {
+					c.Iscrizione(atleta);
+					r=true;
+				}
+				else
+					return false;
+			}
+		}
 		else
-			return r;
+			return false;
+		
 		return r;
+		//erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
 	}
 
 	public void SelezionaCompetizione(int codCompetizione) {
@@ -132,11 +139,15 @@ public class ProFencer {
 	}
 
 	public void AccettazioneAtleta(int codFIS) {
-
+		competizioneCorrente.AccettazioneAtleta(codFIS);
 	}
 
 	public void CreazioneGironi() {
-
+		if (competizioneCorrente==null) {
+			//bisogna selezionare una competizione e dare un output da vedere come si gestisce
+			return;
+		}
+		competizioneCorrente.CreazioneGironi();
 	}
 
 	public void VisualizzaGironi() {
