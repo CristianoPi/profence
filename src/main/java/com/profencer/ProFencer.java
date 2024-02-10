@@ -92,26 +92,39 @@ public class ProFencer {
 	}
 
 	public boolean Iscrizione(int codFIS, int codCompetizione) {
-		boolean b=false;
-		Competizione c=new Competizione(0);
+		boolean r=false;
+		//trovo la competizione
+		Competizione c=new Competizione();
 		for (Competizione competizione : Competizioni) {
-			if(competizione.getCodCompetizione()==codCompetizione)
+			if (competizione.getCodCompetizione()==codCompetizione) {
 				c=competizione;
+				r=true;
+			}
 		}
-		b=c.IscrizioneAtleta(codFIS);
-
+		if(r)
+			r=c.Iscrizione(codFIS);
+		else
+			return r;
+		return r;
 	}
 
 	public void SelezionaCompetizione(int codCompetizione) {
-
+		for (Competizione competizione : Competizioni) {
+			if (competizione.getCodCompetizione()==codCompetizione) {
+				competizioneCorrente=competizione;
+			}
+		}	
 	}
 
 	public FormulaDiGara VisualizzazioneFormulaGara(Competizione c) {
-		return null;
+		return competizioneCorrente.getFormulaDiGara();
 	}
 
 	public void ModificaFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi) {
-
+		competizioneCorrente.getFormulaDiGara().setPercEliminati(percEliminati);
+		competizioneCorrente.getFormulaDiGara().setNumeroStoccateDirette(numeroStoccateDirette);
+		competizioneCorrente.getFormulaDiGara().setNumeroStoccateGironi(numeroStoccateGironi);
+		competizioneCorrente.getFormulaDiGara().setMaxDimGirone(maxDimGironi);
 	}
 
 	public List<Atleta> VisualizzazioneAtleti(Competizione c) {

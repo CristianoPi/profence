@@ -2,6 +2,7 @@ package com.profencer;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -118,19 +119,49 @@ public class Competizione {
         Gironi = gironi;
     }
 
-
-
- 
-
-
     public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
     }
 
-    public boolean IscrizioneAtleta(int codFIS){
-    if (iscritti == null) {
-        iscritti = new HashMap<>();
+    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
+            float quotaParticipazione, com.profencer.FormulaDiGara formulaDiGara, List<Girone> gironi,
+            Map<Integer, Set<Integer>> iscritti, Map<Integer, Set<Integer>> accettazioni) {
+        this.codCompetizione = codCompetizione;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.categoria = categoria;
+        this.arma = arma;
+        this.quotaParticipazione = quotaParticipazione;
+        FormulaDiGara = formulaDiGara;
+        Gironi = gironi;
+        this.iscritti = iscritti;
+        this.accettazioni = accettazioni;
     }
-    iscritti.put(this.codCompetizione, codFIS);
+    
+
+    public Competizione() {
+        
+    }
+
+    public boolean Iscrizione(int codFIS){
+        try {
+            Integer chiave_competizione= this.codCompetizione;
+
+            Integer elemento_atleta = codFIS;
+
+            // Ottieni il Set dalla mappa
+            Set<Integer> set = iscritti.get(chiave_competizione);
+            // Se il Set non esiste, crealo(prima iscrizione)
+            if (set == null) {
+                set = new HashSet<>();
+                iscritti.put(chiave_competizione, set);
+            }
+            set.add(elemento_atleta);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+
     }
 }
