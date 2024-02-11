@@ -144,7 +144,8 @@ public class ProFencer {
 
 	public void CreazioneGironi() {
 		if (competizioneCorrente==null) {
-			//bisogna selezionare una competizione e dare un output da vedere come si gestisce
+			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
+			System.out.println("ERRORE");
 			return;
 		}
 		competizioneCorrente.CreazioneGironi();

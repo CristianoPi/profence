@@ -2,15 +2,10 @@ package com.profencer;
 
 public class Atleta_Girone {
     private int codFIS;
-
 	private int stoccateDate;
-
 	private int stoccateRicevute;
-
 	private int punteggio;
-
 	private int vittorie;
-
 	private int posizione;
 
     public int getCodFIS() {
@@ -69,6 +64,10 @@ public class Atleta_Girone {
         this.punteggio = punteggio;
         this.vittorie = vittorie;
         this.posizione = posizione;
+    }
+
+    public Atleta_Girone(int codFIS) {
+        this.codFIS = codFIS;
     }
     
 }

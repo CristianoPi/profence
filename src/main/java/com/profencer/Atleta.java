@@ -2,14 +2,20 @@ package com.profencer;
 
 public class Atleta {
     private int codFIS;
-
 	private String nome;
-
 	private String cognome;
-
 	private String CF;
-
 	private boolean genere;
+    private int posRanking;
+
+    public Atleta(int codFIS, String nome, String cognome, String cF, boolean genere, int posRanking) {
+        this.codFIS = codFIS;
+        this.nome = nome;
+        this.cognome = cognome;
+        CF = cF;
+        this.genere = genere;
+        this.posRanking = posRanking;
+    }
 
     public int getCodFIS() {
         return codFIS;
@@ -51,12 +57,12 @@ public class Atleta {
         this.genere = genere;
     }
 
-    public Atleta(int codFIS, String nome, String cognome, String cF, boolean genere) {
-        this.codFIS = codFIS;
-        this.nome = nome;
-        this.cognome = cognome;
-        CF = cF;
-        this.genere = genere;
+    public int getPosRanking() {
+        return posRanking;
+    }
+
+    public void setPosRanking(int posRanking) {
+        this.posRanking = posRanking;
     }
 
     

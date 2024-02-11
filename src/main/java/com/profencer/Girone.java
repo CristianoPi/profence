@@ -4,16 +4,11 @@ import java.util.List;
 
 public class Girone {
     private int codGirone;
-
 	private int dataOra;
-
 	private int pedana;
-
 	private Competizione competizione;
-
-	private List<Assalto> Assalti;
-
-	private List<Atleta_Girone> AtletiGiorne;
+	private List<Assalto> assalti;
+	private List<Atleta_Girone> atletiGiorne;
 
     public int getCodGirone() {
         return codGirone;
@@ -47,20 +42,22 @@ public class Girone {
         this.competizione = competizione;
     }
 
+    
+
     public List<Assalto> getAssalti() {
-        return Assalti;
+        return assalti;
     }
 
     public void setAssalti(List<Assalto> assalti) {
-        Assalti = assalti;
+        this.assalti = assalti;
     }
 
     public List<Atleta_Girone> getAtletiGiorne() {
-        return AtletiGiorne;
+        return atletiGiorne;
     }
 
     public void setAtletiGiorne(List<Atleta_Girone> atletiGiorne) {
-        AtletiGiorne = atletiGiorne;
+        this.atletiGiorne = atletiGiorne;
     }
 
     public Girone(int codGirone, int dataOra, int pedana, Competizione competizione, List<Assalto> assalti,
@@ -69,8 +66,14 @@ public class Girone {
         this.dataOra = dataOra;
         this.pedana = pedana;
         this.competizione = competizione;
-        Assalti = assalti;
-        AtletiGiorne = atletiGiorne;
+        this.assalti = assalti;
+        this.atletiGiorne = atletiGiorne;
     }
+
+    public Girone(int codGirone) {
+        this.codGirone = codGirone;
+    }
+
+
     
 }
