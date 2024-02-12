@@ -1,10 +1,11 @@
 package com.profencer;
 
+import java.sql.Date;
 import java.util.List;
 
 public class Girone {
     private int codGirone;
-	private int dataOra;
+	private int dataOra;//non funziona date
 	private int pedana;
 	private Competizione competizione;
 	private List<Assalto> assalti;
@@ -42,7 +43,6 @@ public class Girone {
         this.competizione = competizione;
     }
 
-    
 
     public List<Assalto> getAssalti() {
         return assalti;

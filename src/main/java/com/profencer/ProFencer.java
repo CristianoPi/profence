@@ -1,5 +1,4 @@
 package com.profencer;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -124,7 +123,7 @@ public class ProFencer {
 	}
 
 	public FormulaDiGara VisualizzazioneFormulaGara(Competizione c) {
-		return competizioneCorrente.getFormulaDiGara();
+		return c.getFormulaDiGara();
 	}
 
 	public void ModificaFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi) {
@@ -151,16 +150,29 @@ public class ProFencer {
 		competizioneCorrente.CreazioneGironi();
 	}
 
-	public void VisualizzaGironi() {
-
+	public List<Girone> VisualizzaGironi() {
+		if (competizioneCorrente==null) {
+			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
+			System.out.println("ERRORE");
+			return null;
+		}
+		return competizioneCorrente.getGironi();
 	}
 
-	public void InserimentoSpecifiche(int codGirone, Date dataOra, int pedana) {
-
+	public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) {
+		if (competizioneCorrente==null) {
+			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
+			System.out.println("ERRORE");
+		}
+		competizioneCorrente.InserimentoSpecifiche(codGirone, dataOra, pedana);
 	}
 
 	public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) {
-
+		if (competizioneCorrente==null) {
+			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
+			System.out.println("ERRORE");
+		}
+		competizioneCorrente.InserimentoRisultati(codGirone, listaAssalti);
 	}
 
 }

@@ -17,6 +17,14 @@ public class Atleta {
         this.posRanking = posRanking;
     }
 
+    public Atleta(int codFIS, String nome, String cognome, String cF, boolean genere) {
+        this.codFIS = codFIS;
+        this.nome = nome;
+        this.cognome = cognome;
+        CF = cF;
+        this.genere = genere;
+    }
+
     public int getCodFIS() {
         return codFIS;
     }

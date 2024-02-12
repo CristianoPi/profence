@@ -3,12 +3,8 @@ package com.profencer;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Comparator;
+
 
 public class Competizione {
 	private int codCompetizione;
@@ -208,7 +204,7 @@ public class Competizione {
             }
             posNelGiorne++;
         }
-        
+
         //PER ORA NON ORIDNE CORRETTO
         //riempio la lista degli assalti, in cui non saranno presenti ancora i risultati
         //per fare ciò si segue l'algoritmo di Berger
@@ -231,4 +227,34 @@ public class Competizione {
             }
         }
     }
+
+    public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana){
+        boolean b=false;
+        for (Girone girone : gironi) {
+            if(girone.getCodGirone()==codGirone){
+                girone.setDataOra(dataOra);
+                girone.setPedana(pedana);
+                b=true;
+            }
+        }
+        if (!b) {
+            //IL GIRONE NON ESISTE
+			System.out.println("IL GIRONE NON ESISTE");
+        }   
+    }
+
+    public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti){
+        boolean b=false;
+        for (Girone girone : gironi) {
+            if(girone.getCodGirone()==codGirone){
+                girone.setAssalti(listaAssalti);
+                b=true;
+            }
+        }
+        if (!b) {
+            //IL GIRONE NON ESISTE
+			System.out.println("IL GIRONE NON ESISTE");
+        }
+    } 
 }
+
