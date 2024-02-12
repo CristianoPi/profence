@@ -70,5 +70,9 @@ public class Assalto {
         this.tempo = tempo;
     }
 
+    public Assalto(int codAssalto) {
+        this.codAssalto = codAssalto;
+    }
+
     
 }
