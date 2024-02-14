@@ -8,13 +8,20 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.util.Date;
+import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.Font;
 
-public class FrameCreazioneCompetizione {
+public class FrameCreazioneCompetizione extends JFrame {
 
 	JFrame frame;
 	private JTextField textNomeCodice;
-	private JTextField textDescrizione;
-	private JTextField textData;
 
 	/**
 	 * Launch the application.
@@ -35,7 +42,7 @@ public class FrameCreazioneCompetizione {
 	/**
 	 * Create the application.
 	 */
-	public FrameCreazioneCompetizione() {
+	public FrameCreazioneCompetizione () {
 		initialize();
 	}
 
@@ -49,42 +56,107 @@ public class FrameCreazioneCompetizione {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblCodiceNome = new JLabel("Inserire nome/codice");
-		lblCodiceNome.setBounds(55, 60, 128, 25);
+		lblCodiceNome.setBounds(55, 60, 111, 25);
 		frame.getContentPane().add(lblCodiceNome);
 		
 		JLabel lblDescrizione = new JLabel("Descrizione");
-		lblDescrizione.setBounds(55, 114, 128, 25);
+		lblDescrizione.setBounds(55, 251, 111, 25);
 		frame.getContentPane().add(lblDescrizione);
 		
 		textNomeCodice = new JTextField();
-		textNomeCodice.setBounds(205, 63, 96, 19);
+		textNomeCodice.setBounds(215, 63, 96, 19);
 		frame.getContentPane().add(textNomeCodice);
 		textNomeCodice.setColumns(10);
+		textNomeCodice.getText();
 		
+		JComboBox boxCategoria = new JComboBox();
+		boxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "under 14", "under 18", "ciao"}));
+		boxCategoria.setToolTipText("");
+		boxCategoria.setBounds(215, 153, 96, 21);
+		frame.getContentPane().add(boxCategoria);
+		
+		JDateChooser selezionaData = new JDateChooser();
+		selezionaData.setBounds(215, 95, 117, 19);
+		frame.getContentPane().add(selezionaData);
+		
+		JLabel lblErrorCodice = new JLabel("");
+		lblErrorCodice.setBounds(393, 63, 280, 19);
+		frame.getContentPane().add(lblErrorCodice);
+		
+		JLabel lblErrorCategoria = new JLabel("");
+		lblErrorCategoria.setBounds(393, 154, 280, 19);
+		frame.getContentPane().add(lblErrorCategoria);
+		
+		JLabel lblErrorDescrizione = new JLabel("");
+		lblErrorDescrizione.setBounds(421, 257, 252, 19);
+		frame.getContentPane().add(lblErrorDescrizione);
+			
+				JTextArea textAreaDescrizione = new JTextArea();
+				textAreaDescrizione.setLineWrap(true);
+				textAreaDescrizione.setBounds(169, 232, 190, 76);
+				frame.getContentPane().add(textAreaDescrizione);
+
+				JTextArea lblErrorDate = new JTextArea();
+				lblErrorDate.setFont(new Font("Tahoma", Font.BOLD, 13));
+				lblErrorDate.setCaretColor(new Color(0, 0, 0));
+				lblErrorDate.setLineWrap(true);
+				lblErrorDate.setBackground(new Color(240, 240, 240));
+				lblErrorDate.setBounds(376, 91, 236, 53);
+				frame.getContentPane().add(lblErrorDate);
+				
 		JButton btnConferma = new JButton("Conferma");
-		btnConferma.setBounds(276, 344, 159, 46);
+		btnConferma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Date currentDate = new Date();
+				lblErrorCodice.setText("");
+				lblErrorDescrizione.setText("");
+				lblErrorDate.setText("");
+				lblErrorCategoria.setText("");
+				
+				JTextArea textDescrizione = new JTextArea();
+				textDescrizione.setRows(1);
+				textDescrizione.setBounds(163, 232, 196, 85);
+				frame.getContentPane().add(textDescrizione);
+				
+				
+				
+				if(textNomeCodice.getText().equals("")||textAreaDescrizione.getText().equals("")||boxCategoria.getSelectedItem().equals("")|| selezionaData.getDate()==null) {
+					if (textNomeCodice.getText().equals(""))
+						lblErrorCodice.setText("ERRORE; devi compilare il campo");
+					if (selezionaData.getDate()==null || selezionaData.getDate().before(currentDate))
+						lblErrorDate.setText("ERRORE; devi selezionare una data futura per la gara");
+					if (textAreaDescrizione.getText().equals(""))
+						lblErrorDescrizione.setText("ERRORE; devi inserire una descrizione");
+					if(boxCategoria.getSelectedItem().equals("")) 
+						lblErrorCategoria.setText("DEVI SELEZIONARE UNA CATEGORIA");
+				}else {
+				textDescrizione.setText("BRAVO");
+				// chiamare la create di competizione passando codice,descrizione , data , categoria .
+				frame.dispose();
+				}
+			}
+		});
+		btnConferma.setBounds(87, 351, 159, 46);
 		frame.getContentPane().add(btnConferma);
 		
-		textDescrizione = new JTextField();
-		textDescrizione.setBounds(184, 117, 96, 19);
-		frame.getContentPane().add(textDescrizione);
-		textDescrizione.setColumns(10);
 		
-		textData = new JTextField();
-		textData.setColumns(10);
-		textData.setBounds(184, 178, 96, 19);
-		frame.getContentPane().add(textData);
-		
-		JLabel lblData = new JLabel("Data");
-		lblData.setBounds(55, 178, 111, 19);
+		JLabel lblData = new JLabel("Data:");
+		lblData.setBounds(55, 95, 111, 19);
 		frame.getContentPane().add(lblData);
 		
 		JLabel lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(56, 207, 106, 19);
+		lblCategoria.setBounds(55, 154, 106, 19);
 		frame.getContentPane().add(lblCategoria);
 		
-		JComboBox boxCategoria = new JComboBox();
-		boxCategoria.setBounds(184, 207, 96, 21);
-		frame.getContentPane().add(boxCategoria);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }

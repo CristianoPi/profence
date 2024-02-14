@@ -61,6 +61,12 @@ public class ProfencerMainAmm {
 		frame.getContentPane().add(btnNewCompetizione);
 		
 		JButton btnTesseramento = new JButton("Tesseramento");
+		btnTesseramento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//FrameTesseramento ft= new FrameTesseramento();
+				//ft.frame.setVisible(true);
+			}
+		});
 		btnTesseramento.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnTesseramento.setBounds(388, 269, 319, 99);
 		frame.getContentPane().add(btnTesseramento);
