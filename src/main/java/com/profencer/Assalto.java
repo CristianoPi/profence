@@ -60,7 +60,6 @@ public class Assalto {
     public void setTempo(int tempo) {
         this.tempo = tempo;
     }
-
     public Assalto(int codAssalto, int atleta1, int atlleta2, int punteggio1, int punteggio2, int tempo) {
         this.codAssalto = codAssalto;
         this.atleta1 = atleta1;
