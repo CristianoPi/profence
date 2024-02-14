@@ -175,4 +175,27 @@ public class ProFencer {
 		competizioneCorrente.InserimentoRisultati(codGirone, listaAssalti);
 	}
 
+	public EliminazioneDiretta CreazioneED(){
+		if (competizioneCorrente==null) {
+			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
+			System.out.println("ERRORE");
+		}
+		return competizioneCorrente.CreazioneED();
+	}
+
+	public void ConfermaED(){
+		competizioneCorrente.ConfermaED();
+	}
+
+	public void SelezionaED(int stato){
+		competizioneCorrente.SelezionaED(stato); 
+	}
+
+	public EliminazioneDiretta VisualizzaED(){
+		return competizioneCorrente.getDirettaCorrente();
+	}
+
+	public void InserisciRisultatiED(List<Assalto> listaAssalti){
+		competizioneCorrente.InserisciRisultatiED(listaAssalti);
+	}
 }

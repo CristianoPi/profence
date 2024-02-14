@@ -5,7 +5,7 @@ public class Assalto {
 
 	private int atleta1;
 
-	private int atlleta2;
+	private int atleta2;
 
 	private int punteggio1;
 
@@ -29,12 +29,12 @@ public class Assalto {
         this.atleta1 = atleta1;
     }
 
-    public int getAtlleta2() {
-        return atlleta2;
+    public int getAtleta2() {
+        return atleta2;
     }
 
-    public void setAtlleta2(int atlleta2) {
-        this.atlleta2 = atlleta2;
+    public void setAtleta2(int atleta2) {
+        this.atleta2 = atleta2;
     }
 
     public int getPunteggio1() {
@@ -60,10 +60,10 @@ public class Assalto {
     public void setTempo(int tempo) {
         this.tempo = tempo;
     }
-    public Assalto(int codAssalto, int atleta1, int atlleta2, int punteggio1, int punteggio2, int tempo) {
+    public Assalto(int codAssalto, int atleta1, int atleta2, int punteggio1, int punteggio2, int tempo) {
         this.codAssalto = codAssalto;
         this.atleta1 = atleta1;
-        this.atlleta2 = atlleta2;
+        this.atleta2 = atleta2;
         this.punteggio1 = punteggio1;
         this.punteggio2 = punteggio2;
         this.tempo = tempo;

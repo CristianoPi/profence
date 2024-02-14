@@ -20,11 +20,34 @@ public class Competizione {
     private List<Atleta> iscritti;
     //private Map<Integer, Set<Integer>> accettazioni = new HashMap<>();
     private List<Atleta> accettazioni;
-  
-    //gettere and setter
+    private List<Atleta_Girone> classificaG;
+    private EliminazioneDiretta direttaCorrente;
+    private List<EliminazioneDiretta> eliminazioniDirette;
+
+    //getters and setters
 
     public int getCodCompetizione() {
         return codCompetizione;
+    }
+
+    public void setClassificaG(List<Atleta_Girone> classificaG) {
+        this.classificaG = classificaG;
+    }
+
+    public EliminazioneDiretta getDirettaCorrente() {
+        return direttaCorrente;
+    }
+
+    public void setDirettaCorrente(EliminazioneDiretta direttaCorrente) {
+        this.direttaCorrente = direttaCorrente;
+    }
+
+    public List<EliminazioneDiretta> getEliminazioniDirette() {
+        return eliminazioniDirette;
+    }
+
+    public void setEliminazioniDirette(List<EliminazioneDiretta> eliminazioniDirette) {
+        this.eliminazioniDirette = eliminazioniDirette;
     }
 
     public List<Atleta> getIscritti() {
@@ -111,6 +134,14 @@ public class Competizione {
         this.gironi = gironi;
     }
 
+    
+    public List<Atleta_Girone> getClassificaG() {
+        return classificaG;
+    }
+
+    public void setClassifica(List<Atleta_Girone> classificaG) {
+        this.classificaG = classificaG;
+    }
     //costruttori
     public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
@@ -134,6 +165,23 @@ public class Competizione {
     
     public Competizione() {
         
+    }
+
+    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
+            float quotaParticipazione, FormulaDiGara formulaDiGara, List<Girone> gironi, List<Atleta> iscritti,
+            List<Atleta> accettazioni, List<Atleta_Girone> classificaG) {
+        this.codCompetizione = codCompetizione;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.categoria = categoria;
+        this.arma = arma;
+        this.quotaParticipazione = quotaParticipazione;
+        this.formulaDiGara = formulaDiGara;
+        this.gironi = gironi;
+        this.iscritti = iscritti;
+        this.accettazioni = accettazioni;
+        this.classificaG = classificaG;
     }
 
     //operazioni
@@ -219,7 +267,7 @@ public class Competizione {
                 while (j<=numAtletiGirone) {
                     ass.setCodAssalto(c);
                     ass.setAtleta1(girone.getAtletiGiorne().get(i).getCodFIS());
-                    ass.setAtleta1(girone.getAtletiGiorne().get(j).getCodFIS());
+                    ass.setAtleta2(girone.getAtletiGiorne().get(j).getCodFIS());
                     girone.getAssalti().add(ass);
                     c++;
                     j++;
@@ -256,5 +304,56 @@ public class Competizione {
 			System.out.println("IL GIRONE NON ESISTE");
         }
     } 
+
+    public void CreaClassifica(){
+        for (Girone g : gironi) {
+            List<Atleta_Girone> Atletig = g.getAtletiGiorne();
+            for (Atleta_Girone atleta_Girone : Atletig) {
+                classificaG.add(atleta_Girone);
+            }
+        }
+        Collections.sort(classificaG, new Comparator<Atleta_Girone>() {
+            @Override
+            public int compare(Atleta_Girone a1, Atleta_Girone a2) {
+                return Integer.compare(a1.getPosizione(), a2.getPosizione());
+            }
+        });
+    }
+    
+    public EliminazioneDiretta CreazioneED(){
+        int stato=0;
+        
+        int pe=formulaDiGara.getPercEliminati();
+        int num_pass=classificaG.size()-(classificaG.size()*pe/100);
+        stato=(int)Math.ceil(Math.log(num_pass) / Math.log(2));//In questo modo, stato sarà il logaritmo in base 2 di num_pass arrotondato per eccesso.
+    
+        EliminazioneDiretta direttaCorrente= new EliminazioneDiretta(stato, null);
+        Assalto a=new Assalto(0);
+        for(int i=1; i<=(int)Math.pow(2, stato-1); i++){
+            a.setCodAssalto(i);
+            a.setAtleta1(classificaG.get(i-1).getCodFIS());
+            if(((int)Math.pow(2, stato)-i)>num_pass){
+                a.setAtleta2(-1);//info che mi dice che l'atleta 1 ha automaticamente vinto
+            }
+            else{
+                a.setAtleta2(classificaG.get((int)Math.pow(2, stato)-i).getCodFIS());
+            }
+            direttaCorrente.getAssaltiED().add(a);
+        }
+
+        return direttaCorrente;
+    }
+
+    public void ConfermaED(){
+        eliminazioniDirette.add(direttaCorrente);
+    }
+
+    public void SelezionaED(int stato){
+        direttaCorrente= eliminazioniDirette.get(stato);
+    }
+
+    public void InserisciRisultatiED(List<Assalto> listaAssalti){
+        direttaCorrente.setAssaltiED(listaAssalti);
+    }
 }
 

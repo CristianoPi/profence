@@ -1,6 +1,5 @@
 package com.profencer;
 
-import java.sql.Date;
 import java.util.List;
 
 public class Girone {
