@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 
@@ -114,6 +115,11 @@ public class FrameTesseramento {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				Date currentDate = new Date();
+				Calendar calendar = Calendar.getInstance();
+		        calendar.setTime(currentDate);
+		        calendar.add(Calendar.YEAR, -10); // sottrai 10 anni
+		        Date tenYearsAgo = calendar.getTime(); // crea un nuovo oggetto Date
+				
 				lblErrorNome.setText("");
 				lblErrorCognome.setText("");
 				lblErrorDateN.setText("");
@@ -121,19 +127,19 @@ public class FrameTesseramento {
 				
 				
 				
-				if(textNome.getText().equals("")||textCognome.getText().equals("")||textCF.getText().equals("")|| selezionaDateN.getDate()==null||selezionaDateN.getDate().after(currentDate)) {
+				if(textNome.getText().equals("")||textCognome.getText().equals("")||textCF.getText().equals("")|| selezionaDateN.getDate()==null||selezionaDateN.getDate().after(tenYearsAgo)) {
 					if (textNome.getText().equals(""))
 						lblErrorNome.setText("ERRORE; devi compilare il campo");
-					if (selezionaDateN.getDate()==null || selezionaDateN.getDate().after(currentDate))
+					if (selezionaDateN.getDate()==null || selezionaDateN.getDate().after(tenYearsAgo))
 						lblErrorDateN.setText("ERRORE; devi selezionare una data valida");
 					if (textCognome.getText().equals(""))
 						lblErrorCognome.setText("ERRORE; devi inserire un cognome");
 					if(textCF.getText().equals("")) 
 						lblErrorCF.setText("Devi inserire un CF");
 					
-					// ul timo controllo verificare dove abbiamo salvati i tesserati se risultaa tesserata un persona con tale codice fiscale se si notificare l'errore.
+					// ultimo controllo verificare dove abbiamo salvati i tesserati se risultaa tesserata un persona con tale codice fiscale se si notificare l'errore.
 				}else {
-					//creare atleta con i dati inseriti e conservarlo dove teniamo a dati dei tesserati
+					//creare tesseraro con i dati inseriti e conservarlo dove teniamo a dati dei tesserati
 					frame.dispose();
 				}
 								
