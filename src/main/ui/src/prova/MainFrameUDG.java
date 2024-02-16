@@ -77,6 +77,16 @@ public class MainFrameUDG {
 		frame.getContentPane().add(btnSelezionaCompetizione);
 		
 		JButton btnGestioneformula = new JButton("Gestione Formula di gara");
+		btnGestioneformula.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+					JOptionPane.showMessageDialog(null, "Errore: per modificare una formuladi gara devi selezionare una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}else {
+				FrameGestioneFormulaDiGara fgfdg= new FrameGestioneFormulaDiGara(lblCompetizione.getText());
+				fgfdg.frame.setVisible(true);
+				}
+			}
+		});
 		btnGestioneformula.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnGestioneformula.setBounds(35, 197, 363, 65);
 		frame.getContentPane().add(btnGestioneformula);

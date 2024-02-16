@@ -57,7 +57,7 @@ public class ProfencerMainAmm {
 			}
 		});
 		btnNewCompetizione.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewCompetizione.setBounds(388, 113, 319, 86);
+		btnNewCompetizione.setBounds(388, 60, 319, 86);
 		frame.getContentPane().add(btnNewCompetizione);
 		
 		JButton btnTesseramento = new JButton("Tesseramento");
@@ -68,7 +68,19 @@ public class ProfencerMainAmm {
 			}
 		});
 		btnTesseramento.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnTesseramento.setBounds(388, 269, 319, 99);
+		btnTesseramento.setBounds(388, 180, 319, 99);
 		frame.getContentPane().add(btnTesseramento);
+		
+		JButton btnIscrizione = new JButton("Iscrizione");
+		btnIscrizione.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//FrameTesseramento ft= new FrameTesseramento();
+				//ft.frame.setVisible(true);
+				//devo aprire il frame di sicrizone per l'atleta.
+			}
+		});
+		btnIscrizione.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnIscrizione.setBounds(388, 290, 319, 99);
+		frame.getContentPane().add(btnIscrizione);
 	}
 }
