@@ -66,7 +66,7 @@ public class MainFrameUDG {
 				//in teoria bisognerebbe ciclare alla ricerca di tale competizione e se trovata si rende corrente ?
 				if(s.equals("")) {
 					JOptionPane.showMessageDialog(null, "Errore: Non è presente una competizione con questo nome/codice ", "Errore", JOptionPane.ERROR_MESSAGE);
-					lblCompetizione.setText("nessuna competizione scelta");
+					lblCompetizione.setText("nessuna competizione scelta ");
 				}else {
 					lblCompetizione.setText(s);
 				}

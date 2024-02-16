@@ -120,7 +120,7 @@ public class FrameGestioneFormulaDiGara {
 				}
 				else {
 					//si fa la set degli attributi 
-					JOptionPane.showMessageDialog(null, "Bravo ", "XD", JOptionPane.OK_OPTION);
+					JOptionPane.showMessageDialog(null, "Bravo ", "XD", JOptionPane.INFORMATION_MESSAGE);
 				}
 				
 			}

@@ -77,6 +77,8 @@ public class ProfencerMainAmm {
 				//FrameTesseramento ft= new FrameTesseramento();
 				//ft.frame.setVisible(true);
 				//devo aprire il frame di sicrizone per l'atleta.
+				FrameVisualizzaCompetizioni fvc = new FrameVisualizzaCompetizioni();
+				fvc.frame.setVisible(true);
 			}
 		});
 		btnIscrizione.setFont(new Font("Tahoma", Font.PLAIN, 20));
