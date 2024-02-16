@@ -1,5 +1,6 @@
 package com.profencer;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -16,16 +17,13 @@ public class Competizione {
 	private float quotaParticipazione;
 	private FormulaDiGara formulaDiGara;
 	private List<Girone> gironi;
-    //private Map<Integer, Set<Integer>> iscritti = new HashMap<>();
     private List<Atleta> iscritti;
-    //private Map<Integer, Set<Integer>> accettazioni = new HashMap<>();
     private List<Atleta> accettazioni;
     private List<Atleta_Girone> classificaG;
     private EliminazioneDiretta direttaCorrente;
     private List<EliminazioneDiretta> eliminazioniDirette;
 
     //getters and setters
-
     public int getCodCompetizione() {
         return codCompetizione;
     }
@@ -134,7 +132,6 @@ public class Competizione {
         this.gironi = gironi;
     }
 
-    
     public List<Atleta_Girone> getClassificaG() {
         return classificaG;
     }
@@ -142,6 +139,7 @@ public class Competizione {
     public void setClassifica(List<Atleta_Girone> classificaG) {
         this.classificaG = classificaG;
     }
+   
     //costruttori
     public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
@@ -211,7 +209,7 @@ public class Competizione {
        Collections.sort(accettazioni, new Comparator<Atleta>() {
             @Override
             public int compare(Atleta a1, Atleta a2) {
-                return Integer.compare(a1.getPosRanking(), a2.getPosRanking());
+                return Integer.compare(a1.getRanking(), a2.getRanking());
             }
         });
     }
@@ -299,6 +297,9 @@ public class Competizione {
                 b=true;
             }
         }
+        //bisogna settare gli atributi di atleta_girone dopo che si inseriscono i risultati
+        
+
         if (!b) {
             //IL GIRONE NON ESISTE
 			System.out.println("IL GIRONE NON ESISTE");
@@ -354,6 +355,24 @@ public class Competizione {
 
     public void InserisciRisultatiED(List<Assalto> listaAssalti){
         direttaCorrente.setAssaltiED(listaAssalti);
+        // se gli assalti sono completi si deve settare la nuova diretta corrente
+    }
+
+    public void CreaClassificaFinale(){
+        List<Atleta> classificaFinale= new ArrayList<>();
+        int num_elimi=classificaG.size()*formulaDiGara.getPercEliminati()/100;
+        int num_pass=classificaG.size()-num_elimi;
+        for(int i=num_pass; i<num_elimi+num_pass; i++){
+            for (Atleta atleta : accettazioni) {
+                if(atleta.getCodFIS()==classificaG.get(i).getCodFIS()){
+                    classificaFinale.add(atleta);
+                }
+            }
+        }
+
+        for (EliminazioneDiretta ed : eliminazioniDirette) {
+            
+        }
     }
 }
 

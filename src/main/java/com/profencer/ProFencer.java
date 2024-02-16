@@ -198,4 +198,8 @@ public class ProFencer {
 	public void InserisciRisultatiED(List<Assalto> listaAssalti){
 		competizioneCorrente.InserisciRisultatiED(listaAssalti);
 	}
+
+	public void CreaClassificaFinale(){
+		competizioneCorrente.CreaClassificaFinale();
+	}
 }

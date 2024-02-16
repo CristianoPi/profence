@@ -6,7 +6,7 @@ public class Atleta {
 	private String cognome;
 	private String CF;
 	private boolean genere;
-    private int posRanking;
+    private int Ranking;
 
     public Atleta(int codFIS, String nome, String cognome, String cF, boolean genere, int posRanking) {
         this.codFIS = codFIS;
@@ -14,7 +14,7 @@ public class Atleta {
         this.cognome = cognome;
         CF = cF;
         this.genere = genere;
-        this.posRanking = posRanking;
+        this.Ranking = posRanking;
     }
 
     public Atleta(int codFIS, String nome, String cognome, String cF, boolean genere) {
@@ -65,12 +65,12 @@ public class Atleta {
         this.genere = genere;
     }
 
-    public int getPosRanking() {
-        return posRanking;
+    public int getRanking() {
+        return Ranking;
     }
 
-    public void setPosRanking(int posRanking) {
-        this.posRanking = posRanking;
+    public void setRanking(int posRanking) {
+        this.Ranking = posRanking;
     }
 
     
