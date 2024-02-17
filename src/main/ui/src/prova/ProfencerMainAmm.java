@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 
 public class ProfencerMainAmm {
 
-	private JFrame frame;
+	JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -41,7 +41,7 @@ public class ProfencerMainAmm {
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 815, 489);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblTitolo = new JLabel("Profencer\r\n");
