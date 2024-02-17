@@ -43,7 +43,7 @@ public class FrameClassificaFinale {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		  JLabel label = new JLabel("Classifica Gironi");
+		  JLabel label = new JLabel("Classifica finale");
 	        frame.add(label,BorderLayout.NORTH);
 
 	        // Creazione della tabella

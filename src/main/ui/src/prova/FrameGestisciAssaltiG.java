@@ -1,5 +1,4 @@
 package prova;
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -14,14 +13,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 public class FrameGestisciAssaltiG {
 
     JFrame frame;
     List<JTextField> punteggio1Fields = new ArrayList<>();
     List<JTextField> punteggio2Fields = new ArrayList<>();
     List<JTextField> tempoFields = new ArrayList<>();
-
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -54,7 +51,7 @@ public class FrameGestisciAssaltiG {
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             JLabel label1 = new JLabel(assalto);
             JLabel label2 = new JLabel("giocatore 2");
-        label1.setBorder(new EmptyBorder(0, 0, 0, 20)); // aggiunge spazio dopo la label
+        label1.setBorder(new EmptyBorder(0, 0, 0, 20));
         label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
         panel.add(label1);
         panel.add(label2);
@@ -87,7 +84,6 @@ public class FrameGestisciAssaltiG {
                     assalto.setPunteggio2(Integer.parseInt(punteggio2Fields.get(i).getText()));
                     assalto.setTempo(Time.valueOf(tempoFields.get(i).getText()));
                 } 
-            	  
             	 */
             	//per vedere se funziona.
             	for (int i = 0; i < assalti.size(); i++) {
@@ -99,6 +95,7 @@ public class FrameGestisciAssaltiG {
         });
         frame.add(confermaButton, BorderLayout.SOUTH);
         frame.setMinimumSize(new Dimension(500,400));
+       // frame.setMaximumSize(new Dimension(500,450));
        frame.pack();
     }
 }
