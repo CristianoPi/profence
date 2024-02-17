@@ -169,14 +169,23 @@ public class MainFrameUDG {
 		btnGestioneAssaltiEliminazioni.setBounds(448, 388, 295, 65);
 		frame.getContentPane().add(btnGestioneAssaltiEliminazioni);
 		
-		JButton btnClassificaGirone = new JButton("Classifica Girone");
-		btnClassificaGirone.addActionListener(new ActionListener() {
+		JButton btnClassificaGironi = new JButton("Classifica Gironi");
+		btnClassificaGironi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//controllo se effettivaemnte i gironi sono file e se la competizione corrente è stata selezionata
+				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}else {
+					// come verificare se i gironi sono stati finiti?
+					FrameClassificaGironi fcf= new FrameClassificaGironi();
+					fcf.frame.setVisible(true);
+
+				}
 			}
 		});
-		btnClassificaGirone.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnClassificaGirone.setBounds(445, 290, 295, 65);
-		frame.getContentPane().add(btnClassificaGirone);
+		btnClassificaGironi.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnClassificaGironi.setBounds(445, 290, 295, 65);
+		frame.getContentPane().add(btnClassificaGironi);
 		
 		JButton btnGesnerazioneRanking = new JButton("Gesnerazione Ranking");
 		btnGesnerazioneRanking.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -184,6 +193,23 @@ public class MainFrameUDG {
 		frame.getContentPane().add(btnGesnerazioneRanking);
 		
 		JButton btnClassificaFinale = new JButton("Classifica Finale");
+		btnClassificaFinale.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				//non solo la competizioen deve essere selezionata ma deve essere anche finita
+				//coem per classifica giorni si passa una lista di atleti quindi credo possa andare bene la stessa frame variando solo la lista in ingressso
+				//no cambia il fatto che si tratterà di una lista di atleti e non di atleti girone quindi non si può usare la stessa frame 
+				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}else {
+					// come verificare se i gironi sono stati finiti?
+					FrameClassificaFinale fcf= new FrameClassificaFinale();
+					fcf.frame.setVisible(true);
+
+				}
+				
+			}
+		});
 		btnClassificaFinale.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnClassificaFinale.setBounds(445, 463, 298, 65);
 		frame.getContentPane().add(btnClassificaFinale);
