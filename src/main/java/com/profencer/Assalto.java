@@ -71,7 +71,16 @@ public class Assalto {
 
     public Assalto(int codAssalto) {
         this.codAssalto = codAssalto;
+        this.punteggio1 = -2;//questo valore di punteggio mi farà comprendere che l'assalto non è stato ancora disputato
+        this.punteggio2 = -2;
     }
 
+    public Assalto(int codAssalto, int a1, int a2) {
+        this.codAssalto = codAssalto;
+        this.atleta1=a1;
+        this.atleta2=a2;
+        this.punteggio1 = -2;//questo valore di punteggio mi farà comprendere che l'assalto non è stato ancora disputato
+        this.punteggio2 = -2;
+    }
     
 }

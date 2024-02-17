@@ -202,4 +202,16 @@ public class ProFencer {
 	public void CreaClassificaFinale(){
 		competizioneCorrente.CreaClassificaFinale();
 	}
+
+	public void CreaRanking(){
+		competizioneCorrente.CreaRanking();
+	}
+
+	public List<Atleta> VisualizzaClassificaFinale(){
+		return competizioneCorrente.getClassificaFinale();
+	}
+
+	public List<Atleta> VisualizzaRanking(){//voglio che si stampi il ranking di tutti i tesserati
+		return tesserati;
+	}
 }

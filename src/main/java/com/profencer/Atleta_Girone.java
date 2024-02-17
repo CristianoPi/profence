@@ -6,7 +6,8 @@ public class Atleta_Girone {
 	private int stoccateRicevute;
 	private int punteggio;
 	private int vittorie;
-	private int posizione;
+    private int sconfitte;
+	private int posizione;// per posizione si intende quella nel girone, cioè quella data dal ranking
 
     public int getCodFIS() {
         return codFIS;
@@ -68,6 +69,14 @@ public class Atleta_Girone {
 
     public Atleta_Girone(int codFIS) {
         this.codFIS = codFIS;
+    }
+
+    public int getSconfitte() {
+        return sconfitte;
+    }
+
+    public void setSconfitte(int sconfitte) {
+        this.sconfitte = sconfitte;
     }
     
 }

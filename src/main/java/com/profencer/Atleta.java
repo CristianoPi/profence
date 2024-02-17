@@ -6,9 +6,9 @@ public class Atleta {
 	private String cognome;
 	private String CF;
 	private boolean genere;
-    private int Ranking;
+    private float Ranking;
 
-    public Atleta(int codFIS, String nome, String cognome, String cF, boolean genere, int posRanking) {
+    public Atleta(int codFIS, String nome, String cognome, String cF, boolean genere, float posRanking) {
         this.codFIS = codFIS;
         this.nome = nome;
         this.cognome = cognome;
@@ -65,11 +65,11 @@ public class Atleta {
         this.genere = genere;
     }
 
-    public int getRanking() {
+    public float getRanking() {
         return Ranking;
     }
 
-    public void setRanking(int posRanking) {
+    public void setRanking(float posRanking) {
         this.Ranking = posRanking;
     }
 
