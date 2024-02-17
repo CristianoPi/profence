@@ -36,12 +36,13 @@ public class FrameVisualizzaCompetizioni {
 		initialize();
 		JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+	 //qui invece di utilizzare un file devo prendere da profencer la lista delle competizioni e fare un foreach di competizione su competizioni
 	    try (Scanner scanner = new Scanner(new File("C:\\Users\\giuse\\OneDrive\\Documenti\\GitHub\\profence\\src\\main\\ui\\src\\prova\\file.txt"))) {
 	        while (scanner.hasNextLine()) {
 	            String line = scanner.nextLine();
-	            JTextField textField = new JTextField(line);
-	            JButton button = new JButton("Iscriviti alla gara"); //ogni bottone dovrebbe poter aprire la frame relativa 
-	            										  //all'iscrizione dell'atleta in quella competizione.
+	            JLabel textField = new JLabel(line);
+	            JButton button = new JButton("Iscriviti alla gara"); 
+	            										  
 	            button.addActionListener(new ActionListener() {
 	    			public void actionPerformed(ActionEvent arg0) {
 	    				//si dovrebbe verificare che l'atletta risulti tesserato
@@ -60,6 +61,7 @@ public class FrameVisualizzaCompetizioni {
 	    				}
 	    				else {
 	    					//caso postivo 
+	    					//bisogna aggiungere alla lista di iscritti della competizione "line" l'atleta con il codice fiscale inserito nel box a tendina
 	    					frame.dispose();
 	    				}
 	    			}

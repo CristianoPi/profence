@@ -64,7 +64,7 @@ public class MainFrameUDG {
 				String s=(String) JOptionPane.showInputDialog(contentPane,"Inserisci codice/ nome della competizione:\n","inserimento competizione",JOptionPane.PLAIN_MESSAGE);
 				//ora si controlla se esiste una cometizione con questo nome/codie se si si imposta questa competizione nella label
 				//in teoria bisognerebbe ciclare alla ricerca di tale competizione e se trovata si rende corrente ?
-				if(s.equals("")) {
+				if(s==null||s.equals("")) {
 					JOptionPane.showMessageDialog(null, "Errore: Non è presente una competizione con questo nome/codice ", "Errore", JOptionPane.ERROR_MESSAGE);
 					lblCompetizione.setText("nessuna competizione scelta ");
 				}else {
@@ -92,16 +92,69 @@ public class MainFrameUDG {
 		frame.getContentPane().add(btnGestioneformula);
 		
 		JButton btnAccettazioneatleti = new JButton("AccettazioneAtleti");
+		btnAccettazioneatleti.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+					JOptionPane.showMessageDialog(null, "Errore: per accettare degli atleti bisogna selezionare una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}else {
+				//FrameGestioneFormulaDiGara fgfdg= new FrameGestioneFormulaDiGara(lblCompetizione.getText());
+				//fgfdg.frame.setVisible(true);
+					
+					//bisogna mettere la nuova frame che stampa la lista degli atleti iscritti alla competizione che si passa alla frame,
+					//in questa frame ad ogni riga ci sarò il profilo di un atleta è un radio button? o comuenque qualcosa per fleggare gli atleti che saranno accettati
+				 // in fondo alla pagina ci sarà un botto di conferma a cui sarà legato l'evento di creare una lista con solo gli atleti flaggati, radio button positivo.
+					//un po di dubbi su come farlo.
+					
+					FrameAccettaAtleta faa= new FrameAccettaAtleta();
+					faa.frame.setVisible(true);
+				}
+				
+			}
+		});
 		btnAccettazioneatleti.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnAccettazioneatleti.setBounds(449, 101, 288, 65);
 		frame.getContentPane().add(btnAccettazioneatleti);
 		
 		JButton btnCreazioneGironi = new JButton("Creazione Gironi");
+		btnCreazioneGironi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+					JOptionPane.showMessageDialog(null, "Errore: creare i gironi deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}else {
+				 //si verrifica se nella competizone corrente è presente una lista di atleti accettati , se è minore di 3 si notifica l'errore 
+					//se è presente ed è maggiore uguale a 3, cioè caso  positivvo si apre la Frame relatica alla creazione dei gironi della competizione corrente. 
+					
+					CreazioneGironi fcg= new CreazioneGironi();
+					fcg.frame.setVisible(true);
+					//nel frame che apro ci devono esser visualizzati i gironi e per ogni girone gli assalti ordinati che lo compongono
+					//come prima cosa si chiama CreazioneGirone() da essa ho bisogno che mi venga restituita la lista dei gironi, in modo tale 
+					//che facendo count() ? oppure un foreach di girone su gironi
+					//posso diveder la frame nei gironi ed allo stesso tempo ho visogno della lista degli assalti per girone per fare in modo di popolare,
+				}
+				
+			}
+		});
 		btnCreazioneGironi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnCreazioneGironi.setBounds(448, 197, 295, 65);
 		frame.getContentPane().add(btnCreazioneGironi);
 		
 		JButton btnGestioneAssaltiGironi = new JButton("Gestione Assalti Gironi");
+		btnGestioneAssaltiGironi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}else {
+					// come verificare se i gironi sono stati creati?
+					FrameVisualizzaGironi fvg= new FrameVisualizzaGironi();
+					fvg.frame.setVisible(true);
+
+				}
+				
+			}
+		});
 		btnGestioneAssaltiGironi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnGestioneAssaltiGironi.setBounds(30, 290, 368, 65);
 		frame.getContentPane().add(btnGestioneAssaltiGironi);
@@ -135,8 +188,24 @@ public class MainFrameUDG {
 		btnClassificaFinale.setBounds(445, 463, 298, 65);
 		frame.getContentPane().add(btnClassificaFinale);
 		
+		JButton btnAmministratore = new JButton("amministratore");
+		btnAmministratore.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String s =JOptionPane.showInputDialog(null, "inserisci il codice dell'amministratore ", "Amministratore", JOptionPane.PLAIN_MESSAGE);
+				if(s.equals("000")) {
+					ProfencerMainAmm pma= new ProfencerMainAmm();
+					pma.frame.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "Errore: codice amministatore sbagliato ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		btnAmministratore.setBounds(364, 10, 117, 21);
+		frame.getContentPane().add(btnAmministratore);
+		
 	
 		
 	}
-
 }
