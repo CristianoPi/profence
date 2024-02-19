@@ -67,6 +67,10 @@ public class ProFencer {
 
 
     //operazioni
+    /**
+     * @param codCompetizione
+     * @throws Exception
+     */
     public void InserimentoCodiceCompetizione(int codCompetizione) throws Exception{
 		for (Competizione competizione : Competizioni) {
 			if(competizione.getCodCompetizione()==codCompetizione){
@@ -74,9 +78,10 @@ public class ProFencer {
 			}
 		}
 		competizioneCorrente = new Competizione(codCompetizione);
+		
 	}
 
-	public void InserimentoDatiCompetizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, ) throws Exception {
+	public void InserimentoDatiCompetizione(String nome, String descrizione, Date data, String categoria, String arma) throws Exception {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
