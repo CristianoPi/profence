@@ -1,8 +1,12 @@
 package com.profencer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class ProFencer {
+	//Singleton
+	private static ProFencer sistema;
+
     private List<Atleta> tesserati;
     private Atleta atletaCorrente; //Serve sicuro?
 	private List<Competizione> Competizioni;
@@ -42,26 +46,45 @@ public class ProFencer {
     }
 
 	//costruttori
-    public ProFencer(List<Atleta> tesserati, Atleta atletaCorrente, List<Competizione> competizioni,
-            Competizione CompetizioneCorrente) {
-        this.tesserati = tesserati;
-        this.atletaCorrente = atletaCorrente;
-        Competizioni = competizioni;
-        competizioneCorrente = CompetizioneCorrente;
+
+
+
+	//_____________________Singleton______________________
+    public ProFencer() {
+        this.tesserati = new ArrayList<Atleta>();
+        this.atletaCorrente = null;
+        Competizioni = new ArrayList<Competizione>();
+        competizioneCorrente = null;
     }
+	public static ProFencer GetIstanceProFencer(){
+		if (sistema==null){
+			sistema=new ProFencer();
+		}
+		return sistema;
+	}
+	//______________________________________________________
+
+
 
     //operazioni
-    public void InserimentoCodiceCompetizione(int codCompetizione) {
+    public void InserimentoCodiceCompetizione(int codCompetizione) throws Exception{
+		for (Competizione competizione : Competizioni) {
+			if(competizione.getCodCompetizione()==codCompetizione){
+				throw new Exception("CodCompetizone già presente nel sistema");
+			}
+		}
 		competizioneCorrente = new Competizione(codCompetizione);
 	}
 
-	public void InserimentoDatiCompetizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, float quotaPartecipazione) {
+	public void InserimentoDatiCompetizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, ) throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		competizioneCorrente.setNome(nome);
 		competizioneCorrente.setDescrizione(descrizione);
 		competizioneCorrente.setData(data);
 		competizioneCorrente.setCategoria(categoria);
 		competizioneCorrente.setArma(arma);
-		competizioneCorrente.setQuotaParticipazione(quotaPartecipazione);
 	}
 
 	public void ScegliFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) {
@@ -141,13 +164,16 @@ public class ProFencer {
 		competizioneCorrente.AccettazioneAtleta(codFIS);
 	}
 
-	public void CreazioneGironi() {
+	public void CreazioneGironi() throws Exception {
+
 		if (competizioneCorrente==null) {
 			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
 			System.out.println("ERRORE");
-			return;
+			throw new Exception("Nessuna competizione corrente");
 		}
+	
 		competizioneCorrente.CreazioneGironi();
+	
 	}
 
 	public List<Girone> VisualizzaGironi() {
@@ -172,6 +198,7 @@ public class ProFencer {
 			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
 			System.out.println("ERRORE");
 		}
+	
 		competizioneCorrente.InserimentoRisultati(codGirone, listaAssalti);
 	}
 
