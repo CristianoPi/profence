@@ -30,19 +30,6 @@ public class ProFencer {
 		
 		//carico le competizioni
 		String filename="competizioni.txt";
-							// try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-						          //  String line;
-						          //  while ((line = reader.readLine()) != null) {
-						             //   int punteggio = Integer.parseInt(line.split(": ")[1]);
-						           //     Competizioni.add(new Competizione(punteggio));
-						               // System.out.println(String.valueOf(punteggio));
-						         //   }  
-						            //for(Competizione c : Competizioni)
-						             //   	System.out.println(c.toString());
-						       // } catch (IOException e) {
-						      //      e.printStackTrace();
-						     //   }
-		
 		
 		 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 

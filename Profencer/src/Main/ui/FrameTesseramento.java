@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -87,6 +88,8 @@ public class FrameTesseramento {
 		frame.getContentPane().add(textCF);
 		
 		JDateChooser selezionaDateN = new JDateChooser();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		selezionaDateN.setDateFormatString(sdf.toPattern());
 		selezionaDateN.setBounds(255, 236, 132, 19);
 		frame.getContentPane().add(selezionaDateN);
 		

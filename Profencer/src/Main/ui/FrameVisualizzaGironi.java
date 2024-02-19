@@ -79,7 +79,7 @@ public class FrameVisualizzaGironi {
         		
         		//proviamo la prima opzione, si rende visibile una nuova frame passandogli il girone selezionato. questa frame 
         		//dal girone si ricaverana la lista degli assalti di quel girone e la tradurra in un formato accettabile
-        		FrameGestisciAssaltiG Fga= new FrameGestisciAssaltiG();
+        		FrameGestisciAssaltiG Fga= new FrameGestisciAssaltiG(-3);
         		Fga.frame.setVisible(true);
 				
 			}

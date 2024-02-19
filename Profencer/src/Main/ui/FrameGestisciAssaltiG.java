@@ -23,7 +23,7 @@ public class FrameGestisciAssaltiG {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    FrameGestisciAssaltiG window = new FrameGestisciAssaltiG();
+                    FrameGestisciAssaltiG window = new FrameGestisciAssaltiG(0);
                     window.frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -32,7 +32,16 @@ public class FrameGestisciAssaltiG {
         });
     }
 
-    public FrameGestisciAssaltiG() {
+    public FrameGestisciAssaltiG(int numero) {
+    	if(numero<0)
+    	{
+    		System.out.print("siamo un giorne");
+    	}
+    	else {
+    		System.out.println("siamo l'eliminazione diretta"+String.valueOf(numero));  
+    		//se siamo in questo caso 2^numero 
+    		//da il numero di assalti che si devono stampare 
+    	}
     	List<String> assalti= new ArrayList<String>();
     	assalti.add("assalto 1");
 	    assalti.add("assalto 2");

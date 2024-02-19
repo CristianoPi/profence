@@ -54,6 +54,8 @@ public class ProfencerMainAmm {
 							
 						profencer.InserimentoCodiceCompetizione(s);
 						System.out.println("bravo codice buono");
+						FrameCreazioneCompetizione fcc= new FrameCreazioneCompetizione(profencer,s);
+						fcc.frame.setVisible(true);			
 						
 						}catch(Exception e) {
 							System.out.println("Eccezzione è gia presente ");
@@ -64,8 +66,7 @@ public class ProfencerMainAmm {
 						
 					}
 				
-				FrameCreazioneCompetizione fcc= new FrameCreazioneCompetizione(profencer);
-				fcc.frame.setVisible(true);
+				
 			}
 		});
 		btnNewCompetizione.setFont(new Font("Tahoma", Font.PLAIN, 20));

@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
@@ -35,7 +36,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 	/**
 	 * Create the application.
 	 */
-	public FrameCreazioneCompetizione (ProFencer profencer) {
+	public FrameCreazioneCompetizione (ProFencer profencer,int codiceCompetizione) {
 		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 732, 503);
@@ -63,6 +64,8 @@ public class FrameCreazioneCompetizione extends JFrame {
 		frame.getContentPane().add(boxCategoria);
 		
 		JDateChooser selezionaData = new JDateChooser();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		selezionaData.setDateFormatString(sdf.toPattern());
 		selezionaData.setBounds(215, 95, 117, 19);
 		frame.getContentPane().add(selezionaData);
 		
@@ -116,7 +119,6 @@ public class FrameCreazioneCompetizione extends JFrame {
 				lblErrorCategoria.setText("");
 				
 				
-				
 				if(textNomeCodice.getText().equals("")||textAreaDescrizione.getText().equals("")||boxCategoria.getSelectedItem().equals("")|| selezionaData.getDate()==null||selezionaData.getDate().before(currentDate)||textIndirizzo.getText().equals("")) {
 					if (textNomeCodice.getText().equals(""))
 						lblErrorCodice.setText("ERRORE; devi compilare il campo");
@@ -132,6 +134,9 @@ public class FrameCreazioneCompetizione extends JFrame {
 					//si aggiorna sto file o database solo a fine caso d'uso in modo tale che se le specifiche non sono state inserite corretaemtne la prima volta l'utente possa riprovare a metterle.
 				}else {
 				textDescrizione.setText("BRAVO");
+			//	profencer.InserimentoDatiCompetizione(codiceCompetizione, textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem(), textIndirizzo.getText());
+				
+				//da controllare il metodo sopra, ha ancora float quota e non presenta indirizzo invece ha arma
 				
 				//controllo se i valori sono già stati inseriti bisogna non creare l'oggetto, cioè se ha sbagliato le specifiche 
 				//e rimette gli stessi dati per la competizione non dobbiamo creare run nuovo oggettto ma solo passare all'aggiunta specifiche.
@@ -148,9 +153,11 @@ public class FrameCreazioneCompetizione extends JFrame {
 				int NstoccateE=Integer.parseInt((JOptionPane.showInputDialog(contentPane,"Inserisci numero di stoccate per la fase ad eliminazione:\n","specifiche",JOptionPane.PLAIN_MESSAGE)));
 				int MacAtleti=Integer.parseInt((JOptionPane.showInputDialog(contentPane,"Inserisci il numero massimo di atleti:\n","specifiche",JOptionPane.PLAIN_MESSAGE)));
 				//se clicco sulla X da un eccezzione, provare a risolvere ? inoltre da eccezzioni pure se si inseriscono caratteri, bisogna gestirlo?
-				if(NstoccateG!=0 && eliminati!=0&&NstoccateE!=0 && MacAtleti!=0) {
+				if(NstoccateG>=0 && eliminati>=0&&NstoccateE>=0 && MacAtleti>=0) {
 					//si settano le specifiche a competizione e si chiude la finestra
 					//si salva la competizione creata in qualche posto
+					
+					
 					frame.dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "Errore: Non è possibile inserire 0 in nessuno dei campi. Riprova ", "Errore", JOptionPane.ERROR_MESSAGE);
