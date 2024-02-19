@@ -67,10 +67,6 @@ public class ProFencer {
 
 
     //operazioni
-    /**
-     * @param codCompetizione
-     * @throws Exception
-     */
     public void InserimentoCodiceCompetizione(int codCompetizione) throws Exception{
 		for (Competizione competizione : Competizioni) {
 			if(competizione.getCodCompetizione()==codCompetizione){
@@ -80,7 +76,6 @@ public class ProFencer {
 		competizioneCorrente = new Competizione(codCompetizione);
 		
 	}
-
 	public void InserimentoDatiCompetizione(String nome, String descrizione, Date data, String categoria, String arma) throws Exception {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
@@ -92,21 +87,36 @@ public class ProFencer {
 		competizioneCorrente.setArma(arma);
 	}
 
-	public void ScegliFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) {
+
+	public void ScegliFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) throws Exception{
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		FormulaDiGara f=new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
 		competizioneCorrente.setFormulaDiGara(f);
 	}
 
-	public void ConfermaInserimento() {
+	public void ConfermaInserimento()throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		Competizioni.add(competizioneCorrente);
 	}
 
-	public void CreaTesseramento(int codFIS, String Nome, String Cognome, Date data_nascita, String CF, boolean genere) {
+	public void CreaTesseramento(int codFIS, String Nome, String Cognome, Date data_nascita, String CF, boolean genere) throws Exception {
+		for (Atleta atleta : tesserati) {
+			if(atleta.getCodFIS()==codFIS){
+				throw new Exception("Atleta già tessereato");
+			}
+		}
 		Atleta a= new Atleta(codFIS, Nome, Cognome, CF, genere);
 		atletaCorrente=a;
 	}
 
-	public void ConfermaTesseramento() {
+	public void ConfermaTesseramento() throws Exception{
+		if(atletaCorrente==null){
+			throw new Exception("Atleta non selezionato");
+		}
 		tesserati.add(atletaCorrente);
 	}
 
@@ -114,7 +124,7 @@ public class ProFencer {
 		return Competizioni;
 	}
 
-	public boolean Iscrizione(int codFIS, int codCompetizione) {
+	public boolean Iscrizione(int codFIS, int codCompetizione) throws Exception{
 		boolean r=false;
 		//trovo la competizione
 		Competizione c=new Competizione();
@@ -124,20 +134,24 @@ public class ProFencer {
 				r=true;
 			}
 		}
+		if (c.getCodCompetizione()==0) {
+			throw new Exception("Competizione non esistente");
+		}
+
 		//trovo l'atleta
-		if(r){
-			for (Atleta atleta : tesserati) {
-				if (atleta.getCodFIS()==codFIS) {
-					c.Iscrizione(atleta);
-					r=true;
-				}
-				else
-					return false;
+		Atleta a=new Atleta();
+
+		for (Atleta atleta : tesserati) {
+			if (atleta.getCodFIS()==codFIS) {
+				a=atleta;
+				r=true;
 			}
 		}
-		else
-			return false;
+		if (a.getCodFIS()==0) {
+			throw new Exception("Atleta non esistente");
+		}
 		
+		c.Iscrizione(a);
 		return r;
 		//erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
 	}

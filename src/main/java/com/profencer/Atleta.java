@@ -33,8 +33,18 @@ public class Atleta {
         this.codFIS = codFIS;
     }
 
+    public Atleta() {
+        this.codFIS = 0;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    @Override
+    public String toString() {
+        return "Atleta [codFIS=" + codFIS + ", nome=" + nome + ", cognome=" + cognome + ", CF=" + CF + ", genere="
+                + genere + ", Ranking=" + Ranking + "]";
     }
 
     public void setNome(String nome) {

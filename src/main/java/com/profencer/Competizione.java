@@ -175,7 +175,7 @@ public class Competizione {
     }
     
     public Competizione() {
-        
+        this.codCompetizione = 0;
     }
 
     public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
@@ -383,6 +383,14 @@ public class Competizione {
         ordinaGironi(classificaG);
     }
      
+
+
+    @Override
+    public String toString() {
+        return "Competizione [codCompetizione=" + codCompetizione + ", nome=" + nome + ", descrizione=" + descrizione
+                + ", data=" + data + ", categoria=" + categoria + ", arma=" + arma + "]";
+    }
+
     public EliminazioneDiretta CreazioneED(){
         int stato=0;
         

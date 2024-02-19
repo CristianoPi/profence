@@ -7,26 +7,55 @@ import org.junit.Test;
 public class ProFencerTest {
     ProFencer proFencer=new ProFencer();
 
+   
     @Test
-    public void testInserimentoCodiceCompetizione() {
+    public void UC1(){
         try {
             proFencer.InserimentoCodiceCompetizione(10);
         } catch (Exception e) {
             fail();
             // TODO: handle exception
         }
-    }
-    
-    @Test
-    public void testInserimentoDatiCompetizione() {
         try {
             proFencer.InserimentoDatiCompetizione("gara1", "descrizione1", null, "U14", "Spada");
         } catch (Exception e) {
             fail();
             // TODO: handle exception
         }
+        try {
+            proFencer.ScegliFormulaGara(1, 20, 15, 5, 7);
+        } catch (Exception e) {
+            fail();
+            // TODO: handle exception
+        }
+
+        try {
+            proFencer.ConfermaInserimento();
+        } catch (Exception e) {
+            fail();
+            // TODO: handle exception
+        }
+        System.out.println(proFencer.getCompetizioneCorrente().toString());
+        System.out.println(proFencer.getCompetizioni());
     }
 
+    @Test
+    public void UC2(){
+        try {
+            proFencer.CreaTesseramento(1,"mario", "rossi", null, "aaaaaaa", true);
+        } catch (Exception e) {
+            fail();
+            // TODO: handle exception
+        }
+        try {
+            proFencer.ConfermaTesseramento();
+        } catch (Exception e) {
+            fail();
+            // TODO: handle exception
+        }
+        System.out.println(proFencer.getAtletaCorrente().toString());
+        System.out.println(proFencer.getTesserati());
+    }
     @Test
     public void testAccettazioneAtleta() {
         
@@ -96,7 +125,12 @@ public class ProFencerTest {
 
     @Test
     public void testIscrizione() {
-        
+        try {
+            //dobbiamo tesserare un atleta e creare una competizone
+            proFencer.setCompetizioni(null);
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
     }
 
     @Test
