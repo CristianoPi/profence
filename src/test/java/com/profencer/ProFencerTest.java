@@ -8,8 +8,10 @@ public class ProFencerTest {
     ProFencer proFencer=new ProFencer();
 
    
+   
     @Test
     public void UC1(){
+        proFencer.caricaDati();
         try {
             proFencer.InserimentoCodiceCompetizione(10);
         } catch (Exception e) {
@@ -41,6 +43,7 @@ public class ProFencerTest {
 
     @Test
     public void UC2(){
+        proFencer.caricaDati();
         try {
             proFencer.CreaTesseramento(1,"mario", "rossi", null, "aaaaaaa", true);
         } catch (Exception e) {
@@ -56,6 +59,19 @@ public class ProFencerTest {
         System.out.println(proFencer.getAtletaCorrente().toString());
         System.out.println(proFencer.getTesserati());
     }
+
+    @Test
+    public void testIscrizione() {
+        proFencer.caricaDati();
+        try {
+            //dobbiamo tesserare un atleta e creare una competizone
+            proFencer.Iscrizione(12345, 1);
+        } catch (Exception e) {
+            fail();
+            // TODO: handle exception
+        }
+    }
+
     @Test
     public void testAccettazioneAtleta() {
         
@@ -121,16 +137,6 @@ public class ProFencerTest {
     @Test
     public void testInserisciRisultatiED() {
         
-    }
-
-    @Test
-    public void testIscrizione() {
-        try {
-            //dobbiamo tesserare un atleta e creare una competizone
-            proFencer.setCompetizioni(null);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
     }
 
     @Test

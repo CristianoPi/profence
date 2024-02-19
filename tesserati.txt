@@ -1,0 +1,2 @@
+12345,Mario,Rossi,MRORSS45A01H501U,true,1.0
+67890,Luigi,Bianchi,LBIBNC45A01H501U,false,2.0

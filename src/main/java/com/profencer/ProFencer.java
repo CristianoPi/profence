@@ -1,4 +1,9 @@
 package com.profencer;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -126,6 +131,7 @@ public class ProFencer {
 
 	public boolean Iscrizione(int codFIS, int codCompetizione) throws Exception{
 		boolean r=false;
+
 		//trovo la competizione
 		Competizione c=new Competizione();
 		for (Competizione competizione : Competizioni) {
@@ -150,10 +156,18 @@ public class ProFencer {
 		if (a.getCodFIS()==0) {
 			throw new Exception("Atleta non esistente");
 		}
+		// try {
+		// 	c.Iscrizione(a);
+		// } catch (Exception e) {
+		// 	throw new Exception("Funzione in competizione non va");
+		// 	// TODO: handle exception
+		// }
 		
-		c.Iscrizione(a);
+		System.out.println(c);
+		System.out.println(a);
 		return r;
-		//erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
+		// //erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
+
 	}
 
 	public void SelezionaCompetizione(int codCompetizione) {
@@ -260,4 +274,63 @@ public class ProFencer {
 	public List<Atleta> VisualizzaRanking(){//voglio che si stampi il ranking di tutti i tesserati
 		return tesserati;
 	}
+
+	//__popolo per prove
+	public void caricaDati() {
+		//Inserimento dati per una prova iniziale
+		//carico la lista delle competizioni, la lista degli atleti
+		
+		//carico le competizioni
+		String filename="competizioni.txt";
+		
+		 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+	        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            try { 
+	            	String line;
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codCompetizione = Integer.parseInt(parts[0]);
+	                String nome = parts[1];
+	                String descrizione = parts[2]; 
+	                Date data = sdf.parse(parts[3]);
+	                String categoria = parts[4];
+	                String arma = parts[5];
+	                int codFormula = Integer.parseInt(parts[6]);
+	                int numeroStoccateGironi = Integer.parseInt(parts[7]);
+	                int percEliminati = Integer.parseInt(parts[8]);
+	                int numeroStoccateDirette = Integer.parseInt(parts[9]);
+	                int maxDimGirone = Integer.parseInt(parts[10]);
+	                FormulaDiGara formulaDiGara = new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
+	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara));
+	            	}
+	            }
+	            catch(ParseException e) {
+	                	e.printStackTrace();
+	                	return;
+	                }
+	        } catch (IOException  e) {
+	            e.printStackTrace();
+	        }
+		 
+		 //da modificicare
+		 filename="tesserati.txt";
+		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            String line;
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codFIS = Integer.parseInt(parts[0]);
+	                String nome = parts[1];
+	                String cognome = parts[2];
+	                String CF = parts[3];
+	                boolean genere = Boolean.parseBoolean(parts[4]);
+	                float posRanking = Float.parseFloat(parts[5]);
+	                tesserati.add(new Atleta(codFIS, nome, cognome, CF, genere, posRanking));
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		 
+		}
+
 }

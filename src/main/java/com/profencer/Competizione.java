@@ -16,7 +16,6 @@ public class Competizione {
 	private Date data;
 	private String categoria;
 	private String arma;
-	private float quotaParticipazione;
 	private FormulaDiGara formulaDiGara;
 	private List<Girone> gironi;
     private List<Atleta> iscritti;
@@ -113,14 +112,6 @@ public class Competizione {
         this.arma = arma;
     }
 
-    public float getQuotaParticipazione() {
-        return quotaParticipazione;
-    }
-
-    public void setQuotaParticipazione(float quotaParticipazione) {
-        this.quotaParticipazione = quotaParticipazione;
-    }
-
     public FormulaDiGara getFormulaDiGara() {
         return formulaDiGara;
     }
@@ -158,8 +149,7 @@ public class Competizione {
         this.codCompetizione = codCompetizione;
     }
 
-    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
-            float quotaParticipazione, com.profencer.FormulaDiGara formulaDiGara, List<Girone> gironi,
+    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, com.profencer.FormulaDiGara formulaDiGara, List<Girone> gironi,
             List<Atleta> iscritti, List<Atleta> accettazioni) {
         this.codCompetizione = codCompetizione;
         this.nome = nome;
@@ -167,7 +157,6 @@ public class Competizione {
         this.data = data;
         this.categoria = categoria;
         this.arma = arma;
-        this.quotaParticipazione = quotaParticipazione;
         this.formulaDiGara = formulaDiGara;
         this.gironi = gironi;
         this.iscritti = iscritti;
@@ -178,8 +167,19 @@ public class Competizione {
         this.codCompetizione = 0;
     }
 
+
     public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
-            float quotaParticipazione, FormulaDiGara formulaDiGara, List<Girone> gironi, List<Atleta> iscritti,
+            FormulaDiGara formulaDiGara) {
+        this.codCompetizione = codCompetizione;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.categoria = categoria;
+        this.arma = arma;
+        this.formulaDiGara = formulaDiGara;
+    }
+
+    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, FormulaDiGara formulaDiGara, List<Girone> gironi, List<Atleta> iscritti,
             List<Atleta> accettazioni, List<Atleta_Girone> classificaG) {
         this.codCompetizione = codCompetizione;
         this.nome = nome;
@@ -187,7 +187,6 @@ public class Competizione {
         this.data = data;
         this.categoria = categoria;
         this.arma = arma;
-        this.quotaParticipazione = quotaParticipazione;
         this.formulaDiGara = formulaDiGara;
         this.gironi = gironi;
         this.iscritti = iscritti;
