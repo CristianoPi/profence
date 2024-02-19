@@ -205,6 +205,22 @@ public class MainFrameUDG {
 		frame.getContentPane().add(btnCreazioneEliminazioniDirette);
 		
 		JButton btnGestioneAssaltiEliminazioni = new JButton("Gestione Assalti Eliminazioni");
+		btnGestioneAssaltiEliminazioni.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
+				}else {
+					
+					//FrameEliminazioneDiretta fed = new FrameEliminazioneDiretta();
+					//fed.frame.setVisible(true);
+					FrameGestioneEliminazioneDiretta fged = new FrameGestioneEliminazioneDiretta();
+					fged.frame.setVisible(true);
+
+				}
+				
+			}
+		});
+		
 		btnGestioneAssaltiEliminazioni.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnGestioneAssaltiEliminazioni.setBounds(448, 388, 295, 65);
 		frame.getContentPane().add(btnGestioneAssaltiEliminazioni);
