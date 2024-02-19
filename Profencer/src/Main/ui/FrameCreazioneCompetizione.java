@@ -2,6 +2,7 @@ package Main.ui;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,7 +19,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.Font;
-
+import Main.domain.*;
 
 public class FrameCreazioneCompetizione extends JFrame {
 
@@ -29,30 +30,13 @@ public class FrameCreazioneCompetizione extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameCreazioneCompetizione window = new FrameCreazioneCompetizione();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	
 
 	/**
 	 * Create the application.
 	 */
-	public FrameCreazioneCompetizione () {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+	public FrameCreazioneCompetizione (ProFencer profencer) {
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 732, 503);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -148,6 +132,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 					//si aggiorna sto file o database solo a fine caso d'uso in modo tale che se le specifiche non sono state inserite corretaemtne la prima volta l'utente possa riprovare a metterle.
 				}else {
 				textDescrizione.setText("BRAVO");
+				
 				//controllo se i valori sono già stati inseriti bisogna non creare l'oggetto, cioè se ha sbagliato le specifiche 
 				//e rimette gli stessi dati per la competizione non dobbiamo creare run nuovo oggettto ma solo passare all'aggiunta specifiche.
 				
@@ -193,13 +178,13 @@ public class FrameCreazioneCompetizione extends JFrame {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	//private void initialize() {
+		
+		
+	//}
 }

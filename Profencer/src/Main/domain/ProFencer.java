@@ -1,12 +1,98 @@
 package Main.domain;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class ProFencer {
+	private static ProFencer instance;
     private List<Atleta> tesserati;
     private Atleta atletaCorrente; //Serve sicuro?
 	private List<Competizione> Competizioni;
 	private Competizione competizioneCorrente;
+	
+	public ProFencer() {
+		super();
+		this.tesserati = new ArrayList<Atleta>();
+		this.atletaCorrente=null;
+		this.Competizioni=new ArrayList<Competizione>();
+		this.competizioneCorrente=null;
+		this.caricaDati(); // per caricare da file quello gia salvato	
+	}
+	private void caricaDati() {
+		//Inserimento dati per una prova iniziale
+		//carico la lista delle competizioni, la lista degli atleti
+		
+		//carico le competizioni
+		String filename="competizioni.txt";
+							// try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+						          //  String line;
+						          //  while ((line = reader.readLine()) != null) {
+						             //   int punteggio = Integer.parseInt(line.split(": ")[1]);
+						           //     Competizioni.add(new Competizione(punteggio));
+						               // System.out.println(String.valueOf(punteggio));
+						         //   }  
+						            //for(Competizione c : Competizioni)
+						             //   	System.out.println(c.toString());
+						       // } catch (IOException e) {
+						      //      e.printStackTrace();
+						     //   }
+		
+		
+		 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+	        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            try { 
+	            	String line;
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codCompetizione = Integer.parseInt(parts[0]);
+	                String nome = parts[1];
+	                String descrizione = parts[2]; 
+	                Date data = sdf.parse(parts[3]);
+	                String categoria = parts[4];
+	                String arma = parts[5];
+	                int codFormula = Integer.parseInt(parts[6]);
+	                int numeroStoccateGironi = Integer.parseInt(parts[7]);
+	                int percEliminati = Integer.parseInt(parts[8]);
+	                int numeroStoccateDirette = Integer.parseInt(parts[9]);
+	                int maxDimGirone = Integer.parseInt(parts[10]);
+	                FormulaDiGara formulaDiGara = new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
+	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara));
+	            	}
+	            }
+	            catch(ParseException e) {
+	                	e.printStackTrace();
+	                	return;
+	                }
+	        } catch (IOException  e) {
+	            e.printStackTrace();
+	        }
+		 
+		 //da modificicare
+		 filename="tesserati.txt";
+		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            String line;
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codFIS = Integer.parseInt(parts[0]);
+	                String nome = parts[1];
+	                String cognome = parts[2];
+	                String CF = parts[3];
+	                boolean genere = Boolean.parseBoolean(parts[4]);
+	                float posRanking = Float.parseFloat(parts[5]);
+	                tesserati.add(new Atleta(codFIS, nome, cognome, CF, genere, posRanking));
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		 
+		}
 
 	//gettter and setter
 	public List<Atleta> getTesserati() {
@@ -41,6 +127,16 @@ public class ProFencer {
         competizioneCorrente = CompetizioneCorrente;
     }
 
+    public static ProFencer getInstance() {
+		//gestione singleton
+		if (instance == null)
+			instance = new ProFencer();
+		else
+			System.out.println("Istanza già creata");
+
+		return instance;
+	}
+    
 	//costruttori
     public ProFencer(List<Atleta> tesserati, Atleta atletaCorrente, List<Competizione> competizioni,
             Competizione CompetizioneCorrente) {

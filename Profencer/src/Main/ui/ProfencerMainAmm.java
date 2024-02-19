@@ -3,45 +3,36 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.awt.event.ActionEvent;
 
 
 import Main.domain.Competizione;
 
+import Main.domain.*;
 public class ProfencerMainAmm {
 
 	JFrame frame;
-
+	private JPanel contentPane;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProfencerMainAmm window = new ProfencerMainAmm();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public ProfencerMainAmm() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+	public ProfencerMainAmm(ProFencer profencer) {
+		//initialize();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 815, 489);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -55,7 +46,25 @@ public class ProfencerMainAmm {
 		JButton btnNewCompetizione = new JButton("Crea una nuova competizione");
 		btnNewCompetizione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FrameCreazioneCompetizione fcc= new FrameCreazioneCompetizione();
+				
+				try {
+					int s=Integer.parseInt(JOptionPane.showInputDialog(contentPane,"Inserisci codice/ nome della competizione:\n","inserimento competizione",JOptionPane.PLAIN_MESSAGE));
+				
+						try {
+							
+						profencer.InserimentoCodiceCompetizione(s);
+						System.out.println("bravo codice buono");
+						
+						}catch(Exception e) {
+							System.out.println("Eccezzione è gia presente ");
+							//se mi da l'eccezione relativa al fatto che già c'è 
+						}
+				}catch(Exception e ){
+						System.out.println("Eccezzione devi inserire un numero che identifica la competizione");
+						
+					}
+				
+				FrameCreazioneCompetizione fcc= new FrameCreazioneCompetizione(profencer);
 				fcc.frame.setVisible(true);
 			}
 		});
@@ -88,4 +97,9 @@ public class ProfencerMainAmm {
 		btnIscrizione.setBounds(388, 290, 319, 99);
 		frame.getContentPane().add(btnIscrizione);
 	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	
 }

@@ -13,13 +13,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-//import profencer.ProFencer;  // cosi la classe ProFencer
+import Main.domain.ProFencer;  // cosi la classe ProFencer
 
 public class MainFrameUDG {
 
 	private JFrame frame;
 	private JPanel contentPane;
-
+	private static ProFencer profencer;
 	/**
 	 * Launch the application.
 	 */
@@ -29,6 +29,7 @@ public class MainFrameUDG {
 				try {
 					MainFrameUDG window = new MainFrameUDG();
 					window.frame.setVisible(true);
+					profencer=ProFencer.getInstance();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,15 +67,33 @@ public class MainFrameUDG {
 		btnSelezionaCompetizione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				String s=(String) JOptionPane.showInputDialog(contentPane,"Inserisci codice/ nome della competizione:\n","inserimento competizione",JOptionPane.PLAIN_MESSAGE);
+				try {
+				int s=Integer.parseInt(JOptionPane.showInputDialog(contentPane,"Inserisci codice/ nome della competizione:\n","inserimento competizione",JOptionPane.PLAIN_MESSAGE));
 				//ora si controlla se esiste una cometizione con questo nome/codie se si si imposta questa competizione nella label
 				//in teoria bisognerebbe ciclare alla ricerca di tale competizione e se trovata si rende corrente ?
-				if(s==null||s.equals("")) {
-					JOptionPane.showMessageDialog(null, "Errore: Non è presente una competizione con questo nome/codice ", "Errore", JOptionPane.ERROR_MESSAGE);
+			//	if(s==null||s.equals("")) {
+			//		JOptionPane.showMessageDialog(null, "Errore: Non è presente una competizione con questo nome/codice ", "Errore", JOptionPane.ERROR_MESSAGE);
+			//		lblCompetizione.setText("nessuna competizione scelta ");
+			//	}else {
+			//		lblCompetizione.setText(s);
+			//	}
+					try {
+					profencer.SelezionaCompetizione(s);
+					System.out.println("bravo codice buono");
+					//la funziona SelezionaCompetizione mi dovrebbe far capire se è stata selezionata o meno 
+					
+					lblCompetizione.setText("Competizione attuale: "+String.valueOf(s));
+					
+					}catch(Exception e) {
+						System.out.println("Eccezzione non essite tale competizione ");
+						//se mi da l'eccezione relativa al fatto che già c'è 
+						lblCompetizione.setText("nessuna competizione scelta ");
+					}
+				}catch(Exception e ){
+					System.out.println("Eccezzione devi inserire un numero che identifica la competizione");
 					lblCompetizione.setText("nessuna competizione scelta ");
-				}else {
-					lblCompetizione.setText(s);
 				}
+				
 			}
 		});
 		btnSelezionaCompetizione.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -258,7 +277,7 @@ public class MainFrameUDG {
 				
 				String s =JOptionPane.showInputDialog(null, "inserisci il codice dell'amministratore ", "Amministratore", JOptionPane.PLAIN_MESSAGE);
 				if(s.equals("000")) {
-					ProfencerMainAmm pma= new ProfencerMainAmm();
+					ProfencerMainAmm pma= new ProfencerMainAmm(profencer);
 					pma.frame.setVisible(true);
 				}else {
 					JOptionPane.showMessageDialog(null, "Errore: codice amministatore sbagliato ", "Errore", JOptionPane.ERROR_MESSAGE);
