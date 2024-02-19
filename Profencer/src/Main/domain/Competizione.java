@@ -195,6 +195,24 @@ public class Competizione {
         this.classificaG = classificaG;
     }
 
+    public Competizione(int codCompetizione2, String nome2, String descrizione2, Date data2, String categoria2,
+			String arma2, FormulaDiGara formulaDiGara2) {
+		// TODO Auto-generated constructor stub
+    	this.codCompetizione=codCompetizione2;
+    	this.nome=nome2;
+    	this.descrizione=descrizione2;
+    	this.data=data2;
+    	this.categoria=categoria2;
+    	this.arma=arma2;
+    	this.formulaDiGara=formulaDiGara2;
+	}
+
+	@Override
+    public String toString() {
+        return "Competizione: " + codCompetizione ;
+    }
+    
+    
     //operazioni
     public void Iscrizione(Atleta atleta){
         iscritti.add(atleta);
