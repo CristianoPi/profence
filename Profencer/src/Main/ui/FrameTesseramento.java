@@ -5,12 +5,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import com.toedter.calendar.JDateChooser;
+
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
+
+import com.toedter.calendar.JDateChooser;
+
+import Main.domain.ProFencer;
+
 import java.awt.Color;
 import java.awt.Font;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,40 +30,20 @@ public class FrameTesseramento {
 
 	JFrame frame;
 	private JTextField textNome;
+	private JTextField textFis;
 	private JTextField textCognome;
 	private JTextField textCF;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameTesseramento window = new FrameTesseramento();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public FrameTesseramento() {
-		initialize();
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+	
+	public FrameTesseramento(ProFencer profencer) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 696, 482);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
+		JLabel lblFis = new JLabel("Codice FIS: ");
+		lblFis.setBounds(85, 70, 127, 27);
+		frame.getContentPane().add(lblFis);
 		
 		JLabel lblNome = new JLabel("Nome dell'atleta: ");
 		lblNome.setBounds(85, 104, 127, 27);
@@ -68,9 +57,20 @@ public class FrameTesseramento {
 		lblCf.setBounds(85, 178, 127, 27);
 		frame.getContentPane().add(lblCf);
 		
+		JLabel lblGenere = new JLabel("genere: ");
+		lblGenere.setBounds(85, 205, 127, 27);
+		frame.getContentPane().add(lblGenere);
+		
+		
 		JLabel lblDataDiNascita = new JLabel("Data di nascita: : ");
 		lblDataDiNascita.setBounds(85, 236, 127, 19);
 		frame.getContentPane().add(lblDataDiNascita);
+		
+		
+		textFis = new JTextField();
+		textFis.setBounds(255, 70, 132, 19);
+		frame.getContentPane().add(textFis);
+		textFis.setColumns(10);
 		
 		textNome = new JTextField();
 		textNome.setBounds(255, 108, 132, 19);
@@ -86,6 +86,12 @@ public class FrameTesseramento {
 		textCF.setColumns(10);
 		textCF.setBounds(255, 182, 132, 19);
 		frame.getContentPane().add(textCF);
+		
+		JComboBox boxGenere = new JComboBox();
+		boxGenere.setModel(new DefaultComboBoxModel(new String[] {"", "male", "female"}));
+		boxGenere.setToolTipText("");
+		boxGenere.setBounds(255, 205, 132, 19);
+		frame.getContentPane().add(boxGenere);
 		
 		JDateChooser selezionaDateN = new JDateChooser();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -104,6 +110,14 @@ public class FrameTesseramento {
 		JLabel lblErrorNome = new JLabel("");
 		lblErrorNome.setBounds(403, 111, 238, 19);
 		frame.getContentPane().add(lblErrorNome);
+		
+		JLabel lblErrorFis = new JLabel("");
+		lblErrorFis.setBounds(403, 70, 238, 19);
+		frame.getContentPane().add(lblErrorFis);
+		
+		JLabel lblErrorGenere = new JLabel("");
+		lblErrorGenere.setBounds(403, 208, 238, 19);
+		frame.getContentPane().add(lblErrorGenere);
 		
 		JTextArea lblErrorDateN = new JTextArea();
 		lblErrorDateN.setLineWrap(true);
@@ -127,10 +141,13 @@ public class FrameTesseramento {
 				lblErrorCognome.setText("");
 				lblErrorDateN.setText("");
 				lblErrorCF.setText("");
+				lblErrorFis.setText("");
+				lblErrorGenere.setText("");
 				
 				
-				
-				if(textNome.getText().equals("")||textCognome.getText().equals("")||textCF.getText().equals("")|| selezionaDateN.getDate()==null||selezionaDateN.getDate().after(tenYearsAgo)) {
+				if(textNome.getText().equals("")||textCognome.getText().equals("")||textCF.getText().equals("")||textFis.getText().equals("") ||selezionaDateN.getDate()==null||selezionaDateN.getDate().after(tenYearsAgo)) {
+					if(textFis.getText().equals(""))
+						lblErrorFis.setText("ERRORE devi inserire un codice FIS");
 					if (textNome.getText().equals(""))
 						lblErrorNome.setText("ERRORE; devi compilare il campo");
 					if (selezionaDateN.getDate()==null || selezionaDateN.getDate().after(tenYearsAgo))
@@ -139,10 +156,26 @@ public class FrameTesseramento {
 						lblErrorCognome.setText("ERRORE; devi inserire un cognome");
 					if(textCF.getText().equals("")) 
 						lblErrorCF.setText("Devi inserire un CF");
+					if(boxGenere.getSelectedItem().equals(""))
+						lblErrorGenere.setText("ERRORE seleziona un'opzione");
 					
-					// ultimo controllo verificare dove abbiamo salvati i tesserati se risultaa tesserata un persona con tale codice fiscale se si notificare l'errore.
+					// ultimo controllo verificare dove abbiamo salvati i tesserati se risultaa 
+					//tesserata un persona con tale codice fiscale se si notificare l'errore.
 				}else {
+					
+						 
+					try {
+						if(boxGenere.getSelectedItem().equals("male"))
+						profencer.CreaTesseramento(Integer.parseInt(textFis.getText()), textNome.getText(), textCognome.getText(), selezionaDateN.getDate(),textCF.getText(), true);
+						else
+						profencer.CreaTesseramento(Integer.parseInt(textFis.getText()), textNome.getText(), textCognome.getText(), selezionaDateN.getDate(),textCF.getText(), false);
+
+						
+					}catch(Exception e) {
+						System.out.println("errore");
+					}
 					//creare tesseraro con i dati inseriti e conservarlo dove teniamo a dati dei tesserati
+					profencer.ConfermaTesseramento();
 					frame.dispose();
 				}
 								

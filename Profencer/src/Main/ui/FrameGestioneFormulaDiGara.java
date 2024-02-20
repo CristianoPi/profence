@@ -8,6 +8,9 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import Main.domain.ProFencer;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -19,36 +22,15 @@ public class FrameGestioneFormulaDiGara {
 	private JTextField textMaxAtleti;
 	private JTextField textPercentualeEliminati;
 	private JTextField textNstoccateEliminazione;
-	private String NomeCompetizione;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameGestioneFormulaDiGara window = new FrameGestioneFormulaDiGara("");
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private int NomeCompetizione;
+
 
 	/**
 	 * Create the application.
 	 */
-	public FrameGestioneFormulaDiGara(String competizione) {
-		 NomeCompetizione=competizione;
-		initialize();
-		
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
+	public FrameGestioneFormulaDiGara(ProFencer profencer) {
+		 NomeCompetizione=profencer.getCompetizioneCorrente().getCodCompetizione();
+	
 		frame = new JFrame();
 		frame.setBounds(100, 100, 777, 535);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -59,7 +41,7 @@ public class FrameGestioneFormulaDiGara {
 		lblGestioneF.setBounds(37, 29, 367, 43);
 		frame.getContentPane().add(lblGestioneF);
 		
-		JLabel lblCompetizione = new JLabel(NomeCompetizione);
+		JLabel lblCompetizione = new JLabel(String.valueOf(NomeCompetizione));
 		lblCompetizione.setBounds(414, 40, 127, 24);
 		frame.getContentPane().add(lblCompetizione);
 		//qui attraverso il codice della competizione bisogna risalire  ai campi della formula di gara di quella competizione 
@@ -87,25 +69,25 @@ public class FrameGestioneFormulaDiGara {
 		lblPercentualeEliminati.setBounds(73, 189, 177, 24);
 		frame.getContentPane().add(lblPercentualeEliminati);
 		
-		textNstoccateG = new JTextField();
+		textNstoccateG = new JTextField(String.valueOf(profencer.getCompetizioneCorrente().getFormulaDiGara().getNumeroStoccateGironi()));
 		textNstoccateG.setBounds(326, 107, 146, 23);
 		frame.getContentPane().add(textNstoccateG);
 		textNstoccateG.setColumns(10);
 		//textNstoccateG.setText(""); // bisogna settarlo al valore attuale di numero di stoccate girone 
 		
-		textMaxAtleti = new JTextField();
+		textMaxAtleti = new JTextField(String.valueOf(profencer.getCompetizioneCorrente().getFormulaDiGara().getMaxDimGirone()));
 		textMaxAtleti.setColumns(10);
 		textMaxAtleti.setBounds(326, 159, 146, 23);
 		frame.getContentPane().add(textMaxAtleti);
 		//textMaxAtleti.setText(""); // bisogna settarlo al valore attuale	
 		
-		textPercentualeEliminati = new JTextField();
+		textPercentualeEliminati = new JTextField(String.valueOf(profencer.getCompetizioneCorrente().getFormulaDiGara().getPercEliminati()));
 		textPercentualeEliminati.setColumns(10);
 		textPercentualeEliminati.setBounds(326, 193, 146, 23);
 		frame.getContentPane().add(textPercentualeEliminati);
 		//textPercentualeEliminati.setText(""); // bisogna settarlo al valore attuale
 		
-		textNstoccateEliminazione = new JTextField();
+		textNstoccateEliminazione = new JTextField(String.valueOf(profencer.getCompetizioneCorrente().getFormulaDiGara().getNumeroStoccateDirette()));
 		textNstoccateEliminazione.setColumns(10);
 		textNstoccateEliminazione.setBounds(326, 236, 146, 23);
 		frame.getContentPane().add(textNstoccateEliminazione);
@@ -120,7 +102,9 @@ public class FrameGestioneFormulaDiGara {
 				}
 				else {
 					//si fa la set degli attributi 
-					JOptionPane.showMessageDialog(null, "Bravo ", "XD", JOptionPane.INFORMATION_MESSAGE);
+					profencer.ModificaFormulaGara(Integer.parseInt(textPercentualeEliminati.getText()),Integer.parseInt(textNstoccateEliminazione.getText()),Integer.parseInt(textNstoccateG.getText()), Integer.parseInt(textMaxAtleti.getText()));
+					//JOptionPane.showMessageDialog(null, "Bravo ", "XD", JOptionPane.INFORMATION_MESSAGE);
+					frame.dispose();
 				}
 				
 			}

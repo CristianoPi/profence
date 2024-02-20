@@ -5,42 +5,40 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+
+import Main.domain.Competizione;
+import Main.domain.ProFencer;
+
 import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FrameVisualizzaCompetizioni {
 
 	 JFrame frame;
 	 private JPanel contentPane;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameVisualizzaCompetizioni window = new FrameVisualizzaCompetizioni();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public FrameVisualizzaCompetizioni() {
+	public FrameVisualizzaCompetizioni(ProFencer profencer) {
 		initialize();
 		JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-	 //qui invece di utilizzare un file devo prendere da profencer la lista delle competizioni e fare un foreach di competizione su competizioni
-	    try (Scanner scanner = new Scanner(new File("C:\\Users\\giuse\\OneDrive\\Documenti\\GitHub\\profence\\src\\main\\ui\\src\\prova\\file.txt"))) {
-	        while (scanner.hasNextLine()) {
-	            String line = scanner.nextLine();
-	            JLabel textField = new JLabel(line);
+	    
+	    List<Competizione>lista =new ArrayList<Competizione>();
+	    
+	    //qui invece di utilizzare un file devo prendere da profencer la lista delle competizioni e fare un foreach di competizione su competizioni
+	  
+	  //  try (Scanner scanner = new Scanner(new File("C:\\Users\\giuse\\OneDrive\\Documenti\\GitHub\\profence\\src\\main\\ui\\src\\prova\\file.txt"))) {
+	  //      while (scanner.hasNextLine()) {
+	    
+	    	lista = profencer.getCompetizioni();
+	    	for (Competizione c : lista) {
+	            
+	            JLabel textField = new JLabel("Competizione: "+c.getCodCompetizione());
 	            JButton button = new JButton("Iscriviti alla gara"); 
 	            										  
 	            button.addActionListener(new ActionListener() {
@@ -51,18 +49,25 @@ public class FrameVisualizzaCompetizioni {
 	    				//poi che la competizione sia aperta a lui in base alla sua categoria
 	    				
 	    				//se tutto va bene si aggiungere atleta alla lista di atleti iscritti a quwella competizione.
-	    			String cf=JOptionPane.showInputDialog(contentPane,"Inserisci il codice fiscale dell'atleta :\n","iscrizione",JOptionPane.PLAIN_MESSAGE);
+	    			String fis=JOptionPane.showInputDialog(contentPane,"Inserisci il codice fis dell'atleta :\n","iscrizione",JOptionPane.PLAIN_MESSAGE);
 	    				// dal codice fiscale si fanno le verifiche.
-	    			JOptionPane.showMessageDialog(null, cf, "il cf: ", JOptionPane.INFORMATION_MESSAGE);
-	    		 //if cf è presente in tesserati e if  la categoria va ben per la categoria della competizione --> si iscrive l'atleta e si chiude il frame
+	    			//JOptionPane.showMessageDialog(null, fis, "il CodFis: ", JOptionPane.INFORMATION_MESSAGE);
+	    		
+	    			//if cf è presente in tesserati e if  la categoria va ben per la categoria della competizione --> si iscrive l'atleta e si chiude il frame
 	    			//else  si notifica l'errore
-	    				if(cf.equals("")) {
-	    					JOptionPane.showMessageDialog(null, "errore: o non sei tesserati o non è aperta a te la gara ", "ERRORE ", JOptionPane.ERROR_MESSAGE);
+	    				if(fis.equals("")) {
+	    					JOptionPane.showMessageDialog(null, "errore: compila il campo ", "ERRORE ", JOptionPane.ERROR_MESSAGE);
 	    				}
 	    				else {
 	    					//caso postivo 
-	    					//bisogna aggiungere alla lista di iscritti della competizione "line" l'atleta con il codice fiscale inserito nel box a tendina
-	    					frame.dispose();
+	    					//bisogna aggiungere alla lista di iscritti della competizione 
+	    					//"line" l'atleta con il codice fiscale inserito nel box a tendina
+	    					if(profencer.Iscrizione(Integer.parseInt(fis), c.getCodCompetizione())) {
+	    						JOptionPane.showMessageDialog(null, "iscrizione avvenura corretamente ", "Risultato: ", JOptionPane.INFORMATION_MESSAGE);
+	    						frame.dispose();
+	    					}
+	    					else
+	    						JOptionPane.showMessageDialog(null, "Errore il codFis rnon è valido ", "errore ", JOptionPane.ERROR_MESSAGE);
 	    				}
 	    			}
 	    		});
@@ -75,9 +80,7 @@ public class FrameVisualizzaCompetizioni {
 	            linePanel.add(button, BorderLayout.EAST);
 	            panel.add(linePanel);
 	        }
-	    } catch (FileNotFoundException e) {
-	        e.printStackTrace();
-	    }
+	   
 	    JScrollPane scrollPane = new JScrollPane(panel);
 	    frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 	    frame.setMinimumSize(new Dimension(600,400));

@@ -49,7 +49,7 @@ public class ProFencer {
 	                int percEliminati = Integer.parseInt(parts[8]);
 	                int numeroStoccateDirette = Integer.parseInt(parts[9]);
 	                int maxDimGirone = Integer.parseInt(parts[10]);
-	                FormulaDiGara formulaDiGara = new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
+	                FormulaDiGara formulaDiGara = new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
 	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara));
 	            	}
 	            }
@@ -138,17 +138,16 @@ public class ProFencer {
 		competizioneCorrente = new Competizione(codCompetizione);
 	}
 
-	public void InserimentoDatiCompetizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, float quotaPartecipazione) {
+	public void InserimentoDatiCompetizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma) {
 		competizioneCorrente.setNome(nome);
 		competizioneCorrente.setDescrizione(descrizione);
 		competizioneCorrente.setData(data);
 		competizioneCorrente.setCategoria(categoria);
 		competizioneCorrente.setArma(arma);
-		competizioneCorrente.setQuotaParticipazione(quotaPartecipazione);
 	}
 
-	public void ScegliFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) {
-		FormulaDiGara f=new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
+	public void ScegliFormulaGara( int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) {
+		FormulaDiGara f=new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
 		competizioneCorrente.setFormulaDiGara(f);
 	}
 
@@ -181,19 +180,22 @@ public class ProFencer {
 		}
 		//trovo l'atleta
 		if(r){
-			for (Atleta atleta : tesserati) {
+			for (Atleta atleta : tesserati)  
+				//se trovo anche l'atleta so che i parametri in ingresso sono corretti 
+				//ma cevo verificare se tale atleta è già iscritto
 				if (atleta.getCodFIS()==codFIS) {
+					for(Atleta iscritto : c.getIscritti())
+						if(iscritto.getCodFIS()==codFIS)
+							//se il codFis risulta già nella lista degli iscritti torno false
+							return false;
 					c.Iscrizione(atleta);
-					r=true;
+					//r=true;
+					return true;
 				}
-				else
-					return false;
-			}
+			return false;
 		}
 		else
 			return false;
-		
-		return r;
 		//erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
 	}
 
@@ -201,15 +203,17 @@ public class ProFencer {
 		for (Competizione competizione : Competizioni) {
 			if (competizione.getCodCompetizione()==codCompetizione) {
 				competizioneCorrente=competizione;
+				return;
 			}
-		}	
+		}
+		competizioneCorrente=null;
 	}
 
 	public FormulaDiGara VisualizzazioneFormulaGara(Competizione c) {
 		return c.getFormulaDiGara();
 	}
 
-	public void ModificaFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi) {
+	public void ModificaFormulaGara(int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi) {
 		competizioneCorrente.getFormulaDiGara().setPercEliminati(percEliminati);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateDirette(numeroStoccateDirette);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateGironi(numeroStoccateGironi);
@@ -220,8 +224,12 @@ public class ProFencer {
 		return null;
 	}
 
-	public void AccettazioneAtleta(int codFIS) {
-		competizioneCorrente.AccettazioneAtleta(codFIS);
+	public boolean AccettazioneAtleta(int codFIS) {
+		for(Atleta a : competizioneCorrente.getAccettazioni())
+			if(a.getCodFIS()==codFIS)
+				return false;  //vedo se è gia presente tra gli accettati se si torno falso
+		return competizioneCorrente.AccettazioneAtleta(codFIS); 
+		//chiamo quando noto che non è in lista accettati e sono interessato a vedere se è iscitto
 	}
 
 	public void CreazioneGironi() {

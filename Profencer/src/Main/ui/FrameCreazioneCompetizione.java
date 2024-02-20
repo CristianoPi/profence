@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +17,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+
+import com.toedter.calendar.JDateChooser;
+
 import java.awt.Color;
 import java.awt.Font;
 import Main.domain.*;
@@ -27,7 +29,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 	JFrame frame;
 	private JTextField textNomeCodice;
 	private JPanel contentPane;
-	private JTextField textIndirizzo;
+	private JTextField textArma;
 	/**
 	 * Launch the application.
 	 */
@@ -43,7 +45,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JLabel lblCodiceNome = new JLabel("Inserire nome/codice");
+		JLabel lblCodiceNome = new JLabel("Inserire nome");
 		lblCodiceNome.setBounds(55, 60, 111, 25);
 		frame.getContentPane().add(lblCodiceNome);
 		
@@ -58,7 +60,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 		textNomeCodice.getText();
 		
 		JComboBox boxCategoria = new JComboBox();
-		boxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "under 14", "under 18", "ciao"}));
+		boxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "under 14", "under 18", "under 21"}));
 		boxCategoria.setToolTipText("");
 		boxCategoria.setBounds(215, 187, 96, 21);
 		frame.getContentPane().add(boxCategoria);
@@ -99,14 +101,14 @@ public class FrameCreazioneCompetizione extends JFrame {
 		textDescrizione.setBounds(163, 232, 196, 85);
 		frame.getContentPane().add(textDescrizione);
 		
-		textIndirizzo = new JTextField();
-		textIndirizzo.setColumns(10);
-		textIndirizzo.setBounds(215, 158, 96, 19);
-		frame.getContentPane().add(textIndirizzo);
+		textArma = new JTextField();
+		textArma.setColumns(10);
+		textArma.setBounds(215, 158, 96, 19);
+		frame.getContentPane().add(textArma);
 		
-		JLabel lblErrorIndirizzo = new JLabel("");
-		lblErrorIndirizzo.setBounds(393, 159, 280, 19);
-		frame.getContentPane().add(lblErrorIndirizzo);
+		JLabel lblErrorArma = new JLabel("");
+		lblErrorArma.setBounds(393, 159, 280, 19);
+		frame.getContentPane().add(lblErrorArma);
 		
 				
 		JButton btnConferma = new JButton("Conferma");
@@ -119,7 +121,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 				lblErrorCategoria.setText("");
 				
 				
-				if(textNomeCodice.getText().equals("")||textAreaDescrizione.getText().equals("")||boxCategoria.getSelectedItem().equals("")|| selezionaData.getDate()==null||selezionaData.getDate().before(currentDate)||textIndirizzo.getText().equals("")) {
+				if(textNomeCodice.getText().equals("")||textAreaDescrizione.getText().equals("")||boxCategoria.getSelectedItem().equals("")|| selezionaData.getDate()==null||selezionaData.getDate().before(currentDate)||textArma.getText().equals("")) {
 					if (textNomeCodice.getText().equals(""))
 						lblErrorCodice.setText("ERRORE; devi compilare il campo");
 					if (selezionaData.getDate()==null || selezionaData.getDate().before(currentDate))
@@ -128,13 +130,13 @@ public class FrameCreazioneCompetizione extends JFrame {
 						lblErrorDescrizione.setText("ERRORE; devi inserire una descrizione");
 					if(boxCategoria.getSelectedItem().equals("")) 
 						lblErrorCategoria.setText("DEVI SELEZIONARE UNA CATEGORIA");
-					if(textIndirizzo.getText().equals(""))
-						lblErrorIndirizzo.setText("Errore, inserire un indirizzo");
+					if(textArma.getText().equals(""))
+						lblErrorArma.setText("Errore, inserire un arma");
 					//si dovrebbe controllare se Codice/nome è già presnte nel file(?) o database dove abbiamo conservati le competizioni già create.
 					//si aggiorna sto file o database solo a fine caso d'uso in modo tale che se le specifiche non sono state inserite corretaemtne la prima volta l'utente possa riprovare a metterle.
 				}else {
-				textDescrizione.setText("BRAVO");
-			//	profencer.InserimentoDatiCompetizione(codiceCompetizione, textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem(), textIndirizzo.getText());
+				
+				profencer.InserimentoDatiCompetizione(codiceCompetizione, textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem().toString(), textArma.getText());
 				
 				//da controllare il metodo sopra, ha ancora float quota e non presenta indirizzo invece ha arma
 				
@@ -156,8 +158,8 @@ public class FrameCreazioneCompetizione extends JFrame {
 				if(NstoccateG>=0 && eliminati>=0&&NstoccateE>=0 && MacAtleti>=0) {
 					//si settano le specifiche a competizione e si chiude la finestra
 					//si salva la competizione creata in qualche posto
-					
-					
+					profencer.ScegliFormulaGara(MacAtleti, eliminati, NstoccateE, NstoccateG);
+					profencer.ConfermaInserimento();
 					frame.dispose();
 				}else {
 					JOptionPane.showMessageDialog(null, "Errore: Non è possibile inserire 0 in nessuno dei campi. Riprova ", "Errore", JOptionPane.ERROR_MESSAGE);
@@ -178,7 +180,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 		lblCategoria.setBounds(60, 188, 106, 19);
 		frame.getContentPane().add(lblCategoria);
 		
-		JLabel lblIndirizzo = new JLabel("Indirizzo:");
+		JLabel lblIndirizzo = new JLabel("Arma:");
 		lblIndirizzo.setBounds(62, 165, 45, 13);
 		frame.getContentPane().add(lblIndirizzo);
 		
@@ -187,11 +189,4 @@ public class FrameCreazioneCompetizione extends JFrame {
 		
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	//private void initialize() {
-		
-		
-	//}
 }

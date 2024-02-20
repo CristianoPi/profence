@@ -69,20 +69,19 @@ public class MainFrameUDG {
 				
 				try {
 				int s=Integer.parseInt(JOptionPane.showInputDialog(contentPane,"Inserisci codice/ nome della competizione:\n","inserimento competizione",JOptionPane.PLAIN_MESSAGE));
-				//ora si controlla se esiste una cometizione con questo nome/codie se si si imposta questa competizione nella label
-				//in teoria bisognerebbe ciclare alla ricerca di tale competizione e se trovata si rende corrente ?
-			//	if(s==null||s.equals("")) {
-			//		JOptionPane.showMessageDialog(null, "Errore: Non è presente una competizione con questo nome/codice ", "Errore", JOptionPane.ERROR_MESSAGE);
-			//		lblCompetizione.setText("nessuna competizione scelta ");
-			//	}else {
-			//		lblCompetizione.setText(s);
-			//	}
+				
 					try {
 					profencer.SelezionaCompetizione(s);
-					System.out.println("bravo codice buono");
+					//System.out.println("bravo codice buono");
 					//la funziona SelezionaCompetizione mi dovrebbe far capire se è stata selezionata o meno 
-					
-					lblCompetizione.setText("Competizione attuale: "+String.valueOf(s));
+					//System.out.println("allora la competizione corrente adesso :" +profencer.getCompetizioneCorrente());
+					//System.out.println("allora la competizione corrente adesso :" +profencer.getCompetizioneCorrente().getCodCompetizione());
+					//System.out.println("allora la competizione corrente adesso :" +profencer.getCompetizioneCorrente().getArma());
+					if(profencer.getCompetizioneCorrente()==null) {
+						JOptionPane.showMessageDialog(null, "Errore: Non è presente una competizione con questo codice ", "Errore", JOptionPane.ERROR_MESSAGE);
+						lblCompetizione.setText("nessuna competizione scelta ");
+					}else
+					lblCompetizione.setText("Competizione attuale: "+String.valueOf(profencer.getCompetizioneCorrente().getCodCompetizione()));
 					
 					}catch(Exception e) {
 						System.out.println("Eccezzione non essite tale competizione ");
@@ -103,10 +102,10 @@ public class MainFrameUDG {
 		JButton btnGestioneformula = new JButton("Gestione Formula di gara");
 		btnGestioneformula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: per modificare una formuladi gara devi selezionare una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
-				FrameGestioneFormulaDiGara fgfdg= new FrameGestioneFormulaDiGara(lblCompetizione.getText());
+				FrameGestioneFormulaDiGara fgfdg= new FrameGestioneFormulaDiGara(profencer);
 				fgfdg.frame.setVisible(true);
 				}
 			}
@@ -119,7 +118,7 @@ public class MainFrameUDG {
 		btnAccettazioneatleti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: per accettare degli atleti bisogna selezionare una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 				//FrameGestioneFormulaDiGara fgfdg= new FrameGestioneFormulaDiGara(lblCompetizione.getText());
@@ -130,7 +129,7 @@ public class MainFrameUDG {
 				 // in fondo alla pagina ci sarà un botto di conferma a cui sarà legato l'evento di creare una lista con solo gli atleti flaggati, radio button positivo.
 					//un po di dubbi su come farlo.
 					
-					FrameAccettaAtleta faa= new FrameAccettaAtleta();
+					FrameAccettaAtleta faa= new FrameAccettaAtleta(profencer);
 					faa.frame.setVisible(true);
 				}
 				
@@ -144,13 +143,13 @@ public class MainFrameUDG {
 		btnCreazioneGironi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: creare i gironi deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 				 //si verrifica se nella competizone corrente è presente una lista di atleti accettati , se è minore di 3 si notifica l'errore 
 					//se è presente ed è maggiore uguale a 3, cioè caso  positivvo si apre la Frame relatica alla creazione dei gironi della competizione corrente. 
 					
-					CreazioneGironi fcg= new CreazioneGironi();
+					CreazioneGironi fcg= new CreazioneGironi(profencer);
 					fcg.frame.setVisible(true);
 					//nel frame che apro ci devono esser visualizzati i gironi e per ogni girone gli assalti ordinati che lo compongono
 					//come prima cosa si chiama CreazioneGirone() da essa ho bisogno che mi venga restituita la lista dei gironi, in modo tale 

@@ -18,9 +18,9 @@ public class Competizione {
 	private String arma;
 	private float quotaParticipazione;
 	private FormulaDiGara formulaDiGara;
-	private List<Girone> gironi;
-    private List<Atleta> iscritti;
-    private List<Atleta> accettazioni;
+	private List<Girone> gironi = new ArrayList<Girone>();
+    private List<Atleta> iscritti = new ArrayList<Atleta>();
+    private List<Atleta> accettazioni =new ArrayList<Atleta>();
     Map<Integer, Atleta> mappaAtleti = new HashMap<>(); //mi è utile per non scorre ogni volta atleti
     private List<Atleta_Girone> classificaG;
     private EliminazioneDiretta direttaCorrente;
@@ -207,10 +207,10 @@ public class Competizione {
     	this.formulaDiGara=formulaDiGara2;
 	}
 
-	@Override
-    public String toString() {
-        return "Competizione: " + codCompetizione ;
-    }
+	//@Override
+   // public String toString() {
+    //    return "Competizione: " + codCompetizione ;
+    //}
     
     
     //operazioni
@@ -218,14 +218,15 @@ public class Competizione {
         iscritti.add(atleta);
     }
 
-    public void AccettazioneAtleta(int codFIS)
+    public boolean AccettazioneAtleta(int codFIS)
     {
         for (Atleta atleta : iscritti) {
             if (atleta.getCodFIS()==codFIS) {
                 accettazioni.add(atleta);
+                return true;
             }
         }
-        //gestire errori
+        return false;
     }
 
     private static int gironi(int a, int d) {
@@ -259,18 +260,18 @@ public class Competizione {
         int numGironi=gironi(numAtleti, maxDimGironi);
         for(int i=1; i<=numGironi; i++){
             Girone g=new Girone(i);
-            gironi.add(g);//si aggiunge alla fine della lista, quindi la lista sarà oridnata in modo crescente g1, g2, ..., gn
+            this.gironi.add(g);//si aggiunge alla fine della lista, quindi la lista sarà oridnata in modo crescente g1, g2, ..., gn
         }
 
         //riempio la lista Atleti_girone per ogni singolo giorne, seguendo le regole
         int x=0;
         while(x<numAtleti){
             int posNelGiorne=1;
-            for (Girone girone : gironi) {
+            for (Girone girone : this.gironi) {
                 Atleta a = null;
                 try {
-                    if(accettazioni.size()>x){
-                        a = accettazioni.get(x);
+                    if(this.accettazioni.size()>x){
+                        a = this.accettazioni.get(x);
                         Atleta_Girone a_g=new Atleta_Girone(a.getCodFIS());
                         a_g.setPosizione(posNelGiorne);
                         girone.getAtletiGiorne().add(a_g);
@@ -296,8 +297,8 @@ public class Competizione {
             int j=0;
             int c=1;
             for(int i=1; i<turni; i++){
-            j=i+1;
-                while (j<=numAtletiGirone) {
+            j=i+1;    
+                while (j<numAtletiGirone) { //ho tolto =
                     ass.setCodAssalto(c);
                     ass.setAtleta1(girone.getAtletiGiorne().get(i).getCodFIS());
                     ass.setAtleta2(girone.getAtletiGiorne().get(j).getCodFIS());

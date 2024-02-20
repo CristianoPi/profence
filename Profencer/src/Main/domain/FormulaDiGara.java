@@ -51,9 +51,7 @@ public class FormulaDiGara {
         this.maxDimGirone = maxDimGirone;
     }
 
-    public FormulaDiGara(int codFormula, int numeroStoccateGironi, int percEliminati, int numeroStoccateDirette,
-            int maxDimGirone) {
-        this.codFormula = codFormula;
+    public FormulaDiGara(int numeroStoccateGironi, int percEliminati, int numeroStoccateDirette, int maxDimGirone) {
         this.numeroStoccateGironi = numeroStoccateGironi;
         this.percEliminati = percEliminati;
         this.numeroStoccateDirette = numeroStoccateDirette;

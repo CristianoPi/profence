@@ -24,15 +24,12 @@ public class ProfencerMainAmm {
 
 	JFrame frame;
 	private JPanel contentPane;
-	/**
-	 * Launch the application.
-	 */
 
 	/**
 	 * Create the application.
 	 */
 	public ProfencerMainAmm(ProFencer profencer) {
-		//initialize();
+		
 		frame = new JFrame();
 		frame.setBounds(100, 100, 815, 489);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -76,7 +73,7 @@ public class ProfencerMainAmm {
 		JButton btnTesseramento = new JButton("Tesseramento");
 		btnTesseramento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				FrameTesseramento ft= new FrameTesseramento();
+				FrameTesseramento ft= new FrameTesseramento(profencer);
 				ft.frame.setVisible(true);
 			}
 		});
@@ -90,7 +87,7 @@ public class ProfencerMainAmm {
 				//FrameTesseramento ft= new FrameTesseramento();
 				//ft.frame.setVisible(true);
 				//devo aprire il frame di sicrizone per l'atleta.
-				FrameVisualizzaCompetizioni fvc = new FrameVisualizzaCompetizioni();
+				FrameVisualizzaCompetizioni fvc = new FrameVisualizzaCompetizioni(profencer);
 				fvc.frame.setVisible(true);
 			}
 		});
