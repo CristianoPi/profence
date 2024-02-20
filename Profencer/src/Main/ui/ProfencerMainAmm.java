@@ -55,8 +55,11 @@ public class ProfencerMainAmm {
 						fcc.frame.setVisible(true);			
 						
 						}catch(Exception e) {
-							System.out.println("Eccezzione è gia presente ");
+							//System.out.println("Eccezzione è gia presente ");
 							//se mi da l'eccezione relativa al fatto che già c'è 
+							JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+							//System.out.println(e.getMessage());
+							
 						}
 				}catch(Exception e ){
 						System.out.println("Eccezzione devi inserire un numero che identifica la competizione");

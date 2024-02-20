@@ -135,8 +135,8 @@ public class FrameCreazioneCompetizione extends JFrame {
 					//si dovrebbe controllare se Codice/nome è già presnte nel file(?) o database dove abbiamo conservati le competizioni già create.
 					//si aggiorna sto file o database solo a fine caso d'uso in modo tale che se le specifiche non sono state inserite corretaemtne la prima volta l'utente possa riprovare a metterle.
 				}else {
-				
-				profencer.InserimentoDatiCompetizione(codiceCompetizione, textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem().toString(), textArma.getText());
+		            try {
+				profencer.InserimentoDatiCompetizione(textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem().toString(), textArma.getText());
 				
 				//da controllare il metodo sopra, ha ancora float quota e non presenta indirizzo invece ha arma
 				
@@ -147,24 +147,24 @@ public class FrameCreazioneCompetizione extends JFrame {
 				// chiamare la create di competizione passando codice,descrizione , data , categoria 
 				// bisogna mostrare una schermata per specificare la formula di gara.
 				
-				//String s=(String) JOptionPane.showInputDialog(contentPane,"Inserisci codice amministratore:\n","Accesso amministratore",JOptionPane.PLAIN_MESSAGE);
-				//in questo modo si può fare inserire una stringa che potrebbe essere il codice amministratore in caso di unione dei due Mainframe si potrebbe 
-				//fare che i click su CreaCompetizione e tesseramento richiedano uno specifico codice.
+				
 				int NstoccateG=Integer.parseInt((JOptionPane.showInputDialog(contentPane,"Inserisci numero di stoccate per i gironi :\n","specifiche",JOptionPane.PLAIN_MESSAGE)));
 				int eliminati=Integer.parseInt((JOptionPane.showInputDialog(contentPane,"Inserisci percentuale di elimnati in formato intero:\n","specifiche",JOptionPane.PLAIN_MESSAGE)));
 				int NstoccateE=Integer.parseInt((JOptionPane.showInputDialog(contentPane,"Inserisci numero di stoccate per la fase ad eliminazione:\n","specifiche",JOptionPane.PLAIN_MESSAGE)));
 				int MacAtleti=Integer.parseInt((JOptionPane.showInputDialog(contentPane,"Inserisci il numero massimo di atleti:\n","specifiche",JOptionPane.PLAIN_MESSAGE)));
 				//se clicco sulla X da un eccezzione, provare a risolvere ? inoltre da eccezzioni pure se si inseriscono caratteri, bisogna gestirlo?
-				if(NstoccateG>=0 && eliminati>=0&&NstoccateE>=0 && MacAtleti>=0) {
-					//si settano le specifiche a competizione e si chiude la finestra
-					//si salva la competizione creata in qualche posto
-					profencer.ScegliFormulaGara(MacAtleti, eliminati, NstoccateE, NstoccateG);
-					profencer.ConfermaInserimento();
-					frame.dispose();
-				}else {
-					JOptionPane.showMessageDialog(null, "Errore: Non è possibile inserire 0 in nessuno dei campi. Riprova ", "Errore", JOptionPane.ERROR_MESSAGE);
-				}
-				
+					if(NstoccateG>=0 && eliminati>=0&&NstoccateE>=0 && MacAtleti>=0) {
+						//si settano le specifiche a competizione e si chiude la finestra
+						//si salva la competizione creata in qualche posto
+						profencer.ScegliFormulaGara(MacAtleti, eliminati, NstoccateE, NstoccateG);
+						profencer.ConfermaInserimento();
+						frame.dispose();
+					}else {
+						JOptionPane.showMessageDialog(null, "Errore: Non è possibile inserire 0 in nessuno dei campi. Riprova ", "Errore", JOptionPane.ERROR_MESSAGE);
+					}
+				}catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+				}				
 				}
 			}
 		});

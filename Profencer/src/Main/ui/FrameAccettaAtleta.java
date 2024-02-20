@@ -48,12 +48,12 @@ public class FrameAccettaAtleta {
 	            button.addActionListener(new ActionListener() {
 	            	// boolean isAccepted = false;
 	            	public void actionPerformed(ActionEvent arg0) {
-	    				
-	            		if(profencer.AccettazioneAtleta(a.getCodFIS()))
+	    				try {
+	            		profencer.AccettazioneAtleta(a.getCodFIS());
 	            			JOptionPane.showMessageDialog(null, "atleta accettato correttaemtne ", "info", JOptionPane.INFORMATION_MESSAGE);
-	            		else
-	            			JOptionPane.showMessageDialog(null, "operazione non completata, l'atleta  risulta gia stato accettato ", "errore", JOptionPane.ERROR_MESSAGE);
-	    				
+	    				}catch(Exception e) {
+	            			JOptionPane.showMessageDialog(null, e.getMessage() , "errore", JOptionPane.ERROR_MESSAGE);
+	    				}
 	            	
 	            		//valutare se implementare la rimozione di un'atleta dalla lista degli accettati, 
 	            		//in questo modo si dovrebbe fare switch di bottone dopo che viene accettato

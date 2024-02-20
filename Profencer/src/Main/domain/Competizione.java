@@ -214,19 +214,24 @@ public class Competizione {
     
     
     //operazioni
-    public void Iscrizione(Atleta atleta){
-        iscritti.add(atleta);
+    public void Iscrizione(Atleta atleta) throws Exception{
+        try {
+            iscritti.add(atleta);
+        } catch (Exception e) {
+            throw new Exception("Funzione Add fallita");
+            // TODO: handle exception
+        }
     }
-
-    public boolean AccettazioneAtleta(int codFIS)
-    {
+    public void AccettazioneAtleta(int codFIS) throws Exception {
         for (Atleta atleta : iscritti) {
             if (atleta.getCodFIS()==codFIS) {
                 accettazioni.add(atleta);
-                return true;
+                return;
             }
         }
-        return false;
+        throw new Exception("nessun atleta con quel codice");
+
+        //gestire errori
     }
 
     private static int gironi(int a, int d) {
@@ -250,28 +255,33 @@ public class Competizione {
         }
     }
 
-    public void CreazioneGironi(){
+    public void CreazioneGironi() throws Exception{
+        this.gironi=new ArrayList<Girone>();
         //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
         OrdinaAlteti();
+
+
         int numAtleti=this.accettazioni.size();
         int maxDimGironi=this.formulaDiGara.getMaxDimGirone();
+
 
         //creo i gironi con solamente il loro codice
         int numGironi=gironi(numAtleti, maxDimGironi);
         for(int i=1; i<=numGironi; i++){
             Girone g=new Girone(i);
-            this.gironi.add(g);//si aggiunge alla fine della lista, quindi la lista sarà oridnata in modo crescente g1, g2, ..., gn
+            gironi.add(g);//si aggiunge alla fine della lista, quindi la lista sarà oridnata in modo crescente g1, g2, ..., gn
         }
+
 
         //riempio la lista Atleti_girone per ogni singolo giorne, seguendo le regole
         int x=0;
+        int posNelGiorne=1;
         while(x<numAtleti){
-            int posNelGiorne=1;
-            for (Girone girone : this.gironi) {
+            for (Girone girone : gironi) {
                 Atleta a = null;
                 try {
-                    if(this.accettazioni.size()>x){
-                        a = this.accettazioni.get(x);
+                    if(accettazioni.size()>x){
+                        a = accettazioni.get(x);
                         Atleta_Girone a_g=new Atleta_Girone(a.getCodFIS());
                         a_g.setPosizione(posNelGiorne);
                         girone.getAtletiGiorne().add(a_g);
@@ -287,27 +297,54 @@ public class Competizione {
             posNelGiorne++;
         }
 
+
         //PER ORA NON ORIDNE CORRETTO
         //riempio la lista degli assalti, in cui non saranno presenti ancora i risultati
         //per fare ciò si segue l'algoritmo di Berger
         for (Girone girone : gironi) {
+            // int numAtletiGirone=girone.getAtletiGiorne().size();
+            // int turni=numAtletiGirone-1;
+            // Assalto ass=new Assalto(0);
+            // int j=0;
+            // int c=1;
+            // for(int i=1; i<turni; i++){
+            //     j=i+1;
+            //     while (j<=numAtletiGirone) {
+            //         ass.setCodAssalto(c);
+            //         ass.setAtleta1(girone.getAtletiGiorne().get(i).getCodFIS());
+            //         ass.setAtleta2(girone.getAtletiGiorne().get(j).getCodFIS());
+            //         girone.getAssalti().add(ass);
+            //         c++;
+            //         j++;
+            //     }
             int numAtletiGirone=girone.getAtletiGiorne().size();
-            int turni=numAtletiGirone-1;
-            Assalto ass=new Assalto(0);
-            int j=0;
-            int c=1;
-            for(int i=1; i<turni; i++){
-            j=i+1;    
-                while (j<numAtletiGirone) { //ho tolto =
-                    ass.setCodAssalto(c);
-                    ass.setAtleta1(girone.getAtletiGiorne().get(i).getCodFIS());
-                    ass.setAtleta2(girone.getAtletiGiorne().get(j).getCodFIS());
-                    girone.getAssalti().add(ass);
-                    c++;
-                    j++;
+            int c=0;
+            List<Assalto> assalti=new ArrayList<Assalto>();
+            for(int z=0; z<numAtletiGirone; z++){
+                for(int i=c; i<numAtletiGirone; i++){
+                    if(z!=i){
+                        System.out.println(z);
+                        System.out.println(i);
+                        System.out.println("________");
+                        Assalto ass=new Assalto(c,girone.getAtletiGiorne().get(z).getCodFIS(),girone.getAtletiGiorne().get(i).getCodFIS());
+                        // ass.setAtleta1(girone.getAtletiGiorne().get(z).getCodFIS());
+                        // ass.setAtleta2(girone.getAtletiGiorne().get(i).getCodFIS());
+                        assalti.add(ass);
+                        
+                        
+                    }
                 }
+                c++;
+            }
+            try {
+                girone.setAssalti(assalti);
+            } catch (Exception e) {
+                throw new Exception("errore add");
+                // TODO: handle exception
             }
         }
+
+           
     }
 
     public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana){

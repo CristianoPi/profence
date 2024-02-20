@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import javax.swing.JTextArea;
@@ -170,13 +171,14 @@ public class FrameTesseramento {
 						else
 						profencer.CreaTesseramento(Integer.parseInt(textFis.getText()), textNome.getText(), textCognome.getText(), selezionaDateN.getDate(),textCF.getText(), false);
 
-						
-					}catch(Exception e) {
-						System.out.println("errore");
-					}
+					
 					//creare tesseraro con i dati inseriti e conservarlo dove teniamo a dati dei tesserati
 					profencer.ConfermaTesseramento();
-					frame.dispose();
+					frame.dispose();		
+					}catch(Exception e) {
+						//System.out.println("errore");
+						JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+						}
 				}
 								
 				

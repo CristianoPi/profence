@@ -25,6 +25,17 @@ public class Atleta {
         this.genere = genere;
     }
 
+    public Atleta() {
+        this.codFIS = 0;
+    }
+    
+    @Override
+    public String toString() {
+        return "Atleta [codFIS=" + codFIS + ", nome=" + nome + ", cognome=" + cognome + ", CF=" + CF + ", genere="
+                + genere + ", Ranking=" + Ranking + "]";
+    }
+    
+    
     public int getCodFIS() {
         return codFIS;
     }

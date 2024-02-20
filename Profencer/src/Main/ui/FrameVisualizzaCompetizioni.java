@@ -62,12 +62,14 @@ public class FrameVisualizzaCompetizioni {
 	    					//caso postivo 
 	    					//bisogna aggiungere alla lista di iscritti della competizione 
 	    					//"line" l'atleta con il codice fiscale inserito nel box a tendina
-	    					if(profencer.Iscrizione(Integer.parseInt(fis), c.getCodCompetizione())) {
+	    					try {
+		    					profencer.Iscrizione(Integer.parseInt(fis), c.getCodCompetizione());
 	    						JOptionPane.showMessageDialog(null, "iscrizione avvenura corretamente ", "Risultato: ", JOptionPane.INFORMATION_MESSAGE);
 	    						frame.dispose();
 	    					}
-	    					else
-	    						JOptionPane.showMessageDialog(null, "Errore il codFis rnon è valido ", "errore ", JOptionPane.ERROR_MESSAGE);
+	    					catch(Exception e) {
+	    						JOptionPane.showMessageDialog(null, e.getMessage(), "errore ", JOptionPane.ERROR_MESSAGE);
+	    					}
 	    				}
 	    			}
 	    		});

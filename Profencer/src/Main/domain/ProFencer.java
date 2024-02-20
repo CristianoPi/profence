@@ -134,11 +134,19 @@ public class ProFencer {
     }
 
     //operazioni
-    public void InserimentoCodiceCompetizione(int codCompetizione) {
+    public void InserimentoCodiceCompetizione(int codCompetizione) throws Exception{
+		for (Competizione competizione : Competizioni) {
+			if(competizione.getCodCompetizione()==codCompetizione){
+				throw new Exception("CodCompetizone già presente nel sistema");
+			}
+		}
 		competizioneCorrente = new Competizione(codCompetizione);
+		
 	}
-
-	public void InserimentoDatiCompetizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma) {
+	public void InserimentoDatiCompetizione(String nome, String descrizione, Date data, String categoria, String arma) throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		competizioneCorrente.setNome(nome);
 		competizioneCorrente.setDescrizione(descrizione);
 		competizioneCorrente.setData(data);
@@ -146,21 +154,37 @@ public class ProFencer {
 		competizioneCorrente.setArma(arma);
 	}
 
-	public void ScegliFormulaGara( int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) {
+	public void ScegliFormulaGara(int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) throws Exception{
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		FormulaDiGara f=new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
 		competizioneCorrente.setFormulaDiGara(f);
 	}
 
-	public void ConfermaInserimento() {
+	public void ConfermaInserimento()throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		Competizioni.add(competizioneCorrente);
 	}
 
-	public void CreaTesseramento(int codFIS, String Nome, String Cognome, Date data_nascita, String CF, boolean genere) {
+	public void CreaTesseramento(int codFIS, String Nome, String Cognome, Date data_nascita, String CF, boolean genere) throws Exception {
+		for (Atleta atleta : tesserati) {
+			if(atleta.getCodFIS()==codFIS){
+				throw new Exception("Atleta già tessereato");
+			}
+		}
 		Atleta a= new Atleta(codFIS, Nome, Cognome, CF, genere);
 		atletaCorrente=a;
 	}
 
-	public void ConfermaTesseramento() {
+	
+
+	public void ConfermaTesseramento() throws Exception{
+		if(atletaCorrente==null){
+			throw new Exception("Atleta non selezionato");
+		}
 		tesserati.add(atletaCorrente);
 	}
 
@@ -168,36 +192,48 @@ public class ProFencer {
 		return Competizioni;
 	}
 
-	public boolean Iscrizione(int codFIS, int codCompetizione) {
-		boolean r=false;
-		//trovo la competizione
-		Competizione c=new Competizione();
-		for (Competizione competizione : Competizioni) {
-			if (competizione.getCodCompetizione()==codCompetizione) {
-				c=competizione;
-				r=true;
-			}
-		}
-		//trovo l'atleta
-		if(r){
-			for (Atleta atleta : tesserati)  
-				//se trovo anche l'atleta so che i parametri in ingresso sono corretti 
-				//ma cevo verificare se tale atleta è già iscritto
-				if (atleta.getCodFIS()==codFIS) {
-					for(Atleta iscritto : c.getIscritti())
-						if(iscritto.getCodFIS()==codFIS)
-							//se il codFis risulta già nella lista degli iscritti torno false
-							return false;
-					c.Iscrizione(atleta);
-					//r=true;
-					return true;
+	
+	public void Iscrizione(int codFIS, int codCompetizione) throws Exception{
+
+			//trovo la competizione
+			Competizione c=new Competizione();
+			for (Competizione competizione : Competizioni) {
+				if (competizione.getCodCompetizione()==codCompetizione) {
+					c=competizione;
 				}
-			return false;
+			}
+			if (c.getCodCompetizione()==0) {
+				throw new Exception("Competizione non esistente");
+			}
+
+			//trovo l'atleta
+			Atleta a=new Atleta();
+			for (Atleta atleta : tesserati) {
+				if (atleta.getCodFIS()==codFIS) {
+					a=atleta;
+				}
+			}
+			if (a.getCodFIS()==0) {
+				throw new Exception("Atleta non esistente");
+			}
+
+			for (Atleta iscritto : c.getIscritti()) {
+				if(iscritto.getCodFIS()==a.getCodFIS())
+					throw new Exception("Atleta già iscritto");
+			}
+			try {
+				c.Iscrizione(a);
+			} catch (Exception e) {
+				throw new Exception("Funzione in competizione non va");
+				// TODO: handle exception
+			}
+
+			System.out.println(c);
+			System.out.println(a);
+			System.out.println(c.getIscritti());
+			// //erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
+
 		}
-		else
-			return false;
-		//erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
-	}
 
 	public void SelezionaCompetizione(int codCompetizione) {
 		for (Competizione competizione : Competizioni) {
@@ -209,38 +245,57 @@ public class ProFencer {
 		competizioneCorrente=null;
 	}
 
-	public FormulaDiGara VisualizzazioneFormulaGara(Competizione c) {
-		return c.getFormulaDiGara();
+	public FormulaDiGara VisualizzazioneFormulaGara( ) throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
+		return competizioneCorrente.getFormulaDiGara();
 	}
 
-	public void ModificaFormulaGara(int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi) {
+	public void ModificaFormulaGara(int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi)throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		competizioneCorrente.getFormulaDiGara().setPercEliminati(percEliminati);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateDirette(numeroStoccateDirette);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateGironi(numeroStoccateGironi);
 		competizioneCorrente.getFormulaDiGara().setMaxDimGirone(maxDimGironi);
 	}
 
-	public List<Atleta> VisualizzazioneAtleti(Competizione c) {
-		return null;
+	public List<Atleta> VisualizzazioneAtleti() throws Exception{
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
+		return competizioneCorrente.getIscritti();
+	}
+	//controllare se è gia stato accettato 
+	public void AccettazioneAtleta(int codFIS) throws Exception{
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
+		try {
+			competizioneCorrente.AccettazioneAtleta(codFIS);
+		} catch (Exception e) {
+			throw new Exception("Nessun atleta con quel codice");
+		}
+		
 	}
 
-	public boolean AccettazioneAtleta(int codFIS) {
-		for(Atleta a : competizioneCorrente.getAccettazioni())
-			if(a.getCodFIS()==codFIS)
-				return false;  //vedo se è gia presente tra gli accettati se si torno falso
-		return competizioneCorrente.AccettazioneAtleta(codFIS); 
-		//chiamo quando noto che non è in lista accettati e sono interessato a vedere se è iscitto
-	}
+	public void CreazioneGironi() throws Exception {
 
-	public void CreazioneGironi() {
 		if (competizioneCorrente==null) {
 			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
 			System.out.println("ERRORE");
-			return;
+			throw new Exception("Nessuna competizione corrente");
 		}
-		competizioneCorrente.CreazioneGironi();
+		try {
+			competizioneCorrente.CreazioneGironi();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+			// TODO: handle exceptions
+		}
+		
 	}
-
 	public List<Girone> VisualizzaGironi() {
 		if (competizioneCorrente==null) {
 			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!

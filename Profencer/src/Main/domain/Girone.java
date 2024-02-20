@@ -32,6 +32,11 @@ public class Girone {
     public int getPedana() {
         return pedana;
     }
+    @Override
+    public String toString() {
+        return "Girone [codGirone=" + this.codGirone + ", data=" + this.dataOra + ", pedana=" + this.pedana
+                + ", competizione=" + this.competizione + ", poi in teroria ci sono le liste degli assalti del girone e degli atletiGirone"+ "]";
+    } 
 
     public void setPedana(int pedana) {
         this.pedana = pedana;

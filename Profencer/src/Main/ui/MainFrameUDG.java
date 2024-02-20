@@ -178,6 +178,7 @@ public class MainFrameUDG {
 				
 			}
 		});
+		try {	
 		btnGestioneAssaltiGironi.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnGestioneAssaltiGironi.setBounds(30, 290, 368, 65);
 		frame.getContentPane().add(btnGestioneAssaltiGironi);
@@ -285,7 +286,9 @@ public class MainFrameUDG {
 		btnClassificaFinale.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnClassificaFinale.setBounds(445, 463, 298, 65);
 		frame.getContentPane().add(btnClassificaFinale);
-		
+	}catch(Exception e) {
+		JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+	}
 		JButton btnAmministratore = new JButton("amministratore");
 		btnAmministratore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

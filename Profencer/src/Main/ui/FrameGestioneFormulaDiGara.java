@@ -102,9 +102,14 @@ public class FrameGestioneFormulaDiGara {
 				}
 				else {
 					//si fa la set degli attributi 
+					try {
 					profencer.ModificaFormulaGara(Integer.parseInt(textPercentualeEliminati.getText()),Integer.parseInt(textNstoccateEliminazione.getText()),Integer.parseInt(textNstoccateG.getText()), Integer.parseInt(textMaxAtleti.getText()));
 					//JOptionPane.showMessageDialog(null, "Bravo ", "XD", JOptionPane.INFORMATION_MESSAGE);
 					frame.dispose();
+					}
+					catch(Exception e) {
+						JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				
 			}

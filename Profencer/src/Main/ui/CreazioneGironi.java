@@ -25,6 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Main.domain.Assalto;
+import Main.domain.Atleta_Girone;
 import Main.domain.Girone;
 import Main.domain.ProFencer;
 
@@ -50,11 +51,30 @@ public class CreazioneGironi {
 	//	    elencoAssalti.add(Arrays.asList("assalto 1 del sec", "assalto 2 del sec", "assalto n del sec"));
 	//	    elencoAssalti.add(Arrays.asList("assalto 1 del ter", "assalto 2 del ter", "assalto n del ter"));
 	//	    elencoAssalti.add(Arrays.asList("assalto 1 del quart", "assalto 2 del quart", "assalto n del quart"));
+	
+	try {	
 		profencer.CreazioneGironi();
 		//    initialize(elenco, elencoAssalti);
 		
 		List<Girone>elenco= profencer.getCompetizioneCorrente().getGironi();
+		System.out.println("ciao");
+		for(Girone g : elenco)
+			System.out.println(g.toString());
+		System.out.println("elenco gironi finito");
+		for(Girone g: elenco) {
+			for(Assalto a : g.getAssalti())
+				System.out.println(a.toString());
+		}
+		System.out.println("Assalti finiti");
+		for(Girone g: elenco) {
+			for(Atleta_Girone a : g.getAtletiGiorne())
+				System.out.println(a.toString());
+		}
+		System.out.println("Atleti girone finiti");
 		initialize(elenco,profencer);
+	}catch(Exception e) {
+		JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+	}
 	}
 	
 	public void initialize(List<Girone> elenco, ProFencer profencer) {	
