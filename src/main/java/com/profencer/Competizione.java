@@ -235,6 +235,7 @@ public class Competizione {
     }
 
     public void CreazioneGironi() throws Exception{
+        this.gironi=new ArrayList<Girone>();
         //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
         OrdinaAlteti();
 
