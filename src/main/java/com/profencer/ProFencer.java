@@ -129,15 +129,13 @@ public class ProFencer {
 		return Competizioni;
 	}
 
-	public boolean Iscrizione(int codFIS, int codCompetizione) throws Exception{
-		boolean r=false;
+	public void Iscrizione(int codFIS, int codCompetizione) throws Exception{
 
 		//trovo la competizione
 		Competizione c=new Competizione();
 		for (Competizione competizione : Competizioni) {
 			if (competizione.getCodCompetizione()==codCompetizione) {
 				c=competizione;
-				r=true;
 			}
 		}
 		if (c.getCodCompetizione()==0) {
@@ -146,26 +144,29 @@ public class ProFencer {
 
 		//trovo l'atleta
 		Atleta a=new Atleta();
-
 		for (Atleta atleta : tesserati) {
 			if (atleta.getCodFIS()==codFIS) {
 				a=atleta;
-				r=true;
 			}
 		}
 		if (a.getCodFIS()==0) {
 			throw new Exception("Atleta non esistente");
 		}
-		// try {
-		// 	c.Iscrizione(a);
-		// } catch (Exception e) {
-		// 	throw new Exception("Funzione in competizione non va");
-		// 	// TODO: handle exception
-		// }
-		
+
+		for (Atleta iscritto : c.getIscritti()) {
+			if(iscritto.getCodFIS()==a.getCodFIS())
+				throw new Exception("Atleta già iscritto");
+		}
+		try {
+			c.Iscrizione(a);
+		} catch (Exception e) {
+			throw new Exception("Funzione in competizione non va");
+			// TODO: handle exception
+		}
+
 		System.out.println(c);
 		System.out.println(a);
-		return r;
+		System.out.println(c.getIscritti());
 		// //erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
 
 	}

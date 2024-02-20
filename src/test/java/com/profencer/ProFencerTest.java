@@ -67,6 +67,7 @@ public class ProFencerTest {
             //dobbiamo tesserare un atleta e creare una competizone
             proFencer.Iscrizione(12345, 1);
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             fail();
             // TODO: handle exception
         }

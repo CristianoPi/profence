@@ -161,10 +161,24 @@ public class Competizione {
         this.gironi = gironi;
         this.iscritti = iscritti;
         this.accettazioni = accettazioni;
+
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
     }
     
     public Competizione() {
         this.codCompetizione = 0;
+
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
     }
 
 
@@ -177,6 +191,13 @@ public class Competizione {
         this.categoria = categoria;
         this.arma = arma;
         this.formulaDiGara = formulaDiGara;
+
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
     }
 
     public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, FormulaDiGara formulaDiGara, List<Girone> gironi, List<Atleta> iscritti,
@@ -192,11 +213,27 @@ public class Competizione {
         this.iscritti = iscritti;
         this.accettazioni = accettazioni;
         this.classificaG = classificaG;
+
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
     }
 
+    
+
+
+
     //operazioni
-    public void Iscrizione(Atleta atleta){
-        iscritti.add(atleta);
+    public void Iscrizione(Atleta atleta) throws Exception{
+        try {
+            iscritti.add(atleta);
+        } catch (Exception e) {
+            throw new Exception("Funzione Add fallita");
+            // TODO: handle exception
+        }
     }
 
     public void AccettazioneAtleta(int codFIS)
