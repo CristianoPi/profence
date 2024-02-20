@@ -93,6 +93,7 @@ public class ProFencerTest {
     public void UC5(){
         proFencer.caricaDati();
         try {
+            proFencer.SelezionaCompetizione(1);
             System.out.println( proFencer.VisualizzazioneAtleti());
             proFencer.AccettazioneAtleta(12345);
         } catch (Exception e) {
@@ -142,16 +143,16 @@ public class ProFencerTest {
     @Test
     public void testInserimentoSpecifiche() {
         proFencer.caricaDati();
-  
         try {
             proFencer.CreazioneGironi();
-            proFencer.InserimentoSpecifiche(2, 0, 0);
+            proFencer.InserimentoSpecifiche(1, 0, 0);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             fail();
             // TODO: handle exception
         }
     }
+
 
     @Test
     public void testGetIstanceProFencer() {

@@ -202,6 +202,10 @@ public class Competizione {
     }
 
     public void AccettazioneAtleta(int codFIS) throws Exception {
+        for (Atleta atletaA : accettazioni) {
+            if (atletaA.getCodFIS()==codFIS)
+            throw new Exception("Atleta già accettato");
+        }
         for (Atleta atleta : iscritti) {
             if (atleta.getCodFIS()==codFIS) {
                 accettazioni.add(atleta);

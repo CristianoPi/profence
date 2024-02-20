@@ -210,7 +210,7 @@ public class ProFencer {
 		try {
 			competizioneCorrente.AccettazioneAtleta(codFIS);
 		} catch (Exception e) {
-			throw new Exception("Nessun atleta con quel codice");
+			throw new Exception(e.getMessage());
 		}
 		
 	}
@@ -383,7 +383,7 @@ public class ProFencer {
 			   }
 
 			   //accetto gli atleti alla competizione 1
-			   try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+			try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 				String line;
 				while ((line = reader.readLine()) != null) {
 					String[] parts = line.split(",");
@@ -399,9 +399,27 @@ public class ProFencer {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
-			
-		   }	
-		
+		}	
+	
+	public void CaricaListaAssalti(){
+		String filename="assalti.txt";
+		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            String line;
+				List<Assalto> listaAss= new ArrayList<>();
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codAssalto = Integer.parseInt(parts[0]);
+	                int atleta1 = Integer.parseInt(parts[1]);
+	                int atleta2 = Integer.parseInt(parts[2]);
+	                int punteggio1 = Integer.parseInt(parts[3]);
+	                int punteggio2 = Integer.parseInt(parts[4]);
+	                int tempo = Integer.parseInt(parts[5]);
+					listaAss.add(new Assalto(codAssalto, atleta1, atleta2, punteggio1, punteggio2, tempo));
+	            }
+				competizioneCorrente.getGironi().get(0).setAssalti(listaAss);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	}
 	
 }
