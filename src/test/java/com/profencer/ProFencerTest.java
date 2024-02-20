@@ -100,10 +100,6 @@ public class ProFencerTest {
             fail();
             // TODO: handle exception
         }
-        
-        
- 
-       
     }
 
     @Test
@@ -111,15 +107,6 @@ public class ProFencerTest {
         
     }
 
-    @Test
-    public void testConfermaInserimento() {
-        
-    }
-
-    @Test
-    public void testConfermaTesseramento() {
-        
-    }
 
     @Test
     public void testCreaClassificaFinale() {
@@ -128,11 +115,6 @@ public class ProFencerTest {
 
     @Test
     public void testCreaRanking() {
-        
-    }
-
-    @Test
-    public void testCreaTesseramento() {
         
     }
 
@@ -158,6 +140,20 @@ public class ProFencerTest {
     }
 
     @Test
+    public void testInserimentoSpecifiche() {
+        proFencer.caricaDati();
+  
+        try {
+            proFencer.CreazioneGironi();
+            proFencer.InserimentoSpecifiche(2, 0, 0);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
+    }
+
+    @Test
     public void testGetIstanceProFencer() {
         
     }
@@ -169,10 +165,7 @@ public class ProFencerTest {
         
     }
 
-    @Test
-    public void testInserimentoSpecifiche() {
-        
-    }
+
 
     @Test
     public void testInserisciRisultatiED() {

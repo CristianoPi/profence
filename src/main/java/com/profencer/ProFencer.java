@@ -241,12 +241,18 @@ public class ProFencer {
 		return competizioneCorrente.getGironi();
 	}
 
-	public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) {
+	public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) throws Exception{
 		if (competizioneCorrente==null) {
 			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
 			System.out.println("ERRORE");
 		}
-		competizioneCorrente.InserimentoSpecifiche(codGirone, dataOra, pedana);
+		try {
+			competizioneCorrente.InserimentoSpecifiche(codGirone, dataOra, pedana);
+		} catch (Exception e) {
+			throw new Exception("Il girone non esiste");
+			// TODO: handle exception
+		}
+		
 	}
 
 	public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) {

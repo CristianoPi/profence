@@ -309,11 +309,10 @@ public class Competizione {
                         // ass.setAtleta1(girone.getAtletiGiorne().get(z).getCodFIS());
                         // ass.setAtleta2(girone.getAtletiGiorne().get(i).getCodFIS());
                         assalti.add(ass);
-                        
-                        
+                        c++;
                     }
                 }
-                c++;
+                
             }
             try {
                 girone.setAssalti(assalti);
@@ -326,7 +325,7 @@ public class Competizione {
            
     }
 
-    public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana){
+    public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) throws Exception{
         boolean b=false;
         for (Girone girone : gironi) {
             if(girone.getCodGirone()==codGirone){
@@ -337,7 +336,7 @@ public class Competizione {
         }
         if (!b) {
             //IL GIRONE NON ESISTE
-			System.out.println("IL GIRONE NON ESISTE");
+            throw new Exception("Il girone non esiste");
         }   
     }
 
