@@ -35,6 +35,10 @@ public class EliminazioneDiretta {
     public void setEliminati(List<Atleta> eliminati) {
         this.eliminati = eliminati;
     }
+    @Override
+    public String toString() {
+        return "EliminazioneDiretta [stato=" + stato + ", assaltiED=" + assaltiED + ", eliminati=" + eliminati + "]\n";
+    }
 
     
 }

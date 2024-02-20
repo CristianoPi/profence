@@ -104,27 +104,6 @@ public class ProFencerTest {
     }
 
     @Test
-    public void testConfermaED() {
-        
-    }
-
-
-    @Test
-    public void testCreaClassificaFinale() {
-        
-    }
-
-    @Test
-    public void testCreaRanking() {
-        
-    }
-
-    @Test
-    public void testCreazioneED() {
-        
-    }
-
-    @Test
     public void testCreazioneGironi() {
         proFencer.caricaDati();
         try {
@@ -155,16 +134,73 @@ public class ProFencerTest {
 
 
     @Test
-    public void testGetIstanceProFencer() {
-        
+    public void testInserimentoRisultati() {
+        proFencer.caricaDati();
+        try {
+            proFencer.SelezionaCompetizione(1);
+            proFencer.CreazioneGironi();
+            proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
+            System.out.println(proFencer.VisualizzaGironi());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
     }
 
+    @Test
+    public void CreaClassifica(){
+        proFencer.caricaDati();
+        try {
+            proFencer.SelezionaCompetizione(1);
+            proFencer.CreazioneGironi();
+            proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
+            proFencer.CreaClassifica();
+            System.out.println(proFencer.VisualizzaClassifica());
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
+    }
+
+    @Test
+    public void testCreazioneED() {
+             proFencer.caricaDati();
+        try {
+            proFencer.SelezionaCompetizione(1);
+            proFencer.CreazioneGironi();
+            proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
+            proFencer.CreaClassifica();
+            proFencer.CreazioneED();
+            proFencer.VisualizzaED();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
+    }
 
 
     @Test
-    public void testInserimentoRisultati() {
+    public void testConfermaED() {
         
     }
+
+
+    @Test
+    public void testCreaClassificaFinale() {
+        
+    }
+
+    @Test
+    public void testCreaRanking() {
+        
+    }
+
+
 
 
 
@@ -223,49 +259,7 @@ public class ProFencerTest {
         
     }
 
-    @Test
-    public void testVisualizzazioneFormulaGara() {
-        
-    }
 
-    @Test
-    public void testGetAtletaCorrente() {
-        
-    }
-
-    @Test
-    public void testGetCompetizioneCorrente() {
-        
-    }
-
-    @Test
-    public void testGetCompetizioni() {
-        
-    }
-
-    @Test
-    public void testGetTesserati() {
-        
-    }
-
-    @Test
-    public void testSetAtletaCorrente() {
-        
-    }
-
-    @Test
-    public void testSetCompetizioneCorrente() {
-        
-    }
-
-    @Test
-    public void testSetCompetizioni() {
-        
-    }
-
-    @Test
-    public void testSetTesserati() {
-        
-    }
+  
 
 }

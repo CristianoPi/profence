@@ -4,7 +4,7 @@ public class Atleta_Girone {
     private int codFIS;
 	private int stoccateDate;
 	private int stoccateRicevute;
-	private int punteggio;
+	private float punteggio;
 	private int vittorie;
     private int sconfitte;
 	private int posizione;// per posizione si intende quella nel girone, cioè quella data dal ranking
@@ -33,11 +33,11 @@ public class Atleta_Girone {
         this.stoccateRicevute = stoccateRicevute;
     }
 
-    public int getPunteggio() {
+    public float getPunteggio() {
         return punteggio;
     }
 
-    public void setPunteggio(int punteggio) {
+    public void setPunteggio(float punteggio) {
         this.punteggio = punteggio;
     }
 
@@ -57,7 +57,7 @@ public class Atleta_Girone {
         this.posizione = posizione;
     }
 
-    public Atleta_Girone(int codFIS, int stoccateDate, int stoccateRicevute, int punteggio, int vittorie,
+    public Atleta_Girone(int codFIS, int stoccateDate, int stoccateRicevute, float punteggio, int vittorie,
             int posizione) {
         this.codFIS = codFIS;
         this.stoccateDate = stoccateDate;
@@ -83,7 +83,7 @@ public class Atleta_Girone {
     public String toString() {
         return "Atleta_Girone [codFIS=" + codFIS + ", stoccateDate=" + stoccateDate + ", stoccateRicevute="
                 + stoccateRicevute + ", punteggio=" + punteggio + ", vittorie=" + vittorie + ", sconfitte=" + sconfitte
-                + ", posizione=" + posizione + "]";
+                + ", posizione=" + posizione + "]\n";
     }
     
 }

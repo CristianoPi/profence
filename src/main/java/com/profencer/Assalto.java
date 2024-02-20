@@ -61,6 +61,7 @@ public class Assalto {
     public void setTempo(int tempo) {
         this.tempo = tempo;
     }
+
     public Assalto(int codAssalto, int atleta1, int atleta2, int punteggio1, int punteggio2, int tempo) {
         this.codAssalto = codAssalto;
         this.atleta1 = atleta1;
@@ -86,7 +87,7 @@ public class Assalto {
     @Override
     public String toString() {
         return "Assalto [codAssalto=" + codAssalto + ", atleta1=" + atleta1 + ", atleta2=" + atleta2 + ", punteggio1="
-                + punteggio1 + ", punteggio2=" + punteggio2 + ", tempo=" + tempo + "]";
+                + punteggio1 + ", punteggio2=" + punteggio2 + ", tempo=" + tempo + "]\n";
     }
 
 }

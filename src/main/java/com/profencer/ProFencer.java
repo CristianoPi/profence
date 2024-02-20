@@ -171,12 +171,17 @@ public class ProFencer {
 
 	}
 
-	public void SelezionaCompetizione(int codCompetizione) {
+	public void SelezionaCompetizione(int codCompetizione) throws Exception {
+		boolean r=false;
 		for (Competizione competizione : Competizioni) {
 			if (competizione.getCodCompetizione()==codCompetizione) {
+				r=true;
 				competizioneCorrente=competizione;
 			}
 		}	
+		if (!r) {
+			throw new Exception("Competizone non esistente");
+		}
 	}
 
 	public FormulaDiGara VisualizzazioneFormulaGara( ) throws Exception {
@@ -243,8 +248,7 @@ public class ProFencer {
 
 	public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) throws Exception{
 		if (competizioneCorrente==null) {
-			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
+			throw new Exception("Competizione non selezionata");
 		}
 		try {
 			competizioneCorrente.InserimentoSpecifiche(codGirone, dataOra, pedana);
@@ -255,21 +259,46 @@ public class ProFencer {
 		
 	}
 
-	public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) {
+	public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) throws Exception{
 		if (competizioneCorrente==null) {
-			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
+			throw new Exception("Competizione non selezionata");
 		}
-	
 		competizioneCorrente.InserimentoRisultati(codGirone, listaAssalti);
 	}
 
-	public EliminazioneDiretta CreazioneED(){
+	public void CreaClassifica() throws Exception{
 		if (competizioneCorrente==null) {
-			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
+			throw new Exception("Competizione non selezionata");
 		}
-		return competizioneCorrente.CreazioneED();
+		try {
+			competizioneCorrente.CreaClassifica();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+
+	public List<Atleta_Girone> VisualizzaClassifica()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
+		if(competizioneCorrente.getClassificaG().size()>0) {
+			return competizioneCorrente.getClassificaG();
+		}
+		else
+			throw new Exception("Creare prima la classifica");
+	}
+
+	public EliminazioneDiretta CreazioneED()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
+		try {
+			return competizioneCorrente.CreazioneED();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+			// TODO: handle exception
+		}
+		
 	}
 
 	public void ConfermaED(){
@@ -401,11 +430,11 @@ public class ProFencer {
 			}
 		}	
 	
-	public void CaricaListaAssalti(){
+	public List<Assalto> CaricaListaAssalti(){
 		String filename="assalti.txt";
 		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 	            String line;
-				List<Assalto> listaAss= new ArrayList<>();
+				List<Assalto> listaAss= new ArrayList<Assalto>();
 	            while ((line = reader.readLine()) != null) {
 	                String[] parts = line.split(",");
 	                int codAssalto = Integer.parseInt(parts[0]);
@@ -415,10 +444,13 @@ public class ProFencer {
 	                int punteggio2 = Integer.parseInt(parts[4]);
 	                int tempo = Integer.parseInt(parts[5]);
 					listaAss.add(new Assalto(codAssalto, atleta1, atleta2, punteggio1, punteggio2, tempo));
+					
 	            }
-				competizioneCorrente.getGironi().get(0).setAssalti(listaAss);
+				return listaAss;
+				//competizioneCorrente.getGironi().get(0).setAssalti(listaAss);
 	        } catch (IOException e) {
 	            e.printStackTrace();
+				return null;
 	        }
 	}
 	
