@@ -179,23 +179,40 @@ public class ProFencer {
 		}	
 	}
 
-	public FormulaDiGara VisualizzazioneFormulaGara(Competizione c) {
-		return c.getFormulaDiGara();
+	public FormulaDiGara VisualizzazioneFormulaGara( ) throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
+		return competizioneCorrente.getFormulaDiGara();
 	}
 
-	public void ModificaFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi) {
+	public void ModificaFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi)throws Exception {
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
 		competizioneCorrente.getFormulaDiGara().setPercEliminati(percEliminati);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateDirette(numeroStoccateDirette);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateGironi(numeroStoccateGironi);
 		competizioneCorrente.getFormulaDiGara().setMaxDimGirone(maxDimGironi);
 	}
 
-	public List<Atleta> VisualizzazioneAtleti(Competizione c) {
-		return null;
+	public List<Atleta> VisualizzazioneAtleti() throws Exception{
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
+		return competizioneCorrente.getIscritti();
 	}
 
-	public void AccettazioneAtleta(int codFIS) {
-		competizioneCorrente.AccettazioneAtleta(codFIS);
+	public void AccettazioneAtleta(int codFIS) throws Exception{
+		if(competizioneCorrente==null){
+			throw new Exception("Competizone non selezionata");
+		}
+		try {
+			competizioneCorrente.AccettazioneAtleta(codFIS);
+		} catch (Exception e) {
+			throw new Exception("Nessun atleta con quel codice");
+		}
+		
 	}
 
 	public void CreazioneGironi() throws Exception {
@@ -205,8 +222,13 @@ public class ProFencer {
 			System.out.println("ERRORE");
 			throw new Exception("Nessuna competizione corrente");
 		}
-	
-		competizioneCorrente.CreazioneGironi();
+		try {
+			competizioneCorrente.CreazioneGironi();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+			// TODO: handle exceptions
+		}
+		
 	
 	}
 
@@ -284,7 +306,7 @@ public class ProFencer {
 		//carico le competizioni
 		String filename="competizioni.txt";
 		
-		 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 	            try { 
@@ -331,7 +353,49 @@ public class ProFencer {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-		 
-		}
+			
+			//Aggiungiamo iscritti per la competizione 1
+			competizioneCorrente=Competizioni.get(0);
 
+			//iscriviamo tutti gli atleti alla competizione 1
+			filename="tesserati.txt";
+			try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+				   String line;
+				   while ((line = reader.readLine()) != null) {
+					   String[] parts = line.split(",");
+					   int codFIS = Integer.parseInt(parts[0]);
+					   String nome = parts[1];
+					   String cognome = parts[2];
+					   String CF = parts[3];
+					   boolean genere = Boolean.parseBoolean(parts[4]);
+					   float posRanking = Float.parseFloat(parts[5]);
+					   competizioneCorrente.getIscritti().add(new Atleta(codFIS, nome, cognome, CF, genere, posRanking));
+			
+				   }
+			   } catch (IOException e) {
+				   e.printStackTrace();
+			   }
+
+			   //accetto gli atleti alla competizione 1
+			   try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+				String line;
+				while ((line = reader.readLine()) != null) {
+					String[] parts = line.split(",");
+					int codFIS = Integer.parseInt(parts[0]);
+					String nome = parts[1];
+					String cognome = parts[2];
+					String CF = parts[3];
+					boolean genere = Boolean.parseBoolean(parts[4]);
+					float posRanking = Float.parseFloat(parts[5]);
+					competizioneCorrente.getAccettazioni().add(new Atleta(codFIS, nome, cognome, CF, genere, posRanking));
+		 
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			
+		   }	
+		
+	
 }

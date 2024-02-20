@@ -59,6 +59,13 @@ public class FormulaDiGara {
         this.numeroStoccateDirette = numeroStoccateDirette;
         this.maxDimGirone = maxDimGirone;
     }
+
+    @Override
+    public String toString() {
+        return "FormulaDiGara [codFormula=" + codFormula + ", numeroStoccateGironi=" + numeroStoccateGironi
+                + ", percEliminati=" + percEliminati + ", numeroStoccateDirette=" + numeroStoccateDirette
+                + ", maxDimGirone=" + maxDimGirone + "]";
+    }
     
 
     

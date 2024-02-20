@@ -49,6 +49,7 @@ public class Assalto {
         return punteggio2;
     }
 
+  
     public void setPunteggio2(int punteggio2) {
         this.punteggio2 = punteggio2;
     }
@@ -82,5 +83,10 @@ public class Assalto {
         this.punteggio1 = -2;//questo valore di punteggio mi farà comprendere che l'assalto non è stato ancora disputato
         this.punteggio2 = -2;
     }
-    
+    @Override
+    public String toString() {
+        return "Assalto [codAssalto=" + codAssalto + ", atleta1=" + atleta1 + ", atleta2=" + atleta2 + ", punteggio1="
+                + punteggio1 + ", punteggio2=" + punteggio2 + ", tempo=" + tempo + "]";
+    }
+
 }

@@ -2,6 +2,8 @@ package com.profencer;
 
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class ProFencerTest {
@@ -74,8 +76,34 @@ public class ProFencerTest {
     }
 
     @Test
-    public void testAccettazioneAtleta() {
+    public void UC4(){
+        proFencer.caricaDati();
+        try {
+            proFencer.SelezionaCompetizione(1);
+            System.out.println(proFencer.VisualizzazioneFormulaGara());
+            proFencer.ModificaFormulaGara(0, 70, 111, 111, 5);
+            System.out.println(proFencer.VisualizzazioneFormulaGara());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            // TODO: handle exception
+        }
+    }
+
+    @Test
+    public void UC5(){
+        proFencer.caricaDati();
+        try {
+            System.out.println( proFencer.VisualizzazioneAtleti());
+            proFencer.AccettazioneAtleta(12345);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
         
+        
+ 
+       
     }
 
     @Test
@@ -115,7 +143,18 @@ public class ProFencerTest {
 
     @Test
     public void testCreazioneGironi() {
-        
+        proFencer.caricaDati();
+        try {
+            proFencer.SelezionaCompetizione(1);
+            proFencer.CreazioneGironi();
+            System.out.println(proFencer.VisualizzaGironi());
+    
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
+       
     }
 
     @Test

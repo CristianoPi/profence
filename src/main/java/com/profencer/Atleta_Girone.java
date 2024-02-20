@@ -78,5 +78,12 @@ public class Atleta_Girone {
     public void setSconfitte(int sconfitte) {
         this.sconfitte = sconfitte;
     }
+
+    @Override
+    public String toString() {
+        return "Atleta_Girone [codFIS=" + codFIS + ", stoccateDate=" + stoccateDate + ", stoccateRicevute="
+                + stoccateRicevute + ", punteggio=" + punteggio + ", vittorie=" + vittorie + ", sconfitte=" + sconfitte
+                + ", posizione=" + posizione + "]";
+    }
     
 }

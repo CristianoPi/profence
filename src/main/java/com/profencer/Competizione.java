@@ -147,20 +147,6 @@ public class Competizione {
     //costruttori
     public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
-    }
-
-    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, com.profencer.FormulaDiGara formulaDiGara, List<Girone> gironi,
-            List<Atleta> iscritti, List<Atleta> accettazioni) {
-        this.codCompetizione = codCompetizione;
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.data = data;
-        this.categoria = categoria;
-        this.arma = arma;
-        this.formulaDiGara = formulaDiGara;
-        this.gironi = gironi;
-        this.iscritti = iscritti;
-        this.accettazioni = accettazioni;
 
         this.gironi = new ArrayList<Girone>();
         this.iscritti = new ArrayList<Atleta>();
@@ -200,28 +186,7 @@ public class Competizione {
         this.classificaFinale = new ArrayList<Atleta>();
     }
 
-    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma, FormulaDiGara formulaDiGara, List<Girone> gironi, List<Atleta> iscritti,
-            List<Atleta> accettazioni, List<Atleta_Girone> classificaG) {
-        this.codCompetizione = codCompetizione;
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.data = data;
-        this.categoria = categoria;
-        this.arma = arma;
-        this.formulaDiGara = formulaDiGara;
-        this.gironi = gironi;
-        this.iscritti = iscritti;
-        this.accettazioni = accettazioni;
-        this.classificaG = classificaG;
-
-        this.gironi = new ArrayList<Girone>();
-        this.iscritti = new ArrayList<Atleta>();
-        this.accettazioni = new ArrayList<Atleta>();
-        this.classificaG = new ArrayList<Atleta_Girone>();;
-        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
-        this.classificaFinale = new ArrayList<Atleta>();
-    }
-
+   
     
 
 
@@ -236,13 +201,15 @@ public class Competizione {
         }
     }
 
-    public void AccettazioneAtleta(int codFIS)
-    {
+    public void AccettazioneAtleta(int codFIS) throws Exception {
         for (Atleta atleta : iscritti) {
             if (atleta.getCodFIS()==codFIS) {
                 accettazioni.add(atleta);
+                return;
             }
         }
+        throw new Exception("nessun atleta con quel codice");
+
         //gestire errori
     }
 
@@ -255,7 +222,7 @@ public class Competizione {
     }
 
     public void OrdinaAlteti(){
-       Collections.sort(accettazioni, new Comparator<Atleta>() {
+       Collections.sort(this.accettazioni, new Comparator<Atleta>() {
             @Override
             public int compare(Atleta a1, Atleta a2) {
                 return Float.compare(a1.getRanking(), a2.getRanking());
@@ -267,11 +234,14 @@ public class Competizione {
         }
     }
 
-    public void CreazioneGironi(){
+    public void CreazioneGironi() throws Exception{
         //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
         OrdinaAlteti();
+
+
         int numAtleti=this.accettazioni.size();
         int maxDimGironi=this.formulaDiGara.getMaxDimGirone();
+
 
         //creo i gironi con solamente il loro codice
         int numGironi=gironi(numAtleti, maxDimGironi);
@@ -280,10 +250,11 @@ public class Competizione {
             gironi.add(g);//si aggiunge alla fine della lista, quindi la lista sarà oridnata in modo crescente g1, g2, ..., gn
         }
 
+
         //riempio la lista Atleti_girone per ogni singolo giorne, seguendo le regole
         int x=0;
+        int posNelGiorne=1;
         while(x<numAtleti){
-            int posNelGiorne=1;
             for (Girone girone : gironi) {
                 Atleta a = null;
                 try {
@@ -304,27 +275,54 @@ public class Competizione {
             posNelGiorne++;
         }
 
+
         //PER ORA NON ORIDNE CORRETTO
         //riempio la lista degli assalti, in cui non saranno presenti ancora i risultati
         //per fare ciò si segue l'algoritmo di Berger
         for (Girone girone : gironi) {
+            // int numAtletiGirone=girone.getAtletiGiorne().size();
+            // int turni=numAtletiGirone-1;
+            // Assalto ass=new Assalto(0);
+            // int j=0;
+            // int c=1;
+            // for(int i=1; i<turni; i++){
+            //     j=i+1;
+            //     while (j<=numAtletiGirone) {
+            //         ass.setCodAssalto(c);
+            //         ass.setAtleta1(girone.getAtletiGiorne().get(i).getCodFIS());
+            //         ass.setAtleta2(girone.getAtletiGiorne().get(j).getCodFIS());
+            //         girone.getAssalti().add(ass);
+            //         c++;
+            //         j++;
+            //     }
             int numAtletiGirone=girone.getAtletiGiorne().size();
-            int turni=numAtletiGirone-1;
-            Assalto ass=new Assalto(0);
-            int j=0;
-            int c=1;
-            for(int i=1; i<turni; i++){
-            j=i+1;
-                while (j<=numAtletiGirone) {
-                    ass.setCodAssalto(c);
-                    ass.setAtleta1(girone.getAtletiGiorne().get(i).getCodFIS());
-                    ass.setAtleta2(girone.getAtletiGiorne().get(j).getCodFIS());
-                    girone.getAssalti().add(ass);
-                    c++;
-                    j++;
+            int c=0;
+            List<Assalto> assalti=new ArrayList<Assalto>();
+            for(int z=0; z<numAtletiGirone; z++){
+                for(int i=c; i<numAtletiGirone; i++){
+                    if(z!=i){
+                        System.out.println(z);
+                        System.out.println(i);
+                        System.out.println("________");
+                        Assalto ass=new Assalto(c,girone.getAtletiGiorne().get(z).getCodFIS(),girone.getAtletiGiorne().get(i).getCodFIS());
+                        // ass.setAtleta1(girone.getAtletiGiorne().get(z).getCodFIS());
+                        // ass.setAtleta2(girone.getAtletiGiorne().get(i).getCodFIS());
+                        assalti.add(ass);
+                        
+                        
+                    }
                 }
+                c++;
+            }
+            try {
+                girone.setAssalti(assalti);
+            } catch (Exception e) {
+                throw new Exception("errore add");
+                // TODO: handle exception
             }
         }
+
+           
     }
 
     public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana){
@@ -421,10 +419,14 @@ public class Competizione {
      
 
 
+
+
     @Override
     public String toString() {
         return "Competizione [codCompetizione=" + codCompetizione + ", nome=" + nome + ", descrizione=" + descrizione
-                + ", data=" + data + ", categoria=" + categoria + ", arma=" + arma + "]";
+                + ", data=" + data + ", categoria=" + categoria + ", arma=" + arma + ", formulaDiGara=" + formulaDiGara
+                + ", gironi=" + gironi + ", iscritti=" + iscritti + ", accettazioni=" + accettazioni + ", tr=" + tr
+                + "]";
     }
 
     public EliminazioneDiretta CreazioneED(){

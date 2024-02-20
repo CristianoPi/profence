@@ -1,14 +1,14 @@
 package com.profencer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Girone {
     private int codGirone;
 	private int dataOra;//non funziona date
 	private int pedana;
-	private Competizione competizione;
 	private List<Assalto> assalti;
-	private List<Atleta_Girone> atletiGiorne;
+	private List<Atleta_Girone> atletiGiorne=new ArrayList<Atleta_Girone>();
 
     public int getCodGirone() {
         return codGirone;
@@ -34,14 +34,6 @@ public class Girone {
         this.pedana = pedana;
     }
 
-    public Competizione getCompetizione() {
-        return competizione;
-    }
-
-    public void setCompetizione(Competizione competizione) {
-        this.competizione = competizione;
-    }
-
 
     public List<Assalto> getAssalti() {
         return assalti;
@@ -59,12 +51,11 @@ public class Girone {
         this.atletiGiorne = atletiGiorne;
     }
 
-    public Girone(int codGirone, int dataOra, int pedana, Competizione competizione, List<Assalto> assalti,
+    public Girone(int codGirone, int dataOra, int pedana, List<Assalto> assalti,
             List<Atleta_Girone> atletiGiorne) {
         this.codGirone = codGirone;
         this.dataOra = dataOra;
         this.pedana = pedana;
-        this.competizione = competizione;
         this.assalti = assalti;
         this.atletiGiorne = atletiGiorne;
     }
@@ -73,6 +64,10 @@ public class Girone {
         this.codGirone = codGirone;
     }
 
+    @Override
+    public String toString() {
+        return "Girone [codGirone=" + codGirone + ", dataOra=" + dataOra + ", pedana=" + pedana + ", assalti=" + assalti
+                + ", atletiGiorne=" + atletiGiorne + "]";
+    }
 
-    
 }
