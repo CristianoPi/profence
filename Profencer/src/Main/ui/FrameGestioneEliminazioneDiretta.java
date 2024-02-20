@@ -18,30 +18,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import Main.domain.ProFencer;
+
 public class FrameGestioneEliminazioneDiretta {
 
 	 JFrame frame;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameGestioneEliminazioneDiretta window = new FrameGestioneEliminazioneDiretta();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public FrameGestioneEliminazioneDiretta() {
+	public FrameGestioneEliminazioneDiretta(ProFencer profencer) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -67,7 +53,7 @@ public class FrameGestioneEliminazioneDiretta {
 	            	 
 	            	public void actionPerformed(ActionEvent arg0) {
 	    				
-	    				FrameGestisciAssaltiG fgaf = new FrameGestisciAssaltiG(i); //andra passat o direttametne la lista 
+	    				FrameGestisciAssaltiG fgaf = new FrameGestisciAssaltiG(i,profencer); //andra passat o direttametne la lista 
 	    																		//degli assalti o qualcosa per arrivarci
 	    																		//metto i nel cotruttore succede qualcosa ?
 	            		fgaf.frame.setVisible(true);

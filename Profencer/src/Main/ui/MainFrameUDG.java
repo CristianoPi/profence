@@ -167,11 +167,11 @@ public class MainFrameUDG {
 		btnGestioneAssaltiGironi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 					// come verificare se i gironi sono stati creati?
-					FrameVisualizzaGironi fvg= new FrameVisualizzaGironi();
+					FrameVisualizzaGironi fvg= new FrameVisualizzaGironi(profencer);
 					fvg.frame.setVisible(true);
 
 				}
@@ -213,7 +213,7 @@ public class MainFrameUDG {
 					
 					//FrameEliminazioneDiretta fed = new FrameEliminazioneDiretta();
 					//fed.frame.setVisible(true);
-					FrameGestioneEliminazioneDiretta fged = new FrameGestioneEliminazioneDiretta();
+					FrameGestioneEliminazioneDiretta fged = new FrameGestioneEliminazioneDiretta(profencer);
 					fged.frame.setVisible(true);
 
 				}
@@ -303,7 +303,7 @@ public class MainFrameUDG {
 				
 			}
 		});
-		btnAmministratore.setBounds(364, 10, 117, 21);
+		btnAmministratore.setBounds(364, 10, 147, 21);
 		frame.getContentPane().add(btnAmministratore);
 		
 	

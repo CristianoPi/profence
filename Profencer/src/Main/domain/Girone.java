@@ -10,7 +10,7 @@ public class Girone {
 	private int dataOra;//non funziona date
 	private int pedana;
 	private Competizione competizione;
-	private List<Assalto> assalti = new ArrayList<Assalto>();
+	private List<Assalto> assalti;
 	private List<Atleta_Girone> atletiGiorne=new ArrayList <Atleta_Girone>();
 
     public int getCodGirone() {

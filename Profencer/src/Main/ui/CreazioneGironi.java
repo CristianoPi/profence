@@ -55,8 +55,8 @@ public class CreazioneGironi {
 	try {	
 		profencer.CreazioneGironi();
 		//    initialize(elenco, elencoAssalti);
-		
-		List<Girone>elenco= profencer.getCompetizioneCorrente().getGironi();
+		List<Girone>elenco= profencer.VisualizzaGironi();
+		//List<Girone>elenco= profencer.getCompetizioneCorrente().getGironi();
 		System.out.println("ciao");
 		for(Girone g : elenco)
 			System.out.println(g.toString());
@@ -82,7 +82,6 @@ public class CreazioneGironi {
 	    JPanel panel = new JPanel();
 	   // panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-	    //for (int i = 0; i < elenco.size(); i++) {
 	    	for(Girone g : elenco) {
 	    	JPanel rowPanel = new JPanel();
 	        rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.Y_AXIS));
@@ -90,12 +89,11 @@ public class CreazioneGironi {
 	        JPanel labelButtonPanel = new JPanel();
 	        labelButtonPanel.setLayout(new BoxLayout(labelButtonPanel, BoxLayout.X_AXIS));
 
-	        
-	        //mi stampa sempre il codice 1 per il girone, capire perchè
+
 	        JLabel label = new JLabel("girone: "+String.valueOf(g.getCodGirone()));
 	        JButton button = new JButton("inserisci dati");
 	        button.addActionListener(new ActionListener() {
-           	//boolean isDone = false;
+           
            	public void actionPerformed(ActionEvent arg0) {
    				
             //bisogna chiedere via messaggio data ora e depana
@@ -112,22 +110,15 @@ public class CreazioneGironi {
 	        labelButtonPanel.add(button);
 	        JTextArea textArea = new JTextArea();
 	        for(Assalto as : g.getAssalti())
-	        	//problemi nella visualizzazione, sono dei codici devo ricare o nomi o qualco'altro
-	        	textArea.append(as.getAtleta1()+" "+as.getAtleta2() + "\n");
+	        	
+	        	textArea.append("Codice Atleta1:"+as.getAtleta1()+"  Codice Atleta2:"+as.getAtleta2() + "\n");
 	       
-	        // JTextArea textArea = new JTextArea(String.join("\n", elenco.get(i).getAssalti().get(i)));   //ci saranno per forza cambiamenti qui
-	        //dovro ciclare assalto su assalti e fare in modo che ogni riga sia composta da assalto.giocatore 1 vs assalto.giocatore g
-	        //altra alternativa sarebbe quella di convertire il formato ed adattatlo, nel senso ricevo lista assalti , prendo  per ogni assalto giocatore 1 e giocatore 2 e creo un lista formatttata nel seguente modo
-	        //"giocatore 1 vs giocatore 2"; ecc ecc
 	       
 	        textArea.setEditable(false);
 	        textArea.setLineWrap(true);
 	        textArea.setWrapStyleWord(true);
 	        textArea.setColumns(30);
 	        
-	       // textArea.setPreferredSize(new Dimension(textArea.getPreferredSize().width, 50)); // Limita l'altezza a 50 pixel
-	        //textArea.setAlignmentX(Component.RIGHT_ALIGNMENT); // Ancora il JTextArea alla sinistra
-	        // Crea un JScrollPane che avvolge il JTextArea
 	       
 	        
 	        JScrollPane scrollPane = new JScrollPane(textArea);

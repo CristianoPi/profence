@@ -156,7 +156,7 @@ public class FrameCreazioneCompetizione extends JFrame {
 					if(NstoccateG>=0 && eliminati>=0&&NstoccateE>=0 && MacAtleti>=0) {
 						//si settano le specifiche a competizione e si chiude la finestra
 						//si salva la competizione creata in qualche posto
-						profencer.ScegliFormulaGara(MacAtleti, eliminati, NstoccateE, NstoccateG);
+						profencer.ScegliFormulaGara(eliminati, NstoccateE, NstoccateG,MacAtleti);
 						profencer.ConfermaInserimento();
 						frame.dispose();
 					}else {

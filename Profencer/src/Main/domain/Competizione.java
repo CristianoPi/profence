@@ -18,9 +18,9 @@ public class Competizione {
 	private String arma;
 	private float quotaParticipazione;
 	private FormulaDiGara formulaDiGara;
-	private List<Girone> gironi = new ArrayList<Girone>();
-    private List<Atleta> iscritti = new ArrayList<Atleta>();
-    private List<Atleta> accettazioni =new ArrayList<Atleta>();
+	private List<Girone> gironi;
+    private List<Atleta> iscritti;
+    private List<Atleta> accettazioni;
     Map<Integer, Atleta> mappaAtleti = new HashMap<>(); //mi è utile per non scorre ogni volta atleti
     private List<Atleta_Girone> classificaG;
     private EliminazioneDiretta direttaCorrente;
@@ -156,56 +156,44 @@ public class Competizione {
     //costruttori
     public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
-    }
 
-    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
-            float quotaParticipazione, Main.domain.FormulaDiGara formulaDiGara, List<Girone> gironi,
-            List<Atleta> iscritti, List<Atleta> accettazioni) {
-        this.codCompetizione = codCompetizione;
-        this.nome = nome;
-        this.descrizione = descrizione;
-        this.data = data;
-        this.categoria = categoria;
-        this.arma = arma;
-        this.quotaParticipazione = quotaParticipazione;
-        this.formulaDiGara = formulaDiGara;
-        this.gironi = gironi;
-        this.iscritti = iscritti;
-        this.accettazioni = accettazioni;
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
     }
     
+    
     public Competizione() {
-        
+    	this.codCompetizione = 0;
+
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
     }
 
-    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
-            float quotaParticipazione, FormulaDiGara formulaDiGara, List<Girone> gironi, List<Atleta> iscritti,
-            List<Atleta> accettazioni, List<Atleta_Girone> classificaG) {
-        this.codCompetizione = codCompetizione;
+    public Competizione(int codice, String nome, String descrizione, Date data, String categoria, String arma,
+            FormulaDiGara formulaDiGara) {
+    	this.codCompetizione=codice;
         this.nome = nome;
         this.descrizione = descrizione;
         this.data = data;
         this.categoria = categoria;
         this.arma = arma;
-        this.quotaParticipazione = quotaParticipazione;
         this.formulaDiGara = formulaDiGara;
-        this.gironi = gironi;
-        this.iscritti = iscritti;
-        this.accettazioni = accettazioni;
-        this.classificaG = classificaG;
-    }
 
-    public Competizione(int codCompetizione2, String nome2, String descrizione2, Date data2, String categoria2,
-			String arma2, FormulaDiGara formulaDiGara2) {
-		// TODO Auto-generated constructor stub
-    	this.codCompetizione=codCompetizione2;
-    	this.nome=nome2;
-    	this.descrizione=descrizione2;
-    	this.data=data2;
-    	this.categoria=categoria2;
-    	this.arma=arma2;
-    	this.formulaDiGara=formulaDiGara2;
-	}
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
+    }
 
 	//@Override
    // public String toString() {
@@ -223,6 +211,10 @@ public class Competizione {
         }
     }
     public void AccettazioneAtleta(int codFIS) throws Exception {
+    	 for (Atleta atletaA : accettazioni) {
+             if (atletaA.getCodFIS()==codFIS)
+             throw new Exception("Atleta già accettato");
+         }
         for (Atleta atleta : iscritti) {
             if (atleta.getCodFIS()==codFIS) {
                 accettazioni.add(atleta);
@@ -243,17 +235,17 @@ public class Competizione {
     }
 
     public void OrdinaAlteti(){
-       Collections.sort(accettazioni, new Comparator<Atleta>() {
-            @Override
-            public int compare(Atleta a1, Atleta a2) {
-                return Float.compare(a1.getRanking(), a2.getRanking());
-            }
-        });
+        Collections.sort(this.accettazioni, new Comparator<Atleta>() {
+             @Override
+             public int compare(Atleta a1, Atleta a2) {
+                 return Float.compare(a1.getRanking(), a2.getRanking());
+             }
+         });
 
-        for (Atleta atleta : accettazioni) {
-            mappaAtleti.put(atleta.getCodFIS(), atleta);
-        }
-    }
+         for (Atleta atleta : accettazioni) {
+             mappaAtleti.put(atleta.getCodFIS(), atleta);
+         }
+     }
 
     public void CreazioneGironi() throws Exception{
         this.gironi=new ArrayList<Girone>();
@@ -321,7 +313,7 @@ public class Competizione {
             int c=0;
             List<Assalto> assalti=new ArrayList<Assalto>();
             for(int z=0; z<numAtletiGirone; z++){
-                for(int i=c; i<numAtletiGirone; i++){
+                for(int i=z; i<numAtletiGirone; i++){
                     if(z!=i){
                         System.out.println(z);
                         System.out.println(i);
@@ -330,11 +322,10 @@ public class Competizione {
                         // ass.setAtleta1(girone.getAtletiGiorne().get(z).getCodFIS());
                         // ass.setAtleta2(girone.getAtletiGiorne().get(i).getCodFIS());
                         assalti.add(ass);
-                        
-                        
+                        c++;
                     }
                 }
-                c++;
+                
             }
             try {
                 girone.setAssalti(assalti);
@@ -538,6 +529,15 @@ public class Competizione {
                 classificaFinale.add(atleta);
             }
         }
+    }
+    
+
+    @Override
+    public String toString() {
+        return "Competizione [codCompetizione=" + codCompetizione + ", nome=" + nome + ", descrizione=" + descrizione
+                + ", data=" + data + ", categoria=" + categoria + ", arma=" + arma + ", formulaDiGara=" + formulaDiGara
+                + ", gironi=" + gironi + ", iscritti=" + iscritti + ", accettazioni=" + accettazioni + ", tr=" + tr
+                + "]";
     }
 
     public void CreaRanking(){

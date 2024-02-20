@@ -17,7 +17,7 @@ public class ProFencer {
 	private Competizione competizioneCorrente;
 	
 	public ProFencer() {
-		super();
+		//super();
 		this.tesserati = new ArrayList<Atleta>();
 		this.atletaCorrente=null;
 		this.Competizioni=new ArrayList<Competizione>();
@@ -189,6 +189,7 @@ public class ProFencer {
 	}
 
 	public List<Competizione> MostraCompetizioni() {
+		System.out.println(Competizioni);
 		return Competizioni;
 	}
 
@@ -276,7 +277,7 @@ public class ProFencer {
 		try {
 			competizioneCorrente.AccettazioneAtleta(codFIS);
 		} catch (Exception e) {
-			throw new Exception("Nessun atleta con quel codice");
+			throw new Exception(e.getMessage());
 		}
 		
 	}

@@ -28,16 +28,16 @@ public class FrameVisualizzaCompetizioni {
 		JPanel panel = new JPanel();
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	    
-	    List<Competizione>lista =new ArrayList<Competizione>();
+	    //List<Competizione>lista =new ArrayList<Competizione>();
 	    
 	    //qui invece di utilizzare un file devo prendere da profencer la lista delle competizioni e fare un foreach di competizione su competizioni
 	  
 	  //  try (Scanner scanner = new Scanner(new File("C:\\Users\\giuse\\OneDrive\\Documenti\\GitHub\\profence\\src\\main\\ui\\src\\prova\\file.txt"))) {
 	  //      while (scanner.hasNextLine()) {
 	    
-	    	lista = profencer.getCompetizioni();
+	    List<Competizione>lista = profencer.MostraCompetizioni();
 	    	for (Competizione c : lista) {
-	            
+	            System.out.print(c.getCodCompetizione());
 	            JLabel textField = new JLabel("Competizione: "+c.getCodCompetizione());
 	            JButton button = new JButton("Iscriviti alla gara"); 
 	            										  

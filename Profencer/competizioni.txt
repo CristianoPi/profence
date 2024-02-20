@@ -1,3 +1,3 @@
-1,Competizione1,Descrizione1,01/01/2024,Categoria1,Arma1,1,10,20,30,40
+1,Competizione1,Descrizione1,01/01/2024,Categoria1,Arma1,1,10,20,30,5
 2,Competizione2,Descrizione2,02/02/2024,Categoria2,Arma2,2,20,30,40,50
 3,Competizione3,Descrizione3,03/03/2024,Categoria3,Arma3,3,30,40,50,60

@@ -18,6 +18,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import Main.domain.Assalto;
+import Main.domain.Girone;
+import Main.domain.ProFencer;
+
 public class FrameVisualizzaGironi {
 
 	 JFrame frame;
@@ -25,61 +29,39 @@ public class FrameVisualizzaGironi {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameVisualizzaGironi window = new FrameVisualizzaGironi();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	/**
 	 * Create the application.
 	 */
-	public FrameVisualizzaGironi() {
-		 List<String> elenco = new ArrayList<String>();
-		    elenco.add("girone 1");
-		    elenco.add("girone 2");
-		    elenco.add("girone 3");
-		    elenco.add("girone n");
+	public FrameVisualizzaGironi(ProFencer profencer) {
+		
+		List<Girone> elenco=profencer.VisualizzaGironi();
+		
 
-		    List<List<String>> elencoAssalti = new ArrayList<>();
-		    elencoAssalti.add(Arrays.asList("assalto 1 del primo", "assalto 2 del primo", "assalto n del primo"));
-		    elencoAssalti.add(Arrays.asList("assalto 1 del sec", "assalto 2 del sec", "assalto n del sec"));
-		    elencoAssalti.add(Arrays.asList("assalto 1 del ter", "assalto 2 del ter", "assalto n del ter"));
-		    elencoAssalti.add(Arrays.asList("assalto 1 del quart", "assalto 2 del quart", "assalto n del quart"));
-
-		    initialize(elenco, elencoAssalti);
+		    initialize(elenco, profencer);
 	}
 
-	private void initialize(List<String> elenco, List<List<String>> elencoAssalti) {
+	private void initialize(List<Girone> elenco, ProFencer profencer) {
 		frame = new JFrame();
 	    JPanel panel = new JPanel();
 	   
 
-	    for (int i = 0; i < elenco.size(); i++) {
+	   // for (int i = 0; i < elenco.size(); i++) {
+	    	for(Girone g : elenco) {
+	    		
 	        JPanel rowPanel = new JPanel();
 	        rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.Y_AXIS));
 
 	        JPanel labelButtonPanel = new JPanel();
 	        labelButtonPanel.setLayout(new BoxLayout(labelButtonPanel, BoxLayout.X_AXIS));
 
-	        JLabel label = new JLabel(elenco.get(i));
+	        JLabel label = new JLabel("girone: "+String.valueOf(g.getCodGirone()));
 	        JButton button = new JButton("Seleziona girone");
 	        button.addActionListener(new ActionListener() {
-        	 boolean isDone = false;
+        	// boolean isDone = false;
         	public void actionPerformed(ActionEvent arg0) {
-				//bisogna aprire o una nuova frame con solo l'elenco degli assalti di tale girone oppure qua stesso chiedere  per ogni assalto, 
-        		//punteggio 1 punteggio 2 e tempo, salvarli nella lista degli assalti compilati
-        		
-        		//proviamo la prima opzione, si rende visibile una nuova frame passandogli il girone selezionato. questa frame 
-        		//dal girone si ricaverana la lista degli assalti di quel girone e la tradurra in un formato accettabile
-        		FrameGestisciAssaltiG Fga= new FrameGestisciAssaltiG(-3);
+				
+        		FrameGestisciAssaltiG Fga= new FrameGestisciAssaltiG(-g.getCodGirone(),profencer);  //numero negativo perchè si tratta di assalti gironi
         		Fga.frame.setVisible(true);
 				
 			}
@@ -88,11 +70,12 @@ public class FrameVisualizzaGironi {
 	        labelButtonPanel.add(label);
 	        labelButtonPanel.add(Box.createHorizontalGlue());  // Aggiungi dello spazio tra la label e il bottone
 	        labelButtonPanel.add(button);
-
-	        JTextArea textArea = new JTextArea(String.join("\n", elencoAssalti.get(i)));   //ci saranno per forza cambiamenti qui
-	        //dovro ciclare assalto su assalti e fare in modo che ogni riga sia composta da assalto.giocatore 1 vs assalto.giocatore g
-	        //altra alternativa sarebbe quella di convertire il formato ed adattatlo, nel senso ricevo lista assalti , prendo  per ogni assalto giocatore 1 e giocatore 2 e creo un lista formatttata nel seguente modo
-	        //"giocatore 1 vs giocatore 2"; ecc ecc
+	        JTextArea textArea = new JTextArea();
+	        for(Assalto as : g.getAssalti())
+	        	
+	        	textArea.append("Codice Atleta1:"+as.getAtleta1()+" - Codice Atleta2:"+as.getAtleta2() + "\n");
+	       
+	       
 	        textArea.setEditable(false);
 	        textArea.setLineWrap(true);
 	        textArea.setWrapStyleWord(true);
@@ -103,9 +86,21 @@ public class FrameVisualizzaGironi {
 	        JScrollPane scrollPane = new JScrollPane(textArea);
 	        scrollPane.setPreferredSize(new Dimension(textArea.getPreferredSize().width, 100)); // Limita l'altezza a 50 pixel
 	        
+	        JPanel labelPanel = new JPanel();
+	        labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.X_AXIS));
+
+	        // Crea le due JLabel e aggiungile al JPanel
+	        JLabel pedanaLabel = new JLabel("Pedana: " + String.valueOf(g.getPedana()));
+	        JLabel dataLabel = new JLabel("Data: " + String.valueOf(g.getDataOra()));
+	        labelPanel.add(pedanaLabel);
+	        labelPanel.add(Box.createHorizontalGlue());  // Aggiungi dello spazio tra le due JLabel
+	        labelPanel.add(dataLabel);
+	        
+	        
 	        rowPanel.add(labelButtonPanel);
 	        rowPanel.add(scrollPane);
-
+	        rowPanel.add(labelPanel);
+	        
 	        panel.add(rowPanel);
 	    }
 
