@@ -298,10 +298,12 @@ public class ProFencer {
 			throw new Exception(e.getMessage());
 			// TODO: handle exception
 		}
-		
 	}
 
-	public void ConfermaED(){
+	public void ConfermaED()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata aaa");
+		}
 		competizioneCorrente.ConfermaED();
 	}
 

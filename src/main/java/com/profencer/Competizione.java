@@ -239,7 +239,7 @@ public class Competizione {
     }
 
     public void CreazioneGironi() throws Exception{
-        this.gironi=new ArrayList<Girone>();
+        this.gironi.clear();
         //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
         OrdinaAlteti();
         int numAtleti=this.accettazioni.size();
@@ -289,8 +289,6 @@ public class Competizione {
             for(int z=0; z<numAtletiGirone; z++){
                 for(int i=z; i<numAtletiGirone; i++){
                     if(z!=i){
-                        System.out.println(z);
-                        System.out.println(i);
                         Assalto ass=new Assalto(c,girone.getAtletiGiorne().get(z).getCodFIS(),girone.getAtletiGiorne().get(i).getCodFIS());
                         // ass.setAtleta1(girone.getAtletiGiorne().get(z).getCodFIS());
                         // ass.setAtleta2(girone.getAtletiGiorne().get(i).getCodFIS());
@@ -343,6 +341,12 @@ public class Competizione {
         
         
         //bisogna settare gli atributi di atleta_girone dopo che si inseriscono i risultati
+        for(Atleta_Girone a : girone.getAtletiGiorne()){
+            a.setPunteggio(0);
+            a.setSconfitte(0);
+            a.setVittorie(0);
+        }
+
         for (Assalto assalto : listaAssalti) {
             for(Atleta_Girone a : girone.getAtletiGiorne()){
                 if(assalto.getAtleta1()==a.getCodFIS()){
@@ -402,6 +406,7 @@ public class Competizione {
     }
 
     public void CreaClassifica() throws Exception{
+        classificaG.clear();
         boolean r=false;
         for (Girone g : gironi) {
             List<Atleta_Girone> Atletig = g.getAtletiGiorne();
@@ -422,40 +427,56 @@ public class Competizione {
             throw new Exception("Creare la classifica dopo i gironi");
         }
 
-        int stato=0;
-        
+        int stato=0;  
         int pe=formulaDiGara.getPercEliminati();
+
+        System.out.print("ClassificaG: ");
+        System.out.println(classificaG);
+
+        System.out.print("Percentuale eliminati: ");
+        System.out.println(pe);
+
         int num_pass=classificaG.size()-(classificaG.size()*pe/100);
+        System.out.print("numero passati: ");
         System.out.println(num_pass);
         stato=(int)Math.ceil(Math.log(num_pass) / Math.log(2));//In questo modo, stato sarà il logaritmo in base 2 di num_pass arrotondato per eccesso.
+
+        System.out.print("stato: ");
+        System.out.println(stato);
     
         EliminazioneDiretta direttaCorrente= new EliminazioneDiretta(stato, null);
-        Assalto a=new Assalto(0);
         List<Assalto> assalti= new ArrayList<Assalto>();
         int codice=0;
         int atleta1=0;
         int atleta2=0;
+        int valore=0;
+        
         for(int i=1; i<=(int)Math.pow(2, stato-1); i++){
             codice=i;
             atleta1=classificaG.get(i-1).getCodFIS();
-            a.setAtleta1(classificaG.get(i-1).getCodFIS());
-            if(((int)Math.pow(2, stato)-i>num_pass)){
-                a.setAtleta2(-1);//info che mi dice che l'atleta 1 ha automaticamente vinto
+            valore=(int)Math.pow(2, stato)-i;
+            System.out.print("valore: ");
+            System.out.println(valore);
+
+            if((valore>=num_pass)){
+                atleta2=-1;//info che mi dice che l'atleta 1 ha automaticamente vinto
+                System.out.println("___VERO");
             }
             else{
-                a.setAtleta2(classificaG.get((int)Math.pow(2, stato)-i).getCodFIS());
-                
+                System.out.println("___FALSO");
+                atleta2=classificaG.get((int)Math.pow(2, stato)-i).getCodFIS();
             }
-           // assalti.add(new Assalto(i, , num_pass, i, i, i))
-            assalti.add(a);
+            assalti.add(new Assalto(codice, atleta1, atleta2));
         }
         direttaCorrente.setAssaltiED(assalti);
-        System.out.println(direttaCorrente);
         return direttaCorrente;
     }
 
 
-    public void ConfermaED(){
+    public void ConfermaED()throws Exception{
+        if (direttaCorrente==null) {
+			throw new Exception("Nessuna diretta corrente ");
+		}
         eliminazioniDirette.add(direttaCorrente);
     }
 

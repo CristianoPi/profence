@@ -167,14 +167,13 @@ public class ProFencerTest {
 
     @Test
     public void testCreazioneED() {
-             proFencer.caricaDati();
+        proFencer.caricaDati();
         try {
             proFencer.SelezionaCompetizione(1);
             proFencer.CreazioneGironi();
             proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
             proFencer.CreaClassifica();
-            proFencer.CreazioneED();
-            proFencer.VisualizzaED();
+            System.out.println(proFencer.CreazioneED());
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -186,7 +185,23 @@ public class ProFencerTest {
 
     @Test
     public void testConfermaED() {
-        
+        proFencer.caricaDati();
+        try {
+            proFencer.SelezionaCompetizione(1);
+            proFencer.CreazioneGironi();
+            proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
+            proFencer.CreaClassifica();
+            System.out.println(proFencer.CreazioneED());
+            
+            proFencer.getCompetizioneCorrente();
+            proFencer.ConfermaED();
+           
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
+       
     }
 
 
