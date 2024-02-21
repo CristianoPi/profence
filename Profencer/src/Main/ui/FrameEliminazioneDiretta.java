@@ -12,6 +12,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -64,8 +65,8 @@ public class FrameEliminazioneDiretta {
         try {
         EliminazioneDiretta ED=profencer.CreazioneED();
         List<Assalto> assalti=ED.getAssaltiED();
-        System.out.println("SONO IL TABELLONE");
-        System.out.println(ED);	
+       // System.out.println("SONO IL TABELLONE");
+       // System.out.println(ED);	
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
@@ -78,7 +79,11 @@ public class FrameEliminazioneDiretta {
             //System.out.println(assalto);
             
             JLabel label1 = new JLabel(String.valueOf(assalto.getAtleta1()));
-            JLabel label2 = new JLabel(String.valueOf(assalto.getAtleta2()));
+            JLabel label2 = new JLabel();
+            
+            if(assalto.getAtleta2()!=-1) 
+            	 label2.setText(String.valueOf(assalto.getAtleta2()));
+            
             Dimension labelSize = new Dimension(100, 20); // Puoi cambiare le dimensioni come preferisci
             label1.setPreferredSize(labelSize);
             label2.setPreferredSize(labelSize);
@@ -106,14 +111,20 @@ public class FrameEliminazioneDiretta {
         confermaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	try {
+            	profencer.ConfermaED();
                 frame.dispose();
+            	}
+            	catch(Exception ex) {
+            		JOptionPane.showMessageDialog(null, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+            	}
             }
         });
         frame.add(confermaButton, BorderLayout.SOUTH);
         frame.setMinimumSize(new Dimension(500,400));
        
         }catch(Exception e) {
-        	System.out.println(e.getMessage());
+        	JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
 	}
 

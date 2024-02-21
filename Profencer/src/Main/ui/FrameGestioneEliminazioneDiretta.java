@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import Main.domain.EliminazioneDiretta;
 import Main.domain.ProFencer;
 
 public class FrameGestioneEliminazioneDiretta {
@@ -36,24 +37,24 @@ public class FrameGestioneEliminazioneDiretta {
 	    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 	   //bisogna prendere da profencere la lista degli atleti iscritti alla competizoone corrente.
 	    //si riportano i daati a schermo con un foreach di atleata su atleti, al memomento penso ai soli codicei fiscali
-	    List<Integer> ED= new ArrayList<Integer>();
+	   // List<Integer> ED= new ArrayList<Integer>();
 	    //la lista di ED è una lista di interi ad esmpio --> 7,6,5,4,3,2,1,0  
 	    //in base alla dimensione della lista capisco quante righe stampare, un pulsante per ogni riga
 	    // il numero di assalti per quella riga sarà uguale a 2^numero della lista e lo gestiro come ho gestito assalti girone;
-	   ED.add(7);
-	   ED.add(6);
-	   ED.add(5);
+	    List<EliminazioneDiretta> lista = profencer.getCompetizioneCorrente().getEliminazioniDirette();
+	    //quindi lista sarò una lista di eliminazione diretta  cove ogni elemento contiene uno stato, una lista di assalti e gli eliminati
+	  
 	   // try (Scanner scanner = new Scanner(new File("C:\\Users\\giuse\\OneDrive\\Documenti\\GitHub\\profence\\src\\main\\ui\\src\\prova\\file.txt"))) {
-	        for(int i : ED) {
+	        for( EliminazioneDiretta ed: lista) {
 	            
-	            JLabel textField = new JLabel(String.valueOf((int)Math.pow(2, i)));
+	            JLabel textField = new JLabel(String.valueOf((int)Math.pow(2, ed.getStato())));
 	            JButton button = new JButton("Seleziona fase"); 
 	            										 
 	            button.addActionListener(new ActionListener() {
 	            	 
 	            	public void actionPerformed(ActionEvent arg0) {
 	    				
-	    				FrameGestisciAssaltiG fgaf = new FrameGestisciAssaltiG(i,profencer); //andra passat o direttametne la lista 
+	    				FrameGestisciAssaltiG fgaf = new FrameGestisciAssaltiG(ed.getStato(),profencer); //andra passat o direttametne la lista 
 	    																		//degli assalti o qualcosa per arrivarci
 	    																		//metto i nel cotruttore succede qualcosa ?
 	            		fgaf.frame.setVisible(true);

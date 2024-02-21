@@ -361,10 +361,14 @@ public class ProFencer {
 		
 	}
 
-	public void ConfermaED(){
+	public void ConfermaED()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata aaa");
+		}
 		competizioneCorrente.ConfermaED();
 	}
-
+		
+		
 	public void SelezionaED(int stato){
 		competizioneCorrente.SelezionaED(stato); 
 	}

@@ -24,6 +24,12 @@ public class Atleta {
         CF = cF;
         this.genere = genere;
     }
+    
+    
+
+    public Atleta(int codFIS) {
+        this.codFIS = codFIS;
+    }
 
     public Atleta() {
         this.codFIS = 0;
