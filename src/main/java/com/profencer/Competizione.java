@@ -423,6 +423,7 @@ public class Competizione {
     }
      
     public EliminazioneDiretta CreazioneED() throws Exception{
+        eliminazioniDirette.clear();
         if(classificaG.size()==0){
             throw new Exception("Creare la classifica dopo i gironi");
         }
@@ -430,19 +431,9 @@ public class Competizione {
         int stato=0;  
         int pe=formulaDiGara.getPercEliminati();
 
-        System.out.print("ClassificaG: ");
-        System.out.println(classificaG);
-
-        System.out.print("Percentuale eliminati: ");
-        System.out.println(pe);
-
         int num_pass=classificaG.size()-(classificaG.size()*pe/100);
-        System.out.print("numero passati: ");
-        System.out.println(num_pass);
         stato=(int)Math.ceil(Math.log(num_pass) / Math.log(2));//In questo modo, stato sarà il logaritmo in base 2 di num_pass arrotondato per eccesso.
 
-        System.out.print("stato: ");
-        System.out.println(stato);
     
         EliminazioneDiretta direttaCorrente= new EliminazioneDiretta(stato, null);
         List<Assalto> assalti= new ArrayList<Assalto>();
@@ -455,15 +446,11 @@ public class Competizione {
             codice=i;
             atleta1=classificaG.get(i-1).getCodFIS();
             valore=(int)Math.pow(2, stato)-i;
-            System.out.print("valore: ");
-            System.out.println(valore);
 
             if((valore>=num_pass)){
                 atleta2=-1;//info che mi dice che l'atleta 1 ha automaticamente vinto
-                System.out.println("___VERO");
             }
             else{
-                System.out.println("___FALSO");
                 atleta2=classificaG.get((int)Math.pow(2, stato)-i).getCodFIS();
             }
             assalti.add(new Assalto(codice, atleta1, atleta2));
@@ -480,7 +467,10 @@ public class Competizione {
         eliminazioniDirette.add(direttaCorrente);
     }
 
-    public void SelezionaED(int stato){
+    public void SelezionaED(int stato)throws Exception{
+        if (eliminazioniDirette.size()==0) {
+            throw new Exception("Dirette non create");
+        }
         direttaCorrente= eliminazioniDirette.get(stato);
     }
 

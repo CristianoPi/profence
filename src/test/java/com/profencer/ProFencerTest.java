@@ -191,8 +191,7 @@ public class ProFencerTest {
             proFencer.CreazioneGironi();
             proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
             proFencer.CreaClassifica();
-            System.out.println(proFencer.CreazioneED());
-            
+            proFencer.CreazioneED();
             proFencer.getCompetizioneCorrente();
             proFencer.ConfermaED();
            

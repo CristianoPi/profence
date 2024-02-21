@@ -293,6 +293,7 @@ public class ProFencer {
 			throw new Exception("Competizione non selezionata");
 		}
 		try {
+			competizioneCorrente.setDirettaCorrente(competizioneCorrente.CreazioneED());
 			return competizioneCorrente.CreazioneED();
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
@@ -302,12 +303,15 @@ public class ProFencer {
 
 	public void ConfermaED()throws Exception{
 		if (competizioneCorrente==null) {
-			throw new Exception("Competizione non selezionata aaa");
+			throw new Exception("Competizione non selezionata");
 		}
 		competizioneCorrente.ConfermaED();
 	}
 
-	public void SelezionaED(int stato){
+	public void SelezionaED(int stato)throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
 		competizioneCorrente.SelezionaED(stato); 
 	}
 
