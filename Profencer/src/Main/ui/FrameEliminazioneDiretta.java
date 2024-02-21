@@ -17,98 +17,81 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Main.domain.Assalto;
+import Main.domain.EliminazioneDiretta;
+import Main.domain.ProFencer;
+
 public class FrameEliminazioneDiretta {
 
 	JFrame frame;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameEliminazioneDiretta window = new FrameEliminazioneDiretta();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
-	public FrameEliminazioneDiretta() {
-		List<String> assalti= new ArrayList<String>();
-    	assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 1");
-	    assalti.add("assalto 2");
-	    assalti.add("assalto 3");
-	    assalti.add("assalto 3");
-		initialize(assalti);
+	
+	public FrameEliminazioneDiretta(ProFencer profencer) {
+	
+		
+		
+		//List<String> assalti= new ArrayList<String>();
+   
+		//	assalti.add("assalto 1");
+	//    assalti.add("assalto 2");
+	//    assalti.add("assalto 3");
+	//    assalti.add("assalto 1");
+	//    assalti.add("assalto 2");
+		//	assalti.add("assalto 1");
+		//    assalti.add("assalto 2");
+		//    assalti.add("assalto 3");
+		//    assalti.add("assalto 1");
+		//    assalti.add("assalto 2");  
+		//	assalti.add("assalto 1");
+		//    assalti.add("assalto 2");
+		//    assalti.add("assalto 3");
+		//    assalti.add("assalto 1");
+		//    assalti.add("assalto 2");
+		  
+		initialize(profencer);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(List<String>assalti) {
+	private void initialize(ProFencer profencer) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		//frame.setMaximumSize(new Dimension(600,400));
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		JLabel label = new JLabel("Tabellone eliminazione diretta");
         frame.add(label,BorderLayout.NORTH);
-        
+        try {
+        EliminazioneDiretta ED=profencer.CreazioneED();
+        List<Assalto> assalti=ED.getAssaltiED();
+        System.out.println("SONO IL TABELLONE");
+        System.out.println(ED);	
         
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
        // frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
-        for (String assalto : assalti) {
+        for (Assalto assalto : assalti) {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); // Imposta la dimensione massima del pannello
 
-            JLabel label1 = new JLabel(assalto);
-            JLabel label2 = new JLabel("gioca");
+            //System.out.println(assalto);
+            
+            JLabel label1 = new JLabel(String.valueOf(assalto.getAtleta1()));
+            JLabel label2 = new JLabel(String.valueOf(assalto.getAtleta2()));
+            Dimension labelSize = new Dimension(100, 20); // Puoi cambiare le dimensioni come preferisci
+            label1.setPreferredSize(labelSize);
+            label2.setPreferredSize(labelSize);
             label1.setBorder(new EmptyBorder(0, 0, 0, 20));
             label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
             panel.add(label1);
             panel.add(label2);
             
-            JTextField punteggio1Field = new JTextField(String.valueOf("0"));
+            JTextField punteggio1Field = new JTextField(String.valueOf(assalto.getPunteggio1()));
             punteggio1Field.setEditable(false); // Rende il campo di testo non modificabile
-            JTextField punteggio2Field = new JTextField(String.valueOf("0"));
+            JTextField punteggio2Field = new JTextField(String.valueOf(assalto.getPunteggio2()));
             punteggio2Field.setEditable(false); // Rende il campo di testo non modificabile
-            JTextField tempoField = new JTextField("oggi");
+            JTextField tempoField = new JTextField(String.valueOf(assalto.getTempo()));
             tempoField.setEditable(false); // Rende il campo di testo non modificabil
 
             panel.add(punteggio1Field);
@@ -129,7 +112,9 @@ public class FrameEliminazioneDiretta {
         frame.add(confermaButton, BorderLayout.SOUTH);
         frame.setMinimumSize(new Dimension(500,400));
        
-      
+        }catch(Exception e) {
+        	System.out.println(e.getMessage());
+        }
 	}
 
 }

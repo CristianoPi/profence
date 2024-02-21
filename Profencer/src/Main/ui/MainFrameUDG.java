@@ -187,13 +187,13 @@ public class MainFrameUDG {
 		btnCreazioneEliminazioniDirette.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//i gironi devono essere finiti e ci deve essere una competizione corrente
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 					// come verificare se i gironi sono stati finiti?
 					// fa partire il metodo da profencer che crea il tabellone, un attrivuot del tabellone sarà la lista degli assalti ad eleiminazione diretta.
 					//io creo la mia frame di visualizzazione de ltabellone passando  eliminazionediretta.listaAssalti, che è una lista assalti
-					FrameEliminazioneDiretta fed = new FrameEliminazioneDiretta();
+					FrameEliminazioneDiretta fed = new FrameEliminazioneDiretta(profencer);
 					fed.frame.setVisible(true);
 
 				}
