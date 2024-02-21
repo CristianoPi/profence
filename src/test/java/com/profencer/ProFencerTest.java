@@ -182,6 +182,7 @@ public class ProFencerTest {
         }
     }
 
+  
 
     @Test
     public void testConfermaED() {
@@ -203,6 +204,31 @@ public class ProFencerTest {
        
     }
 
+    @Test
+    public void testSelezionaED(){
+        proFencer.caricaDati();
+        try {
+            proFencer.SelezionaCompetizione(1);
+            proFencer.CreazioneGironi();
+            proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
+            proFencer.CreaClassifica();
+            proFencer.CreazioneED();
+            proFencer.getCompetizioneCorrente();
+            proFencer.ConfermaED();
+            proFencer.SelezionaED(3);
+           
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            fail();
+            // TODO: handle exception
+        }
+    }
+    @Test
+    public void testInserisciRisultatiED() {
+        
+    }
+
+
 
     @Test
     public void testCreaClassificaFinale() {
@@ -218,11 +244,7 @@ public class ProFencerTest {
 
 
 
-    @Test
-    public void testInserisciRisultatiED() {
-        
-    }
-
+ 
     @Test
     public void testModificaFormulaGara() {
         
@@ -240,11 +262,6 @@ public class ProFencerTest {
 
     @Test
     public void testSelezionaCompetizione() {
-        
-    }
-
-    @Test
-    public void testSelezionaED() {
         
     }
 
