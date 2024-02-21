@@ -98,7 +98,7 @@ public class FrameEliminazioneDiretta {
             panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50)); // Imposta la dimensione massima del pannello
 
             JLabel label1 = new JLabel(assalto);
-            JLabel label2 = new JLabel("giocatore 2");
+            JLabel label2 = new JLabel("gioca");
             label1.setBorder(new EmptyBorder(0, 0, 0, 20));
             label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
             panel.add(label1);

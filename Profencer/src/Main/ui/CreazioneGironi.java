@@ -98,10 +98,15 @@ public class CreazioneGironi {
    				
             //bisogna chiedere via messaggio data ora e depana
            	// successivamente si settano data ora pedana dellìistanza girone scelta
+           		try {
            		String data=JOptionPane.showInputDialog(contentPane,"Inserisci data ed ora :\n","specifiche",JOptionPane.PLAIN_MESSAGE);
 				int pedana=Integer.parseInt((JOptionPane.showInputDialog(contentPane,"Inserisci numero della pedana:\n","specifiche",JOptionPane.PLAIN_MESSAGE)));
                 profencer.InserimentoSpecifiche(g.getCodGirone(), Integer.parseInt(data), pedana);
 				button.setText("Modifica Dati");
+           		}catch(Exception e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+
+           		}
    			}
    		});
 
