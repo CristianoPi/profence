@@ -459,5 +459,29 @@ public class ProFencer {
 				return null;
 	        }
 	}
+
+	public List<Assalto> CaricaListaAssaltiED(){
+		String filename="assalti2.txt";
+		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            String line;
+				List<Assalto> listaAss= new ArrayList<Assalto>();
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codAssalto = Integer.parseInt(parts[0]);
+	                int atleta1 = Integer.parseInt(parts[1]);
+	                int atleta2 = Integer.parseInt(parts[2]);
+	                int punteggio1 = Integer.parseInt(parts[3]);
+	                int punteggio2 = Integer.parseInt(parts[4]);
+	                int tempo = Integer.parseInt(parts[5]);
+					listaAss.add(new Assalto(codAssalto, atleta1, atleta2, punteggio1, punteggio2, tempo));
+					
+	            }
+				return listaAss;
+				//competizioneCorrente.getGironi().get(0).setAssalti(listaAss);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+				return null;
+	        }
+	}
 	
 }
