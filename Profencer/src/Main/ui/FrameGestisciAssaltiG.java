@@ -38,8 +38,13 @@ public class FrameGestisciAssaltiG {
     		System.out.println("siamo l'eliminazione diretta"+String.valueOf(numero));  
     		//se siamo in questo caso 2^numero 
     		//da il numero di assalti che si devono stampare 
-    		EliminazioneDiretta ed = profencer.SelezionaCompetizione(numero); //fare il pull che in realta torna un oggetto eliminazione diretta
-    		
+    		try {
+    		profencer.SelezionaCompetizione(numero);
+    		EliminazioneDiretta ed = profencer.getCompetizioneCorrente().getDirettaCorrente();
+    			initialize(ed.getAssaltiED(),profencer);
+    		}catch(Exception e) {
+    			JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+    		}
     	}
     }
 
@@ -131,7 +136,7 @@ public class FrameGestisciAssaltiG {
             JLabel label1 = new JLabel(String.valueOf(assalto.getAtleta1()));
             JLabel label2 = new JLabel(String.valueOf(assalto.getAtleta2()));
         
-            Dimension labelSize = new Dimension(100, 20); // Puoi cambiare le dimensioni come preferisci
+            Dimension labelSize = new Dimension(100, 20); //le dimensioni
             label1.setPreferredSize(labelSize);
             label2.setPreferredSize(labelSize);
             
@@ -171,7 +176,7 @@ public class FrameGestisciAssaltiG {
             	for(Assalto a : assalti)
             		System.out.println(" vediamo:  "+a.toString());
             	try {
-            	profencer.InserimentoRisultati(codice, assalti);
+            	profencer.InserisciRisultatiED(assalti);
             	}catch(Exception ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 

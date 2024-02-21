@@ -474,8 +474,17 @@ public class Competizione {
 		}
         eliminazioniDirette.add(direttaCorrente);
     }
-    public void SelezionaED(int stato){
-        direttaCorrente= eliminazioniDirette.get(stato);
+    public void SelezionaED(int stato)throws Exception{
+        if (eliminazioniDirette.size()==0) {
+            throw new Exception("Dirette non create");
+        }
+        for (EliminazioneDiretta eliminazioneDiretta : eliminazioniDirette) {
+            if(eliminazioneDiretta.getStato()==stato){
+                direttaCorrente=eliminazioneDiretta;
+                return;
+            }
+        }
+        throw new Exception("Dirette non esistente"); 
     }
 
     public void InserisciRisultatiED(List<Assalto> listaAssalti){

@@ -369,10 +369,12 @@ public class ProFencer {
 	}
 		
 		
-	public void SelezionaED(int stato){
+	public void SelezionaED(int stato)throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
 		competizioneCorrente.SelezionaED(stato); 
 	}
-
 	public EliminazioneDiretta VisualizzaED(){
 		return competizioneCorrente.getDirettaCorrente();
 	}
