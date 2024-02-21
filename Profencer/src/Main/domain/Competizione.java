@@ -338,7 +338,7 @@ public class Competizione {
            
     }
 
-    public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana){
+    public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) throws Exception{
         boolean b=false;
         for (Girone girone : gironi) {
             if(girone.getCodGirone()==codGirone){
@@ -349,27 +349,26 @@ public class Competizione {
         }
         if (!b) {
             //IL GIRONE NON ESISTE
-			System.out.println("IL GIRONE NON ESISTE");
+            throw new Exception("Il girone non esiste");
         }   
     }
 
-    public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti){
+    public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) throws Exception{
         Girone girone=null;
         //trovo il girone di cui voglio insserire gli assalti
         for (Girone g : gironi) {
             if(g.getCodGirone()==codGirone){
                 girone=g;
-                
             }
         }
         if (girone==null) {
-            //IL GIRONE NON ESISTE, non devo fare nulla
-			System.out.println("IL GIRONE NON ESISTE");
-            return;
+            throw new Exception("Il girone non esiste");
         }
+
         //se sono qui il girone esiste
         girone.setAssalti(listaAssalti);//PER ORA NON STIAMO CONSIDERANDO LA POSSIBILITà CH ENON SI INSERISCANO TUTTI GLI ASSALTI DI UN GIRONE
-
+        
+        
         //bisogna settare gli atributi di atleta_girone dopo che si inseriscono i risultati
         for (Assalto assalto : listaAssalti) {
             for(Atleta_Girone a : girone.getAtletiGiorne()){
@@ -382,17 +381,27 @@ public class Competizione {
                     else{
                         a.setSconfitte(a.getSconfitte()+1);
                     }
-                    break;
+                }
+                if (assalto.getAtleta2()==a.getCodFIS()) {
+                    a.setStoccateDate(assalto.getPunteggio2()+a.getStoccateDate());
+                    a.setStoccateRicevute(assalto.getPunteggio1()+a.getStoccateRicevute());
+                    if(assalto.getPunteggio2()>assalto.getPunteggio1()){
+                        a.setVittorie(a.getVittorie()+1);
+                    }
+                    else{
+                        a.setSconfitte(a.getSconfitte()+1);
+                    }
                 }
             }
         }
+
         //ora bisogna calcolare i punteggi degli atleti
         for(Atleta_Girone a : girone.getAtletiGiorne()){
             if(a.getVittorie()+a.getSconfitte() != 0){
-                a.setPunteggio(a.getVittorie()/(a.getVittorie()+a.getSconfitte()));
+                a.setPunteggio((float)a.getVittorie()/(a.getVittorie()+a.getSconfitte()));
             }
             else{
-                a.setPunteggio(0); // o qualsiasi altro valore di default
+                a.setPunteggio(-1); // o qualsiasi altro valore di default
             }
         }
     } 
@@ -402,7 +411,7 @@ public class Competizione {
             @Override
             public int compare(Atleta_Girone a1, Atleta_Girone a2) {
                 if(a1.getPunteggio() != a2.getPunteggio()) {
-                    return Integer.compare(a2.getPunteggio(), a1.getPunteggio()); // Ordina prima per punteggio, dal più alto al più basso
+                    return Float.compare(a2.getPunteggio(), a1.getPunteggio()); // Ordina prima per punteggio, dal più alto al più basso
                 } else {
                     if(a1.getVittorie() != a2.getVittorie()) {
                         return Integer.compare(a2.getVittorie(), a1.getVittorie()); // Se il punteggio è lo stesso, ordina per vittorie, dal più alto al più basso
@@ -419,39 +428,57 @@ public class Competizione {
         });
     }
 
-    public void CreaClassifica(){
+    public void CreaClassifica() throws Exception{
+    	classificaG.clear();
+        boolean r=false;
         for (Girone g : gironi) {
             List<Atleta_Girone> Atletig = g.getAtletiGiorne();
             for (Atleta_Girone atleta_Girone : Atletig) {
+                r=true;
                 classificaG.add(atleta_Girone);
             }
         }
-        //ordina gironi
+        if(!r){
+            throw new Exception("Completare tutti i passsi precedenti");
+        }
+        //ordina classifica gironi
         ordinaGironi(classificaG);
     }
      
-    public EliminazioneDiretta CreazioneED(){
+    public EliminazioneDiretta CreazioneED() throws Exception{
+        if(classificaG.size()==0){
+            throw new Exception("Creare la classifica dopo i gironi");
+        }
+
         int stato=0;
         
         int pe=formulaDiGara.getPercEliminati();
         int num_pass=classificaG.size()-(classificaG.size()*pe/100);
+        System.out.println(num_pass);
         stato=(int)Math.ceil(Math.log(num_pass) / Math.log(2));//In questo modo, stato sarà il logaritmo in base 2 di num_pass arrotondato per eccesso.
     
         EliminazioneDiretta direttaCorrente= new EliminazioneDiretta(stato, null);
         Assalto a=new Assalto(0);
-
+        List<Assalto> assalti= new ArrayList<Assalto>();
+        int codice=0;
+        int atleta1=0;
+        int atleta2=0;
         for(int i=1; i<=(int)Math.pow(2, stato-1); i++){
-            a.setCodAssalto(i);
+            codice=i;
+            atleta1=classificaG.get(i-1).getCodFIS();
             a.setAtleta1(classificaG.get(i-1).getCodFIS());
-            if(((int)Math.pow(2, stato)-i)>num_pass){
+            if(((int)Math.pow(2, stato)-i>num_pass)){
                 a.setAtleta2(-1);//info che mi dice che l'atleta 1 ha automaticamente vinto
             }
             else{
                 a.setAtleta2(classificaG.get((int)Math.pow(2, stato)-i).getCodFIS());
+                
             }
-            direttaCorrente.getAssaltiED().add(a);
+           // assalti.add(new Assalto(i, , num_pass, i, i, i))
+            assalti.add(a);
         }
-
+        direttaCorrente.setAssaltiED(assalti);
+        System.out.println(direttaCorrente);
         return direttaCorrente;
     }
 

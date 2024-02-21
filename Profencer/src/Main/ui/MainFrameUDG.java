@@ -207,12 +207,10 @@ public class MainFrameUDG {
 		JButton btnGestioneAssaltiEliminazioni = new JButton("Gestione Assalti Eliminazioni");
 		btnGestioneAssaltiEliminazioni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 					
-					//FrameEliminazioneDiretta fed = new FrameEliminazioneDiretta();
-					//fed.frame.setVisible(true);
 					FrameGestioneEliminazioneDiretta fged = new FrameGestioneEliminazioneDiretta(profencer);
 					fged.frame.setVisible(true);
 
@@ -229,11 +227,11 @@ public class MainFrameUDG {
 		btnClassificaGironi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//controllo se effettivaemnte i gironi sono file e se la competizione corrente è stata selezionata
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 					// come verificare se i gironi sono stati finiti?
-					FrameClassificaGironi fcf= new FrameClassificaGironi();
+					FrameClassificaGironi fcf= new FrameClassificaGironi(profencer);
 					fcf.frame.setVisible(true);
 
 				}

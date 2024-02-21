@@ -10,7 +10,9 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -36,13 +38,6 @@ public class FrameGestisciAssaltiG {
     		//se siamo in questo caso 2^numero 
     		//da il numero di assalti che si devono stampare 
     	}
-    	
-    	//List<String> assalti= new ArrayList<String>();
-    	//assalti.add("assalto 1");
-	    //assalti.add("assalto 2");
-	    //assalti.add("assalto 3");
-	    //assalti.add("assalto n");
-       // initialize(assalti);
     }
 
     private void initialize(int codice, List<Assalto> assalti,ProFencer profencer) {
@@ -50,46 +45,46 @@ public class FrameGestisciAssaltiG {
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
+       
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        
         for (Assalto assalto : assalti) {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             JLabel label1 = new JLabel(String.valueOf(assalto.getAtleta1()));
             JLabel label2 = new JLabel(String.valueOf(assalto.getAtleta2()));
-        label1.setBorder(new EmptyBorder(0, 0, 0, 20));
-        label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
-        panel.add(label1);
-        panel.add(label2);
         
-        JTextField punteggio1Field = new JTextField(String.valueOf(assalto.getPunteggio1()));
-        JTextField punteggio2Field = new JTextField(String.valueOf(assalto.getPunteggio2()));
-        JTextField tempoField = new JTextField(String.valueOf(assalto.getTempo()));
-        punteggio1Fields.add(punteggio1Field);
-        punteggio2Fields.add(punteggio2Field);
-        tempoFields.add(tempoField);
-        panel.add(punteggio1Field);
-        panel.add(punteggio2Field);
-        panel.add(tempoField);
-          //  panel.add(new JLabel(assalto.getGiocatore1()));
-          //  panel.add(new JLabel(assalto.getGiocatore2()));
-          //  panel.add(new JTextField(String.valueOf(assalto.getPunteggio1())));
-          //  panel.add(new JTextField(String.valueOf(assalto.getPunteggio2())));
-          //  panel.add(new JTextField(assalto.getTempo().toString()));
-            frame.add(panel);
+            Dimension labelSize = new Dimension(100, 20); // Puoi cambiare le dimensioni come preferisci
+            label1.setPreferredSize(labelSize);
+            label2.setPreferredSize(labelSize);
+            
+	        label1.setBorder(new EmptyBorder(0, 0, 0, 20));
+	        label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
+	        panel.add(label1);
+	        panel.add(label2);
+	        
+	        JTextField punteggio1Field = new JTextField(String.valueOf(assalto.getPunteggio1()));
+	        JTextField punteggio2Field = new JTextField(String.valueOf(assalto.getPunteggio2()));
+	        JTextField tempoField = new JTextField(String.valueOf(assalto.getTempo()));
+	        punteggio1Fields.add(punteggio1Field);
+	        punteggio2Fields.add(punteggio2Field);
+	        tempoFields.add(tempoField);
+	        panel.add(punteggio1Field);
+	        panel.add(punteggio2Field);
+	        panel.add(tempoField);
+	 
+	        mainPanel.add(panel);
+	        // frame.add(panel);
         }
+        JScrollPane ScrollPane= new JScrollPane(mainPanel);
+        frame.add(ScrollPane);
         JButton confermaButton = new JButton("Conferma");
         confermaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aggiorna la lista di assalti qui
-            	/*
-            	  for (int i = 0; i < assalti.size(); i++) {
-                    Assalto assalto = assalti.get(i);
-                    assalto.setPunteggio1(Integer.parseInt(punteggio1Fields.get(i).getText()));
-                    assalto.setPunteggio2(Integer.parseInt(punteggio2Fields.get(i).getText()));
-                    assalto.setTempo(Time.valueOf(tempoFields.get(i).getText()));
-                } 
-            	 */
-            	//per vedere se funziona.
+               
+            //per vedere se funziona.
             	for(int i=0; i<assalti.size();i++) {
             	//List <Assalto> assaltiRisultati= new ArrayList<Assalto>();
             	assalti.get(i).setPunteggio1(Integer.parseInt(punteggio1Fields.get(i).getText()));
@@ -99,8 +94,13 @@ public class FrameGestisciAssaltiG {
             	}
             	for(Assalto a : assalti)
             		System.out.println(" vediamo:  "+a.toString());
+            	try {
             	profencer.InserimentoRisultati(codice, assalti);
-             	for (int i = 0; i < assalti.size(); i++) {
+            	}catch(Exception ex) {
+					JOptionPane.showMessageDialog(null, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+
+            	}
+            	for (int i = 0; i < assalti.size(); i++) {
             		System.out.println(tempoFields.get(i).getText());
             		System.out.println(punteggio1Fields.get(i).getText());
             		System.out.println(punteggio2Fields.get(i).getText());

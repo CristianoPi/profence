@@ -306,28 +306,59 @@ public class ProFencer {
 		return competizioneCorrente.getGironi();
 	}
 
-	public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) {
+	public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) throws Exception{
 		if (competizioneCorrente==null) {
-			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
+			throw new Exception("Competizione non selezionata");
 		}
-		competizioneCorrente.InserimentoSpecifiche(codGirone, dataOra, pedana);
+		try {
+			competizioneCorrente.InserimentoSpecifiche(codGirone, dataOra, pedana);
+		} catch (Exception e) {
+			throw new Exception("Il girone non esiste");
+			// TODO: handle exception
+		}
+		
 	}
 
-	public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) {
+	public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) throws Exception{
 		if (competizioneCorrente==null) {
-			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
+			throw new Exception("Competizione non selezionata");
 		}
 		competizioneCorrente.InserimentoRisultati(codGirone, listaAssalti);
 	}
 
-	public EliminazioneDiretta CreazioneED(){
+	public void CreaClassifica() throws Exception{
 		if (competizioneCorrente==null) {
-			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
+			throw new Exception("Competizione non selezionata");
 		}
-		return competizioneCorrente.CreazioneED();
+		try {
+			competizioneCorrente.CreaClassifica();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public List<Atleta_Girone> VisualizzaClassifica()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
+		if(competizioneCorrente.getClassificaG().size()>0) {
+			return competizioneCorrente.getClassificaG();
+		}
+		else
+			throw new Exception("Creare prima la classifica");
+	}
+	
+	public EliminazioneDiretta CreazioneED()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
+		try {
+			return competizioneCorrente.CreazioneED();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+			// TODO: handle exception
+		}
+		
 	}
 
 	public void ConfermaED(){
