@@ -245,7 +245,7 @@ public class MainFrameUDG {
 		btnGesnerazioneRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: per generare un ranking devi aver selezionato una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 					// come verificare se  le eliminazioni sono finete?
@@ -253,7 +253,7 @@ public class MainFrameUDG {
 					//dalla competizione corrente prendo la lista degli atleti e la stampo
 					//prima si dovrebbe chimare la funziona che crea il ranking.
 					//poi si passsa alla frame la competiizone corrente o la lista atleti della competizione corrente
-					FrameRanking fr= new FrameRanking();
+					FrameRanking fr= new FrameRanking(profencer);
 					fr.frame.setVisible(true);
 				}
 				
@@ -270,11 +270,11 @@ public class MainFrameUDG {
 				//non solo la competizioen deve essere selezionata ma deve essere anche finita
 				//coem per classifica giorni si passa una lista di atleti quindi credo possa andare bene la stessa frame variando solo la lista in ingressso
 				//no cambia il fatto che si tratterà di una lista di atleti e non di atleti girone quindi non si può usare la stessa frame 
-				if(lblCompetizione.getText().equals("nessuna competizione scelta ")) {
+				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 					// come verificare se i gironi sono stati finiti?
-					FrameClassificaFinale fcf= new FrameClassificaFinale();
+					FrameClassificaFinale fcf= new FrameClassificaFinale(profencer);
 					fcf.frame.setVisible(true);
 
 				}
