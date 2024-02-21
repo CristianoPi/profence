@@ -319,16 +319,36 @@ public class ProFencer {
 		return competizioneCorrente.getDirettaCorrente();
 	}
 
-	public void InserisciRisultatiED(List<Assalto> listaAssalti){
+	public void InserisciRisultatiED(List<Assalto> listaAssalti)throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
 		competizioneCorrente.InserisciRisultatiED(listaAssalti);
 	}
 
-	public void CreaClassificaFinale(){
-		competizioneCorrente.CreaClassificaFinale();
+	public void CreaClassificaFinale()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
+		try {
+			competizioneCorrente.CreaClassificaFinale();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+			// TODO: handle exception
+		}
 	}
 
-	public void CreaRanking(){
-		competizioneCorrente.CreaRanking();
+	public void CreaRanking()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
+		try {
+			competizioneCorrente.CreaRanking();
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+			// TODO: handle exception
+		}
+		
 	}
 
 	public List<Atleta> VisualizzaClassificaFinale(){
@@ -462,6 +482,54 @@ public class ProFencer {
 
 	public List<Assalto> CaricaListaAssaltiED(){
 		String filename="assalti2.txt";
+		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            String line;
+				List<Assalto> listaAss= new ArrayList<Assalto>();
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codAssalto = Integer.parseInt(parts[0]);
+	                int atleta1 = Integer.parseInt(parts[1]);
+	                int atleta2 = Integer.parseInt(parts[2]);
+	                int punteggio1 = Integer.parseInt(parts[3]);
+	                int punteggio2 = Integer.parseInt(parts[4]);
+	                int tempo = Integer.parseInt(parts[5]);
+					listaAss.add(new Assalto(codAssalto, atleta1, atleta2, punteggio1, punteggio2, tempo));
+					
+	            }
+				return listaAss;
+				//competizioneCorrente.getGironi().get(0).setAssalti(listaAss);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+				return null;
+	        }
+	}
+
+	public List<Assalto> CaricaListaAssaltiED3(){
+		String filename="assalti3.txt";
+		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+	            String line;
+				List<Assalto> listaAss= new ArrayList<Assalto>();
+	            while ((line = reader.readLine()) != null) {
+	                String[] parts = line.split(",");
+	                int codAssalto = Integer.parseInt(parts[0]);
+	                int atleta1 = Integer.parseInt(parts[1]);
+	                int atleta2 = Integer.parseInt(parts[2]);
+	                int punteggio1 = Integer.parseInt(parts[3]);
+	                int punteggio2 = Integer.parseInt(parts[4]);
+	                int tempo = Integer.parseInt(parts[5]);
+					listaAss.add(new Assalto(codAssalto, atleta1, atleta2, punteggio1, punteggio2, tempo));
+					
+	            }
+				return listaAss;
+				//competizioneCorrente.getGironi().get(0).setAssalti(listaAss);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+				return null;
+	        }
+	}
+
+	public List<Assalto> CaricaListaAssaltiED4(){
+		String filename="assalti4.txt";
 		 try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
 	            String line;
 				List<Assalto> listaAss= new ArrayList<Assalto>();
