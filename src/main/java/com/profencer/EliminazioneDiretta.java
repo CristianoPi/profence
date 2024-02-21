@@ -20,11 +20,12 @@ public class EliminazioneDiretta {
     public void setAssaltiED(List<Assalto> assaltiED) {
         this.assaltiED = assaltiED;
     }
-    public EliminazioneDiretta(int stato, List<Assalto> assaltiED) {
+    
+    public EliminazioneDiretta(int stato, List<Assalto> assaltiED, List<Atleta> eliminati) {
         this.stato = stato;
         this.assaltiED = assaltiED;
+        this.eliminati = eliminati;
     }
-
     public EliminazioneDiretta(int stato) {
         this.stato = stato;
         this.assaltiED =new ArrayList<>();

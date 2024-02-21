@@ -25,6 +25,7 @@ public class Competizione {
     private EliminazioneDiretta direttaCorrente;
     private List<EliminazioneDiretta> eliminazioniDirette;
     private List<Atleta> classificaFinale; //PER ORA IMPLEMENTATA COME LISTA
+
     private List<Tabellla_ranking> tr;//PER ORA IMPLEMENTATA COME LISTA
 
     //getters and setters
@@ -435,7 +436,7 @@ public class Competizione {
         stato=(int)Math.ceil(Math.log(num_pass) / Math.log(2));//In questo modo, stato sarà il logaritmo in base 2 di num_pass arrotondato per eccesso.
 
     
-        EliminazioneDiretta direttaCorrente= new EliminazioneDiretta(stato, null);
+        EliminazioneDiretta direttaCorrente= new EliminazioneDiretta(stato);
         List<Assalto> assalti= new ArrayList<Assalto>();
         int codice=0;
         int atleta1=0;
@@ -481,65 +482,124 @@ public class Competizione {
     }
 
     public void InserisciRisultatiED(List<Assalto> listaAssalti){
-        direttaCorrente.setAssaltiED(listaAssalti);
-        // se gli assalti sono completi si deve settare la nuova diretta corrente
         boolean fine=true;
+        direttaCorrente.setAssaltiED(listaAssalti);
+        if(direttaCorrente.getStato()==1)
+            fine=false;
+
+        // se gli assalti sono completi si deve settare la nuova diretta corrente
+
+        
         for(Assalto a : listaAssalti){
-           if(a.getPunteggio1()==-2||a.getPunteggio2()==-2){//ricordiamo che -2 èun valore deciso da noi per indicare assalto non ancora disputato 
-            fine=false;    
-           } 
+            System.out.println("a");
+            if(a.getPunteggio1()==-2||a.getPunteggio2()==-2){
+                //Qui i punteggi non sono stati modificati
+                if(a.getAtleta2()!=-1){
+                    fine=false;
+                }
+            }
         }
+
+
+
        
+        System.out.print("valore di fine:");
+        System.out.println(fine);
+
+
         if(fine){//se finiamo tutti gli assalti di una fase es.64 quella corrente diventa in automatico quella dei 32
-            EliminazioneDiretta new_ED=new EliminazioneDiretta(direttaCorrente.getStato()-1);
+
+            
+            List<Atleta> eliminati = new ArrayList<Atleta>();
+            List<Assalto> assalti  = new ArrayList<Assalto>();
             int vincitore1=0;
             int vincitore2=0;
+            
             for(int i = 0; i < listaAssalti.size(); i += 2){
                 if(listaAssalti.get(i).getPunteggio1()>listaAssalti.get(i).getPunteggio2()||listaAssalti.get(i).getAtleta2()==-1){//atleta uguale a -1 vuol dire che in realtà era un assalto fittizio vinto automaticamente da a1
                     vincitore1=listaAssalti.get(i).getAtleta1();
                     if (listaAssalti.get(i).getAtleta2()!=-1) {
-                        new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i).getAtleta2()));
+                        eliminati.add(mappaAtleti.get(listaAssalti.get(i).getAtleta2()));
+                        //new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i).getAtleta2()));
                     }
                 }
                 else{
                     vincitore1=listaAssalti.get(i).getAtleta2();
-                    new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i).getAtleta1()));
+                    eliminati.add(mappaAtleti.get(listaAssalti.get(i).getAtleta1()));
+                    //new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i).getAtleta1()));
                 }
 
                 if(listaAssalti.get(i+1).getPunteggio1()>listaAssalti.get(i+1).getPunteggio2()||listaAssalti.get(i+1).getAtleta2()==-1){
                     vincitore2=listaAssalti.get(i+1).getAtleta1();
                     if (listaAssalti.get(i).getAtleta2()!=-1) {
-                        new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i+1).getAtleta2()));
+                        eliminati.add(mappaAtleti.get(listaAssalti.get(i+1).getAtleta2()));
+                        //new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i+1).getAtleta2()));
                     }
                 }
                 else{
                     vincitore2=listaAssalti.get(i+1).getAtleta2();
-                    new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i+1).getAtleta1()));
+                    eliminati.add(mappaAtleti.get(listaAssalti.get(i+1).getAtleta1()));
+                    //new_ED.getEliminati().add(mappaAtleti.get(listaAssalti.get(i+1).getAtleta1()));
                 }
-                Assalto a=new Assalto(i/2, vincitore1, vincitore2);
-                new_ED.getAssaltiED().add(a); 
+                assalti.add(new Assalto(i/2, vincitore1, vincitore2));
+                //new_ED.getAssaltiED().add(a); 
             }
+
+            EliminazioneDiretta new_ED=new EliminazioneDiretta(direttaCorrente.getStato()-1, assalti, eliminati);
             direttaCorrente=new_ED;
+            eliminazioniDirette.add(new_ED);
         }
+
+        //Per ora non verificato cosa succede se si arriva in finale
     }
 
-    public void CreaClassificaFinale(){
-        classificaFinale= new ArrayList<>();
-        Atleta atleta;
-        //aggiungiamo vincitore della gara in cima
-        //la gara deve essere finita, da verificare(PER ORA forse aggiungere atrributo fine_gara)
-        Assalto finale=eliminazioniDirette.get(eliminazioniDirette.size()-1).getAssaltiED().get(0);
-        if(finale.getPunteggio1()>finale.getPunteggio2()){
-            atleta = mappaAtleti.get(finale.getAtleta1());
+    public void CreaClassificaFinale()throws Exception{
+        classificaFinale.clear();
+        boolean fine=false;
+        Atleta atleta=null;
+
+        // aggiungiamo vincitore della gara in cima
+        // la gara deve essere finita, da verificare(PER ORA forse aggiungere atrributo fine_gara)
+        for (EliminazioneDiretta ed : eliminazioniDirette){
+            if(ed.getStato()==1){
+                if(ed.getAssaltiED().get(0).getPunteggio1()!=-2&&ed.getAssaltiED().get(0).getPunteggio2()!=-2){
+                    if(ed.getAssaltiED().get(0).getPunteggio1()>ed.getAssaltiED().get(0).getPunteggio2()){
+                        atleta=mappaAtleti.get(ed.getAssaltiED().get(0).getAtleta1());
+                        classificaFinale.add(atleta);
+                        atleta=mappaAtleti.get(ed.getAssaltiED().get(0).getAtleta2());
+                        classificaFinale.add(atleta);
+                    }
+                    else{
+                        atleta=mappaAtleti.get(ed.getAssaltiED().get(0).getAtleta2());
+                        classificaFinale.add(atleta);
+                        atleta=mappaAtleti.get(ed.getAssaltiED().get(0).getAtleta1());
+                        classificaFinale.add(atleta);
+                    }
+                    fine=true;
+                }
+            }
         }
-        else{
-            atleta = mappaAtleti.get(finale.getAtleta2());
+        if(!fine){
+            throw new Exception("La competzione non è ancora finita"); 
         }
-        for (EliminazioneDiretta ed : eliminazioniDirette) {//PER ORA NON FATTO ma da verificare in che senso scorre
-            classificaFinale.addAll(ed.getEliminati());
-        }
+        
+        //_____
+        
+        int stato=0;  
         int num_elimi=classificaG.size()*formulaDiGara.getPercEliminati()/100;
         int num_pass=classificaG.size()-num_elimi;
+
+        stato=(int)Math.ceil(Math.log(num_pass) / Math.log(2));//In questo modo, stato sarà il logaritmo in base 2 di num_pass arrotondato per eccesso.
+
+        for (int i = eliminazioniDirette.size() - 1; i >= 0; i--) {
+            EliminazioneDiretta ed = eliminazioniDirette.get(i);
+            if(ed.getStato() != stato) {
+                classificaFinale.addAll(ed.getEliminati());
+            }
+        }
+        
+
+        
         for(int i=num_pass; i<num_elimi+num_pass; i++){
             atleta = mappaAtleti.get(classificaG.get(i).getCodFIS());
             if(atleta != null){
@@ -548,16 +608,27 @@ public class Competizione {
         }
     }
 
-    public void CreaRanking(){
-        CreaClassificaFinale();
+    public void CreaRanking() throws Exception{
+        try {
+            CreaClassificaFinale();
+        } catch (Exception e) {
+            throw new Exception("Errore in crea classifica"); 
+            // TODO: handle exception
+        }
+        
         Tabellla_ranking tr=new Tabellla_ranking();
         tr.CaricaTabellaRanking();
         float punteggio=0;
         Atleta a;
         for(int i=0; i<classificaFinale.size(); i++){
             punteggio=tr.OttieniPunteggio(i);
+            System.out.println("IL PUNTEGGIO E'");
+            System.out.println(punteggio);
             a=classificaFinale.get(i);
             a.setRanking(a.getRanking()+punteggio);// considerando che è un riferimento all'oggetto lo sto modificando ovunque anche su tesserati
+        }
+        for (Atleta atleta : accettazioni) {
+            
         }
     }
 
