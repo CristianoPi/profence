@@ -87,7 +87,7 @@ public class FrameEliminazioneDiretta {
             Dimension labelSize = new Dimension(100, 20); // Puoi cambiare le dimensioni come preferisci
             label1.setPreferredSize(labelSize);
             label2.setPreferredSize(labelSize);
-            label1.setBorder(new EmptyBorder(0, 0, 0, 20));
+            label1.setBorder(new EmptyBorder(0, 10, 0, 20));
             label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
             panel.add(label1);
             panel.add(label2);

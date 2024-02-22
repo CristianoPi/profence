@@ -84,8 +84,8 @@ public class MainFrameUDG {
 					lblCompetizione.setText("Competizione attuale: "+String.valueOf(profencer.getCompetizioneCorrente().getCodCompetizione()));
 					
 					}catch(Exception e) {
-						System.out.println("Eccezzione non essite tale competizione ");
-						//se mi da l'eccezione relativa al fatto che già c'è 
+						
+						JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 						lblCompetizione.setText("nessuna competizione scelta ");
 					}
 				}catch(Exception e ){
@@ -121,13 +121,6 @@ public class MainFrameUDG {
 				if(profencer.getCompetizioneCorrente()==null) {
 					JOptionPane.showMessageDialog(null, "Errore: per accettare degli atleti bisogna selezionare una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
-				//FrameGestioneFormulaDiGara fgfdg= new FrameGestioneFormulaDiGara(lblCompetizione.getText());
-				//fgfdg.frame.setVisible(true);
-					
-					//bisogna mettere la nuova frame che stampa la lista degli atleti iscritti alla competizione che si passa alla frame,
-					//in questa frame ad ogni riga ci sarò il profilo di un atleta è un radio button? o comuenque qualcosa per fleggare gli atleti che saranno accettati
-				 // in fondo alla pagina ci sarà un botto di conferma a cui sarà legato l'evento di creare una lista con solo gli atleti flaggati, radio button positivo.
-					//un po di dubbi su come farlo.
 					
 					FrameAccettaAtleta faa= new FrameAccettaAtleta(profencer);
 					faa.frame.setVisible(true);
@@ -241,7 +234,7 @@ public class MainFrameUDG {
 		btnClassificaGironi.setBounds(445, 290, 295, 65);
 		frame.getContentPane().add(btnClassificaGironi);
 		
-		JButton btnGesnerazioneRanking = new JButton("Gesnerazione Ranking");
+		JButton btnGesnerazioneRanking = new JButton("Ranking");
 		btnGesnerazioneRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -253,8 +246,8 @@ public class MainFrameUDG {
 					//dalla competizione corrente prendo la lista degli atleti e la stampo
 					//prima si dovrebbe chimare la funziona che crea il ranking.
 					//poi si passsa alla frame la competiizone corrente o la lista atleti della competizione corrente
-					FrameRanking fr= new FrameRanking(profencer);
-					fr.frame.setVisible(true);
+					FrameMenuRanking fmr = new FrameMenuRanking(profencer);
+					fmr.frame.setVisible(true);
 				}
 				
 			}

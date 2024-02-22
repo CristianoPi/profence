@@ -19,14 +19,14 @@ public class FrameRanking {
 
 	
 	//bisognera aggiungere cosa verra passato o competizione o lista atleti della competizione
-	public FrameRanking( ProFencer profencer) {
-		initialize(profencer);
+	public FrameRanking( ProFencer profencer,boolean flag) {
+		initialize(profencer,flag);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize(ProFencer profencer) {
+	private void initialize(ProFencer profencer,boolean flag) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -34,7 +34,8 @@ public class FrameRanking {
 	        frame.add(label,BorderLayout.NORTH);
 	        
 	        try {
-	        profencer.CreaRanking();
+	        	if(flag)
+	        	profencer.CreaRanking();
 	        List<Atleta> ranking = profencer.VisualizzaRanking();
 	        // Creazione della tabella
 	        String[] columnNames = {"codFIS","nome", "cognome","CF", "genere", "ranking"};
@@ -44,11 +45,12 @@ public class FrameRanking {
 	            data[i][0] = atleta.getCF();
 	        	  data[i][1] = atleta.getNome();
 	        	  data[i][2] = atleta.getCognome();
+	        	  data[i][3]=atleta.getCF();
 	        	  if(atleta.isGenere())
-	        		  data[i][3] = "male";
+	        		  data[i][4] = "male";
 	        	  else
-	        		  data[i][3] = "female";
-	        	  data[i][4] = atleta.getRanking();
+	        		  data[i][4] = "female";
+	        	  data[i][5] = atleta.getRanking();
 	            
 	        }
 	        

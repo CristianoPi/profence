@@ -25,6 +25,7 @@ public class FrameGestisciAssaltiG {
     List<JTextField> punteggio1Fields = new ArrayList<>();
     List<JTextField> punteggio2Fields = new ArrayList<>();
     List<JTextField> tempoFields = new ArrayList<>();
+    Dimension textSize = new Dimension(80, 30);
   
     public FrameGestisciAssaltiG(int numero,ProFencer profencer) {
     	if(numero<0)
@@ -39,7 +40,7 @@ public class FrameGestisciAssaltiG {
     		//se siamo in questo caso 2^numero 
     		//da il numero di assalti che si devono stampare 
     		try {
-    		profencer.SelezionaCompetizione(numero);
+    		profencer.SelezionaED(numero);
     		EliminazioneDiretta ed = profencer.getCompetizioneCorrente().getDirettaCorrente();
     			initialize(ed.getAssaltiED(),profencer);
     		}catch(Exception e) {
@@ -67,7 +68,7 @@ public class FrameGestisciAssaltiG {
             label1.setPreferredSize(labelSize);
             label2.setPreferredSize(labelSize);
             
-	        label1.setBorder(new EmptyBorder(0, 0, 0, 20));
+	        label1.setBorder(new EmptyBorder(0, 10, 0, 20));
 	        label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
 	        panel.add(label1);
 	        panel.add(label2);
@@ -104,6 +105,8 @@ public class FrameGestisciAssaltiG {
             		System.out.println(" vediamo:  "+a.toString());
             	try {
             	profencer.InserimentoRisultati(codice, assalti);
+            	JOptionPane.showMessageDialog(null, "risultati inseriti correttamente ", "Info", JOptionPane.INFORMATION_MESSAGE);
+            	frame.dispose();
             	}catch(Exception ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 
@@ -134,29 +137,69 @@ public class FrameGestisciAssaltiG {
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             JLabel label1 = new JLabel(String.valueOf(assalto.getAtleta1()));
-            JLabel label2 = new JLabel(String.valueOf(assalto.getAtleta2()));
-        
-            Dimension labelSize = new Dimension(100, 20); //le dimensioni
-            label1.setPreferredSize(labelSize);
-            label2.setPreferredSize(labelSize);
-            
-	        label1.setBorder(new EmptyBorder(0, 0, 0, 20));
-	        label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
-	        panel.add(label1);
-	        panel.add(label2);
-	        
-	        JTextField punteggio1Field = new JTextField(String.valueOf(assalto.getPunteggio1()));
-	        JTextField punteggio2Field = new JTextField(String.valueOf(assalto.getPunteggio2()));
-	        JTextField tempoField = new JTextField(String.valueOf(assalto.getTempo()));
-	        punteggio1Fields.add(punteggio1Field);
-	        punteggio2Fields.add(punteggio2Field);
-	        tempoFields.add(tempoField);
-	        panel.add(punteggio1Field);
-	        panel.add(punteggio2Field);
-	        panel.add(tempoField);
-	 
-	        mainPanel.add(panel);
-	        // frame.add(panel);
+            JLabel label2 = new JLabel();
+            if(assalto.getAtleta2()!=-1) {
+              	 label2.setText(String.valueOf(assalto.getAtleta2()));
+           
+               Dimension labelSize = new Dimension(110, 20); // Puoi cambiare le dimensioni come preferisci
+               label1.setPreferredSize(labelSize);
+               label2.setPreferredSize(labelSize);
+	               
+	   	        label1.setBorder(new EmptyBorder(0, 10, 0, 20));
+	   	        label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
+	   	        panel.add(label1);
+	   	        panel.add(label2);
+	   	        
+	   	        JTextField punteggio1Field = new JTextField(String.valueOf(assalto.getPunteggio1()));
+	   	        JTextField punteggio2Field = new JTextField(String.valueOf(assalto.getPunteggio2()));
+	   	        JTextField tempoField = new JTextField(String.valueOf(assalto.getTempo()));
+	   	        
+	   	        punteggio1Field.setPreferredSize(textSize);
+    	        punteggio2Field.setPreferredSize(textSize);
+    	        tempoField.setPreferredSize(textSize);
+	   	        
+	   	        punteggio1Fields.add(punteggio1Field);
+	   	        punteggio2Fields.add(punteggio2Field);
+	   	        tempoFields.add(tempoField);
+	   	        panel.add(punteggio1Field);
+	   	        panel.add(punteggio2Field);
+	   	        panel.add(tempoField);
+	   	 
+	   	        mainPanel.add(panel);
+               }else {
+               	label2.setText("fase successiva");
+               	Dimension labelSize = new Dimension(110, 20); // Puoi cambiare le dimensioni come preferisci
+                   label1.setPreferredSize(labelSize);
+                   label2.setPreferredSize(labelSize);
+                   
+       	        label1.setBorder(new EmptyBorder(0, 10, 0, 20));
+       	        label2.setBorder(new EmptyBorder(0, 0, 0, 20)); 
+       	        panel.add(label1);
+       	        panel.add(label2);
+       	        
+       	        JTextField punteggio1Field = new JTextField(String.valueOf(assalto.getPunteggio1()));
+       	        punteggio1Field.setEditable(false);
+       	        
+       	        JTextField punteggio2Field = new JTextField(String.valueOf(assalto.getPunteggio2()));
+       	        punteggio2Field.setEditable(false);
+       	       
+       	        JTextField tempoField = new JTextField(String.valueOf(assalto.getTempo()));
+       	        tempoField.setEditable(false);
+       	        
+       	        
+       	        punteggio1Field.setPreferredSize(textSize);
+       	        punteggio2Field.setPreferredSize(textSize);
+       	        tempoField.setPreferredSize(textSize);
+       	        
+       	        punteggio1Fields.add(punteggio1Field);
+       	        punteggio2Fields.add(punteggio2Field);
+       	        tempoFields.add(tempoField);
+       	        panel.add(punteggio1Field);
+       	        panel.add(punteggio2Field);
+       	        panel.add(tempoField);
+       	        
+               	mainPanel.add(panel);
+               }
         }
         JScrollPane ScrollPane= new JScrollPane(mainPanel);
         frame.add(ScrollPane);
@@ -177,6 +220,8 @@ public class FrameGestisciAssaltiG {
             		System.out.println(" vediamo:  "+a.toString());
             	try {
             	profencer.InserisciRisultatiED(assalti);
+            	JOptionPane.showMessageDialog(null, "risultati inseriti correttamente ", "Info", JOptionPane.INFORMATION_MESSAGE);
+            	frame.dispose();
             	}catch(Exception ex) {
 					JOptionPane.showMessageDialog(null, ex.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 

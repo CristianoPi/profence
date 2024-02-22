@@ -21,11 +21,12 @@ public class EliminazioneDiretta {
     public void setAssaltiED(List<Assalto> assaltiED) {
         this.assaltiED = assaltiED;
     }
-    public EliminazioneDiretta(int stato, List<Assalto> assaltiED) {
+    
+    public EliminazioneDiretta(int stato, List<Assalto> assaltiED, List<Atleta> eliminati) {
         this.stato = stato;
         this.assaltiED = assaltiED;
+        this.eliminati = eliminati;
     }
-
     public EliminazioneDiretta(int stato) {
         this.stato = stato;
         this.assaltiED =new ArrayList<>();
@@ -35,6 +36,10 @@ public class EliminazioneDiretta {
     }
     public void setEliminati(List<Atleta> eliminati) {
         this.eliminati = eliminati;
+    }
+    @Override
+    public String toString() {
+        return "EliminazioneDiretta [stato=" + stato + ", assaltiED=" + assaltiED + ", eliminati=" + eliminati + "]\n";
     }
 
     

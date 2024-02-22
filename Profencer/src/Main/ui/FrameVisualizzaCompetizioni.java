@@ -65,7 +65,7 @@ public class FrameVisualizzaCompetizioni {
 	    					try {
 		    					profencer.Iscrizione(Integer.parseInt(fis), c.getCodCompetizione());
 	    						JOptionPane.showMessageDialog(null, "iscrizione avvenura corretamente ", "Risultato: ", JOptionPane.INFORMATION_MESSAGE);
-	    						frame.dispose();
+	    						//frame.dispose();
 	    					}
 	    					catch(Exception e) {
 	    						JOptionPane.showMessageDialog(null, e.getMessage(), "errore ", JOptionPane.ERROR_MESSAGE);

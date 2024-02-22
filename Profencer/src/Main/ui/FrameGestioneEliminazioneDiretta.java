@@ -46,8 +46,13 @@ public class FrameGestioneEliminazioneDiretta {
 	  
 	   // try (Scanner scanner = new Scanner(new File("C:\\Users\\giuse\\OneDrive\\Documenti\\GitHub\\profence\\src\\main\\ui\\src\\prova\\file.txt"))) {
 	        for( EliminazioneDiretta ed: lista) {
-	            
-	            JLabel textField = new JLabel(String.valueOf((int)Math.pow(2, ed.getStato())));
+	        	JLabel textField = new JLabel();
+	            if(ed.getStato()!=1) {
+	            	 textField.setText("Tabellone dei "+String.valueOf((int)Math.pow(2, ed.getStato())));
+	            }
+	            else {
+	            	 textField.setText("FINALE");
+	            }
 	            JButton button = new JButton("Seleziona fase"); 
 	            										 
 	            button.addActionListener(new ActionListener() {
@@ -58,7 +63,7 @@ public class FrameGestioneEliminazioneDiretta {
 	    																		//degli assalti o qualcosa per arrivarci
 	    																		//metto i nel cotruttore succede qualcosa ?
 	            		fgaf.frame.setVisible(true);
-	    				
+	    				frame.dispose();
 	    			}
 	    		});
 	            
