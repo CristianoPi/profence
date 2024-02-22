@@ -50,8 +50,12 @@ public class FrameCreazioneCompetizione extends JFrame {
 		frame.getContentPane().add(lblCodiceNome);
 		
 		JLabel lblDescrizione = new JLabel("Descrizione");
-		lblDescrizione.setBounds(55, 251, 111, 25);
-		frame.getContentPane().add(lblDescrizione);
+		lblDescrizione.setBounds(55, 251, 111, 25);	
+		frame.getContentPane().add(lblDescrizione);  
+		
+		JLabel lblGenere = new JLabel("Genere");
+		lblGenere.setBounds(55, 210, 96, 21);
+		frame.getContentPane().add(lblGenere);
 		
 		textNomeCodice = new JTextField();
 		textNomeCodice.setBounds(215, 63, 96, 19);
@@ -62,8 +66,14 @@ public class FrameCreazioneCompetizione extends JFrame {
 		JComboBox boxCategoria = new JComboBox();
 		boxCategoria.setModel(new DefaultComboBoxModel(new String[] {"", "under 14", "under 18", "under 21"}));
 		boxCategoria.setToolTipText("");
-		boxCategoria.setBounds(215, 187, 96, 21);
+		boxCategoria.setBounds(215, 187, 96, 21);  
 		frame.getContentPane().add(boxCategoria);
+		
+		JComboBox boxGenere = new JComboBox();
+		boxGenere.setModel(new DefaultComboBoxModel(new String[] {"", "male", "female"}));
+		boxGenere.setToolTipText("");
+		boxGenere.setBounds(215, 210, 96, 21);
+		frame.getContentPane().add(boxGenere);
 		
 		JDateChooser selezionaData = new JDateChooser();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -77,6 +87,10 @@ public class FrameCreazioneCompetizione extends JFrame {
 		
 		JLabel lblErrorCategoria = new JLabel("");
 		lblErrorCategoria.setBounds(393, 189, 280, 19);
+		frame.getContentPane().add(lblErrorCategoria);
+		
+		JLabel lblErrorGenere = new JLabel("");
+		lblErrorCategoria.setBounds(393, 210, 280, 19);
 		frame.getContentPane().add(lblErrorCategoria);
 		
 		JLabel lblErrorDescrizione = new JLabel("");
@@ -130,14 +144,19 @@ public class FrameCreazioneCompetizione extends JFrame {
 						lblErrorDescrizione.setText("ERRORE; devi inserire una descrizione");
 					if(boxCategoria.getSelectedItem().equals("")) 
 						lblErrorCategoria.setText("DEVI SELEZIONARE UNA CATEGORIA");
+					if(boxGenere.getSelectedItem().equals("")) 
+						lblErrorCategoria.setText("DEVI SELEZIONARE UN GENERE");
 					if(textArma.getText().equals(""))
 						lblErrorArma.setText("Errore, inserire un arma");
 					//si dovrebbe controllare se Codice/nome è già presnte nel file(?) o database dove abbiamo conservati le competizioni già create.
 					//si aggiorna sto file o database solo a fine caso d'uso in modo tale che se le specifiche non sono state inserite corretaemtne la prima volta l'utente possa riprovare a metterle.
 				}else {
 		            try {
-				profencer.InserimentoDatiCompetizione(textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem().toString(), textArma.getText());
-				
+		            	if(boxGenere.getSelectedItem()=="male")
+		            		profencer.InserimentoDatiCompetizione(textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem().toString(), textArma.getText(),true);
+		            	else
+		            		profencer.InserimentoDatiCompetizione(textNomeCodice.getText(), textAreaDescrizione.getText(), currentDate,boxCategoria.getSelectedItem().toString(), textArma.getText(),false);
+
 				//da controllare il metodo sopra, ha ancora float quota e non presenta indirizzo invece ha arma
 				
 				//controllo se i valori sono già stati inseriti bisogna non creare l'oggetto, cioè se ha sbagliato le specifiche 

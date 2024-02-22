@@ -30,24 +30,6 @@ public class FrameEliminazioneDiretta {
 	public FrameEliminazioneDiretta(ProFencer profencer) {
 	
 		
-		
-		//List<String> assalti= new ArrayList<String>();
-   
-		//	assalti.add("assalto 1");
-	//    assalti.add("assalto 2");
-	//    assalti.add("assalto 3");
-	//    assalti.add("assalto 1");
-	//    assalti.add("assalto 2");
-		//	assalti.add("assalto 1");
-		//    assalti.add("assalto 2");
-		//    assalti.add("assalto 3");
-		//    assalti.add("assalto 1");
-		//    assalti.add("assalto 2");  
-		//	assalti.add("assalto 1");
-		//    assalti.add("assalto 2");
-		//    assalti.add("assalto 3");
-		//    assalti.add("assalto 1");
-		//    assalti.add("assalto 2");
 		  
 		initialize(profencer);
 	}

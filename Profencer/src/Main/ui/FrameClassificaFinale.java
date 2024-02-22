@@ -37,8 +37,8 @@ public class FrameClassificaFinale {
 	    List<Atleta> classificaF = profencer.VisualizzaClassificaFinale();
 	    
 	        // Creazione della tabella
-	        String[] columnNames = {"posizione","codFIS","nome", "cognome","CF", "genere", "ranking"};
-	        Object[][] data = new Object[classificaF.size()][7];
+	        String[] columnNames = {"posizione","codFIS","nome", "cognome","CF", "ranking"};
+	        Object[][] data = new Object[classificaF.size()][6];
 	        for (int i = 0; i < classificaF.size(); i++) {
 	            Atleta atleta = classificaF.get(i);
 	            data[i][0]= i+1;
@@ -46,11 +46,7 @@ public class FrameClassificaFinale {
 	        	data[i][2] = atleta.getNome();
 	            data[i][3] = atleta.getCognome();
 	            data[i][4]=atleta.getCF();
-	            if(atleta.isGenere())
-	        		  data[i][5] = "male";
-	        	  else
-	        		  data[i][5] = "female";
-	            data[i][6] = atleta.getRanking();
+	            data[i][5] = atleta.getRanking();
 	            
 	        }
 	        

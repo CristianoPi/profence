@@ -143,7 +143,7 @@ public class ProFencer {
 		competizioneCorrente = new Competizione(codCompetizione);
 		
 	}
-	public void InserimentoDatiCompetizione(String nome, String descrizione, Date data, String categoria, String arma) throws Exception {
+	public void InserimentoDatiCompetizione(String nome, String descrizione, Date data, String categoria, String arma,boolean genere) throws Exception {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
@@ -152,6 +152,7 @@ public class ProFencer {
 		competizioneCorrente.setData(data);
 		competizioneCorrente.setCategoria(categoria);
 		competizioneCorrente.setArma(arma);
+		competizioneCorrente.setGenere(genere);
 	}
 
 

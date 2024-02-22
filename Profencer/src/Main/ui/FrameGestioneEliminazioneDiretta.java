@@ -47,6 +47,7 @@ public class FrameGestioneEliminazioneDiretta {
 	   // try (Scanner scanner = new Scanner(new File("C:\\Users\\giuse\\OneDrive\\Documenti\\GitHub\\profence\\src\\main\\ui\\src\\prova\\file.txt"))) {
 	        for( EliminazioneDiretta ed: lista) {
 	        	JLabel textField = new JLabel();
+	        	textField.setPreferredSize(new Dimension(130,40));
 	            if(ed.getStato()!=1) {
 	            	 textField.setText("Tabellone dei "+String.valueOf((int)Math.pow(2, ed.getStato())));
 	            }
