@@ -17,6 +17,7 @@ public class Competizione {
 	private String categoria;
 	private String arma;
 	private FormulaDiGara formulaDiGara;
+    private boolean genere;
 	private List<Girone> gironi;
     private List<Atleta> iscritti;
     private List<Atleta> accettazioni;
@@ -31,10 +32,19 @@ public class Competizione {
     private List<Tabellla_ranking> tr;//Gestito con un oggetto tabella, non rappresentato in uml, nel progetto definitivo si gestira con DB
 
     //getters and setters
+    
     public int getCodCompetizione() {
         return codCompetizione;
     }
     
+    public boolean isGenere() {
+        return genere;
+    }
+
+    public void setGenere(boolean genere) {
+        this.genere = genere;
+    }
+
     public void setClassificaG(List<Atleta_Girone> classificaG) {
         this.classificaG = classificaG;
     }
@@ -247,6 +257,7 @@ public class Competizione {
         this.gironi.clear();
         //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
         OrdinaAlteti();
+
         int numAtleti=this.accettazioni.size();
         int maxDimGironi=this.formulaDiGara.getMaxDimGirone();
 
@@ -341,7 +352,16 @@ public class Competizione {
             throw new Exception("Il girone non esiste");
         }
 
-        //se sono qui il girone esiste
+        int nStoccateGirone=this.getFormulaDiGara().getNumeroStoccateGironi();
+
+        //vedo se i risultati sono validi
+        for (Assalto assalto : listaAssalti) {
+            if(assalto.getPunteggio1()!=-2||assalto.getPunteggio2()!=-2)//ricordiamo -2 valore che ci dice che l'assalto non è disputato
+                if(0>assalto.getPunteggio1()||assalto.getPunteggio1()>nStoccateGirone||0>assalto.getPunteggio2()||assalto.getPunteggio2()>nStoccateGirone)
+                    throw new Exception("punteggio non valido");
+        }
+
+        //se sono qui il girone esiste e i risultati sono validi
         girone.setAssalti(listaAssalti);//PER ORA NON STIAMO CONSIDERANDO LA POSSIBILITà CH ENON SI INSERISCANO TUTTI GLI ASSALTI DI UN GIRONE
         
         
@@ -485,35 +505,35 @@ public class Competizione {
         throw new Exception("Dirette non esistente"); 
     }
 
-    public void InserisciRisultatiED(List<Assalto> listaAssalti){
+    public void InserisciRisultatiED(List<Assalto> listaAssalti) throws Exception{
         boolean fine=true;
         direttaCorrente.setAssaltiED(listaAssalti);
+        int nStoccateED=this.getFormulaDiGara().getNumeroStoccateDirette();
         if(direttaCorrente.getStato()==1)
             fine=false;
 
         // se gli assalti sono completi si deve settare la nuova diretta corrente
-
         
-        for(Assalto a : listaAssalti){
-            System.out.println("a");
-            if(a.getPunteggio1()==-2||a.getPunteggio2()==-2){
+        // if(assalto.getPunteggio1()!=-2||assalto.getPunteggio2()!=-2)//ricordiamo -2 valore che ci dice che l'assalto non è disputato
+        //         if(0>assalto.getPunteggio1()||assalto.getPunteggio1()>nStoccateGirone||0>assalto.getPunteggio2()||assalto.getPunteggio2()>nStoccateGirone)
+        //             throw new Exception("punteggio non valido");
+        
+        for(Assalto assalto : listaAssalti){
+            if(assalto.getPunteggio1()==-2||assalto.getPunteggio2()==-2){
                 //Qui i punteggi non sono stati modificati
-                if(a.getAtleta2()!=-1){
+                if(assalto.getAtleta2()!=-1){
                     fine=false;
                 }
             }
+            else{
+                if(0>assalto.getPunteggio1()||assalto.getPunteggio1()>nStoccateED||0>assalto.getPunteggio2()||assalto.getPunteggio2()>nStoccateED)
+                    throw new Exception("punteggio non valido");
+            }
+
         }
-
-
-
-       
-        System.out.print("valore di fine:");
-        System.out.println(fine);
-
 
         if(fine){//se finiamo tutti gli assalti di una fase es.64 quella corrente diventa in automatico quella dei 32
 
-            
             List<Atleta> eliminati = new ArrayList<Atleta>();
             List<Assalto> assalti  = new ArrayList<Assalto>();
             int vincitore1=0;

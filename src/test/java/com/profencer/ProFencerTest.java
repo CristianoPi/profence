@@ -21,13 +21,13 @@ public class ProFencerTest {
             // TODO: handle exception
         }
         try {
-            proFencer.InserimentoDatiCompetizione("gara1", "descrizione1", null, "U14", "Spada");
+            proFencer.InserimentoDatiCompetizione("gara1", "descrizione1", null, "U14", "Spada", true);
         } catch (Exception e) {
             fail();
             // TODO: handle exception
         }
         try {
-            proFencer.ScegliFormulaGara(1, 20, 15, 5, 7);
+            proFencer.ScegliFormulaGara(20, 15, 5, 7);
         } catch (Exception e) {
             fail();
             // TODO: handle exception
@@ -80,9 +80,9 @@ public class ProFencerTest {
         proFencer.caricaDati();
         try {
             proFencer.SelezionaCompetizione(1);
-            System.out.println(proFencer.VisualizzazioneFormulaGara());
-            proFencer.ModificaFormulaGara(0, 70, 111, 111, 5);
-            System.out.println(proFencer.VisualizzazioneFormulaGara());
+            System.out.println(proFencer.VisualizzaFormulaGara());
+            proFencer.ModificaFormulaGara(70, 111, 111, 5);
+            System.out.println(proFencer.VisualizzaFormulaGara());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             // TODO: handle exception
@@ -94,7 +94,7 @@ public class ProFencerTest {
         proFencer.caricaDati();
         try {
             proFencer.SelezionaCompetizione(1);
-            System.out.println( proFencer.VisualizzazioneAtleti());
+            System.out.println( proFencer.VisualizzaAtleti());
             proFencer.AccettazioneAtleta(12345);
         } catch (Exception e) {
             System.out.println(e.getMessage());

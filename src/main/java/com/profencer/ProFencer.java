@@ -72,16 +72,21 @@ public class ProFencer {
 
 
     //operazioni
+
+	//OPERAZIONI DELL'AMMINISTRATORE
+	//________UC1________
+	//1.1
     public void InserimentoCodiceCompetizione(int codCompetizione) throws Exception{
 		for (Competizione competizione : Competizioni) {
 			if(competizione.getCodCompetizione()==codCompetizione){
 				throw new Exception("CodCompetizone già presente nel sistema");
 			}
 		}
-		competizioneCorrente = new Competizione(codCompetizione);
-		
+		competizioneCorrente = new Competizione(codCompetizione);	
 	}
-	public void InserimentoDatiCompetizione(String nome, String descrizione, Date data, String categoria, String arma) throws Exception {
+
+	//1.2
+	public void InserimentoDatiCompetizione(String nome, String descrizione, Date data, String categoria, String arma, boolean genere) throws Exception {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
@@ -90,24 +95,29 @@ public class ProFencer {
 		competizioneCorrente.setData(data);
 		competizioneCorrente.setCategoria(categoria);
 		competizioneCorrente.setArma(arma);
+		competizioneCorrente.setGenere(genere);
 	}
 
-
-	public void ScegliFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) throws Exception{
+	//1.3
+	public void ScegliFormulaGara(int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGirone) throws Exception{
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
-		FormulaDiGara f=new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
+		FormulaDiGara f=new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
 		competizioneCorrente.setFormulaDiGara(f);
 	}
 
+	//1.4
 	public void ConfermaInserimento()throws Exception {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
 		Competizioni.add(competizioneCorrente);
 	}
+	//___________________
 
+	//________UC2________
+	//2.1
 	public void CreaTesseramento(int codFIS, String Nome, String Cognome, Date data_nascita, String CF, boolean genere) throws Exception {
 		for (Atleta atleta : tesserati) {
 			if(atleta.getCodFIS()==codFIS){
@@ -118,19 +128,23 @@ public class ProFencer {
 		atletaCorrente=a;
 	}
 
+	//2.2
 	public void ConfermaTesseramento() throws Exception{
 		if(atletaCorrente==null){
 			throw new Exception("Atleta non selezionato");
 		}
 		tesserati.add(atletaCorrente);
 	}
+	//___________________
 
+	//________UC3________
+	//3.1
 	public List<Competizione> MostraCompetizioni() {
 		return Competizioni;
 	}
 
+	//3.2
 	public void Iscrizione(int codFIS, int codCompetizione) throws Exception{
-
 		//trovo la competizione
 		Competizione c=new Competizione();
 		for (Competizione competizione : Competizioni) {
@@ -153,24 +167,27 @@ public class ProFencer {
 			throw new Exception("Atleta non esistente");
 		}
 
+		//vedo se è già iscritto
 		for (Atleta iscritto : c.getIscritti()) {
 			if(iscritto.getCodFIS()==a.getCodFIS())
 				throw new Exception("Atleta già iscritto");
 		}
+		if(c.isGenere()!=a.isGenere())
+			throw new Exception("L'atleta non puo' iscirversi ad un'altra competizione");
+	
 		try {
 			c.Iscrizione(a);
 		} catch (Exception e) {
 			throw new Exception("Funzione in competizione non va");
 			// TODO: handle exception
 		}
-
-		System.out.println(c);
-		System.out.println(a);
-		System.out.println(c.getIscritti());
-		// //erorre gestito con variabile booleana, se non esiste la competizione o l'atleta non è tesserato errore.
-
 	}
+	//__________________
+	//FINE OPERAZIONI DELL'AMMINISTRATORE
 
+	//OPERAZIONI DELL'UFFICIALE DI GARA
+	//________UC4________
+	//4.1(anche 5.1)
 	public void SelezionaCompetizione(int codCompetizione) throws Exception {
 		boolean r=false;
 		for (Competizione competizione : Competizioni) {
@@ -184,14 +201,16 @@ public class ProFencer {
 		}
 	}
 
-	public FormulaDiGara VisualizzazioneFormulaGara( ) throws Exception {
+	//4.2
+	public FormulaDiGara VisualizzaFormulaGara( ) throws Exception {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
 		return competizioneCorrente.getFormulaDiGara();
 	}
 
-	public void ModificaFormulaGara(int codFormula, int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi)throws Exception {
+	//4.3
+	public void ModificaFormulaGara(int percEliminati, int numeroStoccateDirette, int numeroStoccateGironi, int maxDimGironi)throws Exception {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
@@ -200,14 +219,18 @@ public class ProFencer {
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateGironi(numeroStoccateGironi);
 		competizioneCorrente.getFormulaDiGara().setMaxDimGirone(maxDimGironi);
 	}
+	//___________________
 
-	public List<Atleta> VisualizzazioneAtleti() throws Exception{
+	//________UC5________
+	//5.2
+	public List<Atleta> VisualizzaAtleti() throws Exception{
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
 		return competizioneCorrente.getIscritti();
 	}
 
+	//5.3
 	public void AccettazioneAtleta(int codFIS) throws Exception{
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
@@ -217,9 +240,11 @@ public class ProFencer {
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
-		
 	}
+	//__________________
 
+	//________UC6________
+	//6.1
 	public void CreazioneGironi() throws Exception {
 
 		if (competizioneCorrente==null) {
@@ -237,15 +262,18 @@ public class ProFencer {
 	
 	}
 
-	public List<Girone> VisualizzaGironi() {
+	//6.2
+	public List<Girone> VisualizzaGironi() throws Exception{
 		if (competizioneCorrente==null) {
-			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
-			return null;
+			throw new Exception("Nessuna competizione corrente");
+		}
+		if(competizioneCorrente.getGironi().size()==0){
+			throw new Exception("Gironi non creatis");
 		}
 		return competizioneCorrente.getGironi();
 	}
 
+	//6.3
 	public void InserimentoSpecifiche(int codGirone, int dataOra, int pedana) throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
@@ -256,16 +284,22 @@ public class ProFencer {
 			throw new Exception("Il girone non esiste");
 			// TODO: handle exception
 		}
-		
 	}
+	//__________________
 
+	//________UC7________
+	//7.2
 	public void InserimentoRisultati(int codGirone, List<Assalto> listaAssalti) throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
 		}
 		competizioneCorrente.InserimentoRisultati(codGirone, listaAssalti);
 	}
+	
+	//___________________
 
+	//________UC7.1________
+	//7.1
 	public void CreaClassifica() throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
@@ -277,6 +311,7 @@ public class ProFencer {
 		}
 	}
 
+	//7.2
 	public List<Atleta_Girone> VisualizzaClassifica()throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
@@ -287,7 +322,10 @@ public class ProFencer {
 		else
 			throw new Exception("Creare prima la classifica");
 	}
+	//______________________
 
+	//________UC8________
+	//8.1
 	public EliminazioneDiretta CreazioneED()throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
@@ -301,13 +339,17 @@ public class ProFencer {
 		}
 	}
 
+	//8.2
 	public void ConfermaED()throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
 		}
 		competizioneCorrente.ConfermaED();
 	}
+	//___________________
 
+	//________UC9________
+	//9.1
 	public void SelezionaED(int stato)throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
@@ -315,17 +357,32 @@ public class ProFencer {
 		competizioneCorrente.SelezionaED(stato); 
 	}
 
-	public EliminazioneDiretta VisualizzaED(){
+	//9.2
+	public EliminazioneDiretta VisualizzaED()throws Exception{
+		if (competizioneCorrente==null) {
+			throw new Exception("Competizione non selezionata");
+		}
+		if (competizioneCorrente.getDirettaCorrente()==null) {
+			throw new Exception("diretta non selezionata");
+		}
 		return competizioneCorrente.getDirettaCorrente();
 	}
 
+	//9.3
 	public void InserisciRisultatiED(List<Assalto> listaAssalti)throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
 		}
-		competizioneCorrente.InserisciRisultatiED(listaAssalti);
+		try {
+			competizioneCorrente.InserisciRisultatiED(listaAssalti);
+		} catch (Exception e) {
+			throw new Exception(e.getMessage()); 
+		}
+		
 	}
+	//___________________
 
+	//________UC11________
 	public void CreaClassificaFinale()throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
@@ -338,6 +395,12 @@ public class ProFencer {
 		}
 	}
 
+	public List<Atleta> VisualizzaClassificaFinale(){
+		return competizioneCorrente.getClassificaFinale();
+	}
+	//____________________
+
+	//________UC10________
 	public void CreaRanking()throws Exception{
 		if (competizioneCorrente==null) {
 			throw new Exception("Competizione non selezionata");
@@ -356,17 +419,24 @@ public class ProFencer {
 			throw new Exception(e.getMessage());
 			// TODO: handle exception
 		}
-		
 	}
-
-	public List<Atleta> VisualizzaClassificaFinale(){
-		return competizioneCorrente.getClassificaFinale();
-	}
-
 	public List<Atleta> VisualizzaRanking(){//voglio che si stampi il ranking di tutti i tesserati
 		return tesserati;
 	}
+	//____________________
 
+
+
+
+
+
+
+
+
+
+
+
+	
 	//__popolo per prove
 	public void caricaDati() {
 		//Inserimento dati per una prova iniziale
@@ -393,7 +463,7 @@ public class ProFencer {
 	                int percEliminati = Integer.parseInt(parts[8]);
 	                int numeroStoccateDirette = Integer.parseInt(parts[9]);
 	                int maxDimGirone = Integer.parseInt(parts[10]);
-	                FormulaDiGara formulaDiGara = new FormulaDiGara(codFormula, numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
+	                FormulaDiGara formulaDiGara = new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
 	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara));
 	            	}
 	            }
