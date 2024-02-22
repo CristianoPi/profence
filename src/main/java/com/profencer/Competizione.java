@@ -24,23 +24,25 @@ public class Competizione {
     private List<Atleta_Girone> classificaG;
     private EliminazioneDiretta direttaCorrente;
     private List<EliminazioneDiretta> eliminazioniDirette;
-    private List<Atleta> classificaFinale; //PER ORA IMPLEMENTATA COME LISTA
+    private List<Atleta> classificaFinale;
+    private boolean rankingCreato;
 
-    private List<Tabellla_ranking> tr;//PER ORA IMPLEMENTATA COME LISTA
+
+    private List<Tabellla_ranking> tr;//Gestito con un oggetto tabella, non rappresentato in uml, nel progetto definitivo si gestira con DB
 
     //getters and setters
     public int getCodCompetizione() {
         return codCompetizione;
     }
-
+    
     public void setClassificaG(List<Atleta_Girone> classificaG) {
         this.classificaG = classificaG;
     }
-
+    
     public EliminazioneDiretta getDirettaCorrente() {
         return direttaCorrente;
     }
-
+    
     public void setDirettaCorrente(EliminazioneDiretta direttaCorrente) {
         this.direttaCorrente = direttaCorrente;
     }
@@ -144,8 +146,10 @@ public class Competizione {
     public void setClassificaFinale(List<Atleta> classificaFinale) {
         this.classificaFinale = classificaFinale;
     }
+//________________fine getters and setters______________
 
-    //costruttori
+
+//costruttori
     public Competizione(int codCompetizione) {
         this.codCompetizione = codCompetizione;
 
@@ -155,6 +159,7 @@ public class Competizione {
         this.classificaG = new ArrayList<Atleta_Girone>();;
         this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
         this.classificaFinale = new ArrayList<Atleta>();
+        rankingCreato=false;
     }
     
     public Competizione() {
@@ -166,8 +171,8 @@ public class Competizione {
         this.classificaG = new ArrayList<Atleta_Girone>();;
         this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
         this.classificaFinale = new ArrayList<Atleta>();
+        rankingCreato=false;
     }
-
 
     public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
             FormulaDiGara formulaDiGara) {
@@ -178,6 +183,7 @@ public class Competizione {
         this.categoria = categoria;
         this.arma = arma;
         this.formulaDiGara = formulaDiGara;
+        rankingCreato=false;
 
         this.gironi = new ArrayList<Girone>();
         this.iscritti = new ArrayList<Atleta>();
@@ -186,13 +192,11 @@ public class Competizione {
         this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
         this.classificaFinale = new ArrayList<Atleta>();
     }
-
-   
-    
+//_____________fine costruttori_________________
 
 
-
-    //operazioni
+//operazioni
+    //operazioni di amministratore
     public void Iscrizione(Atleta atleta) throws Exception{
         try {
             iscritti.add(atleta);
@@ -201,7 +205,9 @@ public class Competizione {
             // TODO: handle exception
         }
     }
+    //fine operazioni amministratore
 
+    //operazioni dell'Ufficiale di gara
     public void AccettazioneAtleta(int codFIS) throws Exception {
         for (Atleta atletaA : accettazioni) {
             if (atletaA.getCodFIS()==codFIS)
@@ -214,11 +220,9 @@ public class Competizione {
             }
         }
         throw new Exception("nessun atleta con quel codice");
-
-        //gestire errori
     }
 
-    private static int gironi(int a, int d) {
+    private static int gironi(int a, int d) {//funzione privata per calcolare il numero di gironi in base alla FDG e il n Atleti
         if (a % d == 0)
             return a / d;
         else {
@@ -226,11 +230,11 @@ public class Competizione {
         }
     }
 
-    public void OrdinaAlteti(){
+    public void OrdinaAlteti(){//ordina in base al ranking decrescente l'atleta col ranking più alto è il primo
        Collections.sort(this.accettazioni, new Comparator<Atleta>() {
             @Override
             public int compare(Atleta a1, Atleta a2) {
-                return Float.compare(a1.getRanking(), a2.getRanking());
+                return Float.compare(a2.getRanking(), a1.getRanking());
             }
         });
 
@@ -586,8 +590,11 @@ public class Competizione {
         //_____
         
         int stato=0;  
+
+        int pe=formulaDiGara.getPercEliminati();
+        int num_pass=classificaG.size()-(classificaG.size()*pe/100);
         int num_elimi=classificaG.size()*formulaDiGara.getPercEliminati()/100;
-        int num_pass=classificaG.size()-num_elimi;
+        //int num_pass=classificaG.size()-num_elimi;
 
         stato=(int)Math.ceil(Math.log(num_pass) / Math.log(2));//In questo modo, stato sarà il logaritmo in base 2 di num_pass arrotondato per eccesso.
 
@@ -598,8 +605,6 @@ public class Competizione {
             }
         }
         
-
-        
         for(int i=num_pass; i<num_elimi+num_pass; i++){
             atleta = mappaAtleti.get(classificaG.get(i).getCodFIS());
             if(atleta != null){
@@ -608,7 +613,10 @@ public class Competizione {
         }
     }
 
-    public void CreaRanking() throws Exception{
+    public List<Atleta> CreaRanking() throws Exception{
+        if(rankingCreato){
+            throw new Exception("Ranking gia' creato");
+        }
         try {
             CreaClassificaFinale();
         } catch (Exception e) {
@@ -622,14 +630,11 @@ public class Competizione {
         Atleta a;
         for(int i=0; i<classificaFinale.size(); i++){
             punteggio=tr.OttieniPunteggio(i);
-            System.out.println("IL PUNTEGGIO E'");
-            System.out.println(punteggio);
             a=classificaFinale.get(i);
             a.setRanking(a.getRanking()+punteggio);// considerando che è un riferimento all'oggetto lo sto modificando ovunque anche su tesserati
         }
-        for (Atleta atleta : accettazioni) {
-            
-        }
+        rankingCreato=true;
+        return classificaFinale;
     }
 
     @Override
