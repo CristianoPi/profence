@@ -49,7 +49,10 @@ public class Competizione {
         this.classificaG = classificaG;
     }
     
-    public EliminazioneDiretta getDirettaCorrente() {
+    public EliminazioneDiretta getDirettaCorrente()throws Exception {
+        if (direttaCorrente==null) {
+            throw new Exception("non c'è una diretta corrente");
+        }
         return direttaCorrente;
     }
     

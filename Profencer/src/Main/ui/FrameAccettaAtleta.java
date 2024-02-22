@@ -55,18 +55,6 @@ public class FrameAccettaAtleta {
 	            			JOptionPane.showMessageDialog(null, e.getMessage() , "errore", JOptionPane.ERROR_MESSAGE);
 	    				}
 	            	
-	            		//valutare se implementare la rimozione di un'atleta dalla lista degli accettati, 
-	            		//in questo modo si dovrebbe fare switch di bottone dopo che viene accettato
-	            		
-	            		//	if (!isAccepted) {
-	                        //bisogna agiungere l'atleta alla lista di atleti accettati
-	                  //      isAccepted = true;
-	                      //  button.setText("Rimuovi atleta");
-	                 //   } else {
-	                        //biaogna rimuovere l'atleta  dalal lista di atleti accettati
-	                 //       isAccepted = false;
-	                 //       button.setText("Accetta atleta");
-	                 //   }
 	    				
 	    			}
 	    		});

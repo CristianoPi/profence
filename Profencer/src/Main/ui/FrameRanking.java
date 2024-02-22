@@ -16,7 +16,7 @@ import Main.domain.ProFencer;
 public class FrameRanking {
 
 	 JFrame frame;
-
+	 public boolean errore = false;
 	
 	//bisognera aggiungere cosa verra passato o competizione o lista atleti della competizione
 	public FrameRanking( ProFencer profencer,boolean flag) {
@@ -42,7 +42,7 @@ public class FrameRanking {
 	        Object[][] data = new Object[ranking.size()][6];
 	        for (int i = 0; i < ranking.size(); i++) {
 	            Atleta atleta = ranking.get(i);
-	            data[i][0] = atleta.getCF();
+	            data[i][0] = atleta.getCodFIS();
 	        	  data[i][1] = atleta.getNome();
 	        	  data[i][2] = atleta.getCognome();
 	        	  data[i][3]=atleta.getCF();
@@ -62,7 +62,9 @@ public class FrameRanking {
 	        
 	       frame.pack();
 	        }catch(Exception e) {
+	        	errore=true;;
 	        	JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+	        	
 	        }
 	      
 	    }

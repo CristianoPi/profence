@@ -25,20 +25,15 @@ import Main.domain.ProFencer;
 public class FrameVisualizzaGironi {
 
 	 JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the application.
-	 */
+	 public boolean errore=false;
 	public FrameVisualizzaGironi(ProFencer profencer) {
-		
+		try {
 		List<Girone> elenco=profencer.VisualizzaGironi();
-		
-
 		    initialize(elenco, profencer);
+		}catch(Exception e) {
+			errore=true;
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	private void initialize(List<Girone> elenco, ProFencer profencer) {
@@ -62,7 +57,8 @@ public class FrameVisualizzaGironi {
         	public void actionPerformed(ActionEvent arg0) {
 				
         		FrameGestisciAssaltiG Fga= new FrameGestisciAssaltiG(-g.getCodGirone(),profencer);  //numero negativo perchè si tratta di assalti gironi
-        		Fga.frame.setVisible(true);
+        		if(!Fga.errore)
+        			Fga.frame.setVisible(true);
 				
 			}
 		});

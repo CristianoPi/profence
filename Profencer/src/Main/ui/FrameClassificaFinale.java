@@ -16,7 +16,8 @@ import Main.domain.ProFencer;
 public class FrameClassificaFinale {
 
 	 JFrame frame;
-
+	 public Boolean errore=false;
+	 
 	//bisognerà passare la lista di atleti
 	public FrameClassificaFinale(ProFencer profencer) {
 		initialize(profencer);
@@ -59,6 +60,7 @@ public class FrameClassificaFinale {
 	       frame.pack();
 	      
 	    }catch(Exception e) {
+			errore=true;
         	JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 	    }
 		

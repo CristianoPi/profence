@@ -16,7 +16,7 @@ import Main.domain.Atleta_Girone;
 public class FrameClassificaGironi {
 
 	 JFrame frame;
-
+	 public boolean errore=false;
 	
 	/**
 	 * Create the application.
@@ -66,6 +66,7 @@ public class FrameClassificaGironi {
 	       frame.pack();
 	        //setVisible(true);
 	       }catch(Exception e) {
+	    	   	errore=true;
 				JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 	        }
 	    }

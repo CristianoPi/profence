@@ -25,7 +25,7 @@ import Main.domain.ProFencer;
 public class FrameEliminazioneDiretta {
 
 	JFrame frame;
-
+	public boolean errore=false;
 	
 	public FrameEliminazioneDiretta(ProFencer profencer) {
 	
@@ -106,6 +106,7 @@ public class FrameEliminazioneDiretta {
         frame.setMinimumSize(new Dimension(500,400));
        
         }catch(Exception e) {
+        	errore=true;
         	JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
         }
 	}

@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -50,10 +51,12 @@ public class MainFrameUDG {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		//ImageIcon imgIcon = new ImageIcon("Scherma1.png");
+		//frame.setIconImage(imgIcon.getImage());
 		frame.setBounds(100, 100, 856, 576);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		JLabel lblTitolo = new JLabel("Profencer\r\n");
+		JLabel lblTitolo = new JLabel("ProFencer\r\n");
 		lblTitolo.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		lblTitolo.setBounds(30, 26, 234, 55);
 		frame.getContentPane().add(lblTitolo);
@@ -143,7 +146,8 @@ public class MainFrameUDG {
 					//se è presente ed è maggiore uguale a 3, cioè caso  positivvo si apre la Frame relatica alla creazione dei gironi della competizione corrente. 
 					
 					CreazioneGironi fcg= new CreazioneGironi(profencer);
-					fcg.frame.setVisible(true);
+					if(!fcg.errore)
+						fcg.frame.setVisible(true);
 					//nel frame che apro ci devono esser visualizzati i gironi e per ogni girone gli assalti ordinati che lo compongono
 					//come prima cosa si chiama CreazioneGirone() da essa ho bisogno che mi venga restituita la lista dei gironi, in modo tale 
 					//che facendo count() ? oppure un foreach di girone su gironi
@@ -164,8 +168,9 @@ public class MainFrameUDG {
 					JOptionPane.showMessageDialog(null, "Errore: deve essere selezionata una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
 				}else {
 					// come verificare se i gironi sono stati creati?
-					FrameVisualizzaGironi fvg= new FrameVisualizzaGironi(profencer);
-					fvg.frame.setVisible(true);
+					FrameVisualizzaGironi fvg= new FrameVisualizzaGironi(profencer);	
+					if(!fvg.errore)
+						fvg.frame.setVisible(true);
 
 				}
 				
@@ -187,7 +192,8 @@ public class MainFrameUDG {
 					// fa partire il metodo da profencer che crea il tabellone, un attrivuot del tabellone sarà la lista degli assalti ad eleiminazione diretta.
 					//io creo la mia frame di visualizzazione de ltabellone passando  eliminazionediretta.listaAssalti, che è una lista assalti
 					FrameEliminazioneDiretta fed = new FrameEliminazioneDiretta(profencer);
-					fed.frame.setVisible(true);
+					if(!fed.errore)
+						fed.frame.setVisible(true);
 
 				}
 				
@@ -197,7 +203,7 @@ public class MainFrameUDG {
 		btnCreazioneEliminazioniDirette.setBounds(30, 388, 368, 65);
 		frame.getContentPane().add(btnCreazioneEliminazioniDirette);
 		
-		JButton btnGestioneAssaltiEliminazioni = new JButton("Gestione Assalti Eliminazioni");
+		JButton btnGestioneAssaltiEliminazioni = new JButton("Gestione Assalti ED");
 		btnGestioneAssaltiEliminazioni.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(profencer.getCompetizioneCorrente()==null) {
@@ -205,7 +211,8 @@ public class MainFrameUDG {
 				}else {
 					
 					FrameGestioneEliminazioneDiretta fged = new FrameGestioneEliminazioneDiretta(profencer);
-					fged.frame.setVisible(true);
+					if(!fged.errore)
+						fged.frame.setVisible(true);
 
 				}
 				
@@ -225,7 +232,8 @@ public class MainFrameUDG {
 				}else {
 					// come verificare se i gironi sono stati finiti?
 					FrameClassificaGironi fcf= new FrameClassificaGironi(profencer);
-					fcf.frame.setVisible(true);
+					if(!fcf.errore)
+						fcf.frame.setVisible(true);
 
 				}
 			}
@@ -238,9 +246,7 @@ public class MainFrameUDG {
 		btnGesnerazioneRanking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				if(profencer.getCompetizioneCorrente()==null) {
-					JOptionPane.showMessageDialog(null, "Errore: per generare un ranking devi aver selezionato una competizione ", "Errore", JOptionPane.ERROR_MESSAGE);
-				}else {
+			
 					// come verificare se  le eliminazioni sono finete?
 					//il raking dovrebbe essere stampare la lista degli atleti della competizione con i valori aggiornati di ranking
 					//dalla competizione corrente prendo la lista degli atleti e la stampo
@@ -248,7 +254,7 @@ public class MainFrameUDG {
 					//poi si passsa alla frame la competiizone corrente o la lista atleti della competizione corrente
 					FrameMenuRanking fmr = new FrameMenuRanking(profencer);
 					fmr.frame.setVisible(true);
-				}
+				
 				
 			}
 		});
@@ -268,7 +274,8 @@ public class MainFrameUDG {
 				}else {
 					// come verificare se i gironi sono stati finiti?
 					FrameClassificaFinale fcf= new FrameClassificaFinale(profencer);
-					fcf.frame.setVisible(true);
+					if(!fcf.errore)
+						fcf.frame.setVisible(true);
 
 				}
 				
