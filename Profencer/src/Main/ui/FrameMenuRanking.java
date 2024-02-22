@@ -3,6 +3,7 @@ package Main.ui;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import Main.domain.ProFencer;
 
@@ -32,8 +33,11 @@ public class FrameMenuRanking {
 		JButton btnNewButton = new JButton("Crea Ranking");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				FrameRanking fr= new FrameRanking(profencer,true);
-				fr.frame.setVisible(true);
+				if(!fr.errore)
+					fr.frame.setVisible(true);
+				
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 17));

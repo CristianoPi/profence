@@ -46,15 +46,21 @@ public class Competizione {
         this.classificaG = classificaG;
     }
 
-    public EliminazioneDiretta getDirettaCorrente() {
+    public EliminazioneDiretta getDirettaCorrente()throws Exception {
+    	System.out.println(direttaCorrente);
+        if (direttaCorrente==null) {
+            throw new Exception("non c'è una diretta corrente");
+        }
         return direttaCorrente;
     }
-
     public void setDirettaCorrente(EliminazioneDiretta direttaCorrente) {
         this.direttaCorrente = direttaCorrente;
     }
 
-    public List<EliminazioneDiretta> getEliminazioniDirette() {
+    public List<EliminazioneDiretta> getEliminazioniDirette() throws Exception{
+    	if(this.eliminazioniDirette.size()==0)
+            throw new Exception("non c'è una diretta corrente");
+    	
         return eliminazioniDirette;
     }
 
@@ -211,7 +217,8 @@ public class Competizione {
     //    return "Competizione: " + codCompetizione ;
     //}
     
-    
+  //_____________fine costruttori_________________
+
 
   //operazioni
       //operazioni di amministratore
@@ -265,6 +272,7 @@ public class Competizione {
           this.gironi.clear();
           //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
           OrdinaAlteti();
+
           int numAtleti=this.accettazioni.size();
           int maxDimGironi=this.formulaDiGara.getMaxDimGirone();
 
@@ -359,7 +367,16 @@ public class Competizione {
               throw new Exception("Il girone non esiste");
           }
 
-          //se sono qui il girone esiste
+          int nStoccateGirone=this.getFormulaDiGara().getNumeroStoccateGironi();
+
+          //vedo se i risultati sono validi
+          for (Assalto assalto : listaAssalti) {
+              if(assalto.getPunteggio1()!=-2||assalto.getPunteggio2()!=-2)//ricordiamo -2 valore che ci dice che l'assalto non è disputato
+                  if(0>assalto.getPunteggio1()||assalto.getPunteggio1()>nStoccateGirone||0>assalto.getPunteggio2()||assalto.getPunteggio2()>nStoccateGirone)
+                      throw new Exception("punteggio non valido");
+          }
+
+          //se sono qui il girone esiste e i risultati sono validi
           girone.setAssalti(listaAssalti);//PER ORA NON STIAMO CONSIDERANDO LA POSSIBILITà CH ENON SI INSERISCANO TUTTI GLI ASSALTI DI UN GIRONE
           
           
@@ -503,35 +520,35 @@ public class Competizione {
           throw new Exception("Dirette non esistente"); 
       }
 
-      public void InserisciRisultatiED(List<Assalto> listaAssalti){
+      public void InserisciRisultatiED(List<Assalto> listaAssalti) throws Exception{
           boolean fine=true;
           direttaCorrente.setAssaltiED(listaAssalti);
+          int nStoccateED=this.getFormulaDiGara().getNumeroStoccateDirette();
           if(direttaCorrente.getStato()==1)
               fine=false;
 
           // se gli assalti sono completi si deve settare la nuova diretta corrente
-
           
-          for(Assalto a : listaAssalti){
-              System.out.println("a");
-              if(a.getPunteggio1()==-2||a.getPunteggio2()==-2){
+          // if(assalto.getPunteggio1()!=-2||assalto.getPunteggio2()!=-2)//ricordiamo -2 valore che ci dice che l'assalto non è disputato
+          //         if(0>assalto.getPunteggio1()||assalto.getPunteggio1()>nStoccateGirone||0>assalto.getPunteggio2()||assalto.getPunteggio2()>nStoccateGirone)
+          //             throw new Exception("punteggio non valido");
+          
+          for(Assalto assalto : listaAssalti){
+              if(assalto.getPunteggio1()==-2||assalto.getPunteggio2()==-2){
                   //Qui i punteggi non sono stati modificati
-                  if(a.getAtleta2()!=-1){
+                  if(assalto.getAtleta2()!=-1){
                       fine=false;
                   }
               }
+              else{
+                  if(0>assalto.getPunteggio1()||assalto.getPunteggio1()>nStoccateED||0>assalto.getPunteggio2()||assalto.getPunteggio2()>nStoccateED)
+                      throw new Exception("punteggio non valido");
+              }
+
           }
-
-
-
-         
-          System.out.print("valore di fine:");
-          System.out.println(fine);
-
 
           if(fine){//se finiamo tutti gli assalti di una fase es.64 quella corrente diventa in automatico quella dei 32
 
-              
               List<Atleta> eliminati = new ArrayList<Atleta>();
               List<Assalto> assalti  = new ArrayList<Assalto>();
               int vincitore1=0;
@@ -654,4 +671,14 @@ public class Competizione {
           rankingCreato=true;
           return classificaFinale;
       }
-}
+
+      @Override
+      public String toString() {
+          return "Competizione [codCompetizione=" + codCompetizione + ", nome=" + nome + ", descrizione=" + descrizione
+                  + ", data=" + data + ", categoria=" + categoria + ", arma=" + arma + ", formulaDiGara=" + formulaDiGara
+                  + ", gironi=" + gironi + ", iscritti=" + iscritti + ", accettazioni=" + accettazioni + ", tr=" + tr
+                  + "]";
+      }
+
+
+  }

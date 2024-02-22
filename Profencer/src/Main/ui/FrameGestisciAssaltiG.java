@@ -22,6 +22,7 @@ import Main.domain.ProFencer;
 public class FrameGestisciAssaltiG {
 
     JFrame frame;
+    public boolean errore=false;
     List<JTextField> punteggio1Fields = new ArrayList<>();
     List<JTextField> punteggio2Fields = new ArrayList<>();
     List<JTextField> tempoFields = new ArrayList<>();
@@ -44,6 +45,7 @@ public class FrameGestisciAssaltiG {
     		EliminazioneDiretta ed = profencer.getCompetizioneCorrente().getDirettaCorrente();
     			initialize(ed.getAssaltiED(),profencer);
     		}catch(Exception e) {
+    			errore=true;
     			JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
     		}
     	}

@@ -1,7 +1,6 @@
 package Main.domain;
 
 public class FormulaDiGara {
-    private int codFormula;
 
 	private int numeroStoccateGironi;
 
@@ -11,13 +10,7 @@ public class FormulaDiGara {
 
 	private int maxDimGirone;
 
-    public int getCodFormula() {
-        return codFormula;
-    }
 
-    public void setCodFormula(int codFormula) {
-        this.codFormula = codFormula;
-    }
 
     public int getNumeroStoccateGironi() {
         return numeroStoccateGironi;
@@ -58,6 +51,11 @@ public class FormulaDiGara {
         this.maxDimGirone = maxDimGirone;
     }
     
-
+    public String toString() {
+        
+        return "FormulaDiGara [numeroStoccateGironi=" + numeroStoccateGironi
+                + ", percEliminati=" + percEliminati + ", numeroStoccateDirette=" + numeroStoccateDirette
+                + ", maxDimGirone=" + maxDimGirone + "]";
+    }
     
 }
