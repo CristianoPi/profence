@@ -194,16 +194,17 @@ public class Competizione {
         rankingCreato=false;
     }
 
-    public Competizione(int codice, String nome, String descrizione, Date data, String categoria, String arma,
-            FormulaDiGara formulaDiGara) {
-    	this.codCompetizione=codice;
+    public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
+            FormulaDiGara formulaDiGara, boolean genere) {
+        this.codCompetizione = codCompetizione;
         this.nome = nome;
         this.descrizione = descrizione;
         this.data = data;
         this.categoria = categoria;
         this.arma = arma;
         this.formulaDiGara = formulaDiGara;
-        rankingCreato=false;
+        this.Genere = genere;
+
         this.gironi = new ArrayList<Girone>();
         this.iscritti = new ArrayList<Atleta>();
         this.accettazioni = new ArrayList<Atleta>();
@@ -211,6 +212,7 @@ public class Competizione {
         this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
         this.classificaFinale = new ArrayList<Atleta>();
     }
+
 
 	//@Override
    // public String toString() {
@@ -272,7 +274,8 @@ public class Competizione {
           this.gironi.clear();
           //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
           OrdinaAlteti();
-
+          if(this.accettazioni.size()<=1)
+        	  throw new Exception("impossibile creare i gironi perchè non sono presenti almeno due atletit accettati");
           int numAtleti=this.accettazioni.size();
           int maxDimGironi=this.formulaDiGara.getMaxDimGirone();
 

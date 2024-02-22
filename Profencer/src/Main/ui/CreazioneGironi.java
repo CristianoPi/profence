@@ -39,19 +39,6 @@ public class CreazioneGironi {
 	 * Create the application.
 	 */
 	public CreazioneGironi(ProFencer profencer) {
-		//qui quindi mi serve passata la lista dei gironi, attraverso la quale per ogni girone prenderò la lista degli assalti,
-		//nell'esmpio ho usato una lista di liste per simulare 
-	//	 List<String> elenco = new ArrayList<String>();
-	//	    elenco.add("girone 1");
-	//	    elenco.add("girone 2");
-	//	    elenco.add("girone 3");
-	//	    elenco.add("girone n");
-
-	//	    List<List<String>> elencoAssalti = new ArrayList<>();
-	//	    elencoAssalti.add(Arrays.asList("assalto 1 del primo", "assalto 2 del primo", "assalto n del primo"));
-	//	    elencoAssalti.add(Arrays.asList("assalto 1 del sec", "assalto 2 del sec", "assalto n del sec"));
-	//	    elencoAssalti.add(Arrays.asList("assalto 1 del ter", "assalto 2 del ter", "assalto n del ter"));
-	//	    elencoAssalti.add(Arrays.asList("assalto 1 del quart", "assalto 2 del quart", "assalto n del quart"));
 	
 	try {	
 		profencer.CreazioneGironi();

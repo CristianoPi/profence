@@ -178,9 +178,10 @@ public class FrameCreazioneCompetizione extends JFrame {
 						profencer.ScegliFormulaGara(eliminati, NstoccateE, NstoccateG,MacAtleti);
 						profencer.ConfermaInserimento();
 						frame.dispose();
-					}else {
-						JOptionPane.showMessageDialog(null, "Errore: Non è possibile inserire 0 in nessuno dei campi. Riprova ", "Errore", JOptionPane.ERROR_MESSAGE);
 					}
+					//else {
+					//	JOptionPane.showMessageDialog(null, "Errore: Non è possibile inserire 0 in nessuno dei campi. Riprova ", "Errore", JOptionPane.ERROR_MESSAGE);
+					//}
 				}catch(Exception e) {
 					JOptionPane.showMessageDialog(null, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 				}				

@@ -101,11 +101,11 @@ public class FrameTesseramento {
 		frame.getContentPane().add(selezionaDateN);
 		
 		JLabel lblErrorCF = new JLabel("");
-		lblErrorCF.setBounds(434, 185, 195, 19);
+		lblErrorCF.setBounds(403, 185, 195, 19);
 		frame.getContentPane().add(lblErrorCF);
 		
 		JLabel lblErrorCognome = new JLabel("");
-		lblErrorCognome.setBounds(397, 148, 244, 19);
+		lblErrorCognome.setBounds(403, 148, 244, 19);
 		frame.getContentPane().add(lblErrorCognome);
 		
 		JLabel lblErrorNome = new JLabel("");
@@ -125,7 +125,7 @@ public class FrameTesseramento {
 		lblErrorDateN.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblErrorDateN.setCaretColor(Color.BLACK);
 		lblErrorDateN.setBackground(UIManager.getColor("Button.background"));
-		lblErrorDateN.setBounds(424, 234, 229, 53);
+		lblErrorDateN.setBounds(403, 234, 229, 53);
 		frame.getContentPane().add(lblErrorDateN);
 		
 		JButton btnConfermatesserametno = new JButton("Conferma");
@@ -148,15 +148,15 @@ public class FrameTesseramento {
 				
 				if(textNome.getText().equals("")||textCognome.getText().equals("")||textCF.getText().equals("")||textFis.getText().equals("") ||selezionaDateN.getDate()==null||selezionaDateN.getDate().after(tenYearsAgo)) {
 					if(textFis.getText().equals(""))
-						lblErrorFis.setText("ERRORE devi inserire un codice FIS");
+						lblErrorFis.setText("ERROREdevi inserire un codice FIS");
 					if (textNome.getText().equals(""))
-						lblErrorNome.setText("ERRORE; devi compilare il campo");
+						lblErrorNome.setText("ERRORE:devi compilare il campo");
 					if (selezionaDateN.getDate()==null || selezionaDateN.getDate().after(tenYearsAgo))
-						lblErrorDateN.setText("ERRORE; devi selezionare una data valida");
+						lblErrorDateN.setText("ERRORE:devi selezionare una data valida");
 					if (textCognome.getText().equals(""))
-						lblErrorCognome.setText("ERRORE; devi inserire un cognome");
+						lblErrorCognome.setText("ERRORE:devi inserire un cognome");
 					if(textCF.getText().equals("")) 
-						lblErrorCF.setText("Devi inserire un CF");
+						lblErrorCF.setText("ERRORE:Devi inserire un CF");
 					if(boxGenere.getSelectedItem().equals(""))
 						lblErrorGenere.setText("ERRORE seleziona un'opzione");
 					

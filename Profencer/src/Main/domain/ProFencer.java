@@ -44,14 +44,13 @@ public class ProFencer {
 	                Date data = sdf.parse(parts[3]);
 	                String categoria = parts[4];
 	                String arma = parts[5];
-	                int codFormula = Integer.parseInt(parts[6]);
+	                boolean genere = Boolean.parseBoolean(parts[6]);
 	                int numeroStoccateGironi = Integer.parseInt(parts[7]);
 	                int percEliminati = Integer.parseInt(parts[8]);
 	                int numeroStoccateDirette = Integer.parseInt(parts[9]);
 	                int maxDimGirone = Integer.parseInt(parts[10]);
 	                FormulaDiGara formulaDiGara = new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
-	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara));
-	            	}
+	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara, genere));	            	}
 	            }
 	            catch(ParseException e) {
 	                	e.printStackTrace();
@@ -165,6 +164,10 @@ public class ProFencer {
    		if(competizioneCorrente==null){
    			throw new Exception("Competizone non selezionata");
    		}
+   		if(percEliminati<0 || numeroStoccateDirette<=0 || numeroStoccateGironi<=0||maxDimGirone<=0)
+   			throw new Exception("Errore hai inserito dei dati non permessi");
+   		if(percEliminati>100)
+   			throw new Exception("Errore non si può inserire una percentuale del genere");
    		FormulaDiGara f=new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
    		competizioneCorrente.setFormulaDiGara(f);
    	}
@@ -276,6 +279,11 @@ public class ProFencer {
    		if(competizioneCorrente==null){
    			throw new Exception("Competizone non selezionata");
    		}
+   		if(percEliminati<0 || numeroStoccateDirette<=0 || numeroStoccateGironi<=0||maxDimGironi<=0)
+   			throw new Exception("Errore hai inserito dei dati non permessi");
+   		if(percEliminati>100)
+   			throw new Exception("Errore non si può inserire una percentuale del genere");
+   		
    		competizioneCorrente.getFormulaDiGara().setPercEliminati(percEliminati);
    		competizioneCorrente.getFormulaDiGara().setNumeroStoccateDirette(numeroStoccateDirette);
    		competizioneCorrente.getFormulaDiGara().setNumeroStoccateGironi(numeroStoccateGironi);
