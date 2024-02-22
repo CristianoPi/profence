@@ -202,10 +202,31 @@ public class Competizione {
         this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
         this.classificaFinale = new ArrayList<Atleta>();
     }
+
+    
 //_____________fine costruttori_________________
 
 
-//operazioni
+public Competizione(int codCompetizione, String nome, String descrizione, Date data, String categoria, String arma,
+            FormulaDiGara formulaDiGara, boolean genere) {
+        this.codCompetizione = codCompetizione;
+        this.nome = nome;
+        this.descrizione = descrizione;
+        this.data = data;
+        this.categoria = categoria;
+        this.arma = arma;
+        this.formulaDiGara = formulaDiGara;
+        this.genere = genere;
+
+        this.gironi = new ArrayList<Girone>();
+        this.iscritti = new ArrayList<Atleta>();
+        this.accettazioni = new ArrayList<Atleta>();
+        this.classificaG = new ArrayList<Atleta_Girone>();;
+        this.eliminazioniDirette = new ArrayList<EliminazioneDiretta>();;
+        this.classificaFinale = new ArrayList<Atleta>();
+    }
+
+    //operazioni
     //operazioni di amministratore
     public void Iscrizione(Atleta atleta) throws Exception{
         try {

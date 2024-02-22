@@ -1,4 +1,4 @@
-1,Competizione1,Descrizione1,01/01/2024,Categoria1,Arma1,1,10,0,30,7
-2,Competizione2,Descrizione2,02/02/2024,Categoria2,Arma2,2,0,30,40,50
-3,Competizione3,Descrizione3,03/03/2024,Categoria3,Arma3,3,30,40,50,5
-4,Competizione3,Descrizione3,03/03/2024,Categoria3,Arma3,4,10,10,10,5
+1,Competizione1,Descrizione1,01/01/2024,Categoria1,Arma1,true,1,10,0,30,7
+2,Competizione2,Descrizione2,02/02/2024,Categoria2,Arma2,false,2,0,30,40,50
+3,Competizione3,Descrizione3,03/03/2024,Categoria3,Arma3,true,3,30,40,50,5
+4,Competizione3,Descrizione3,03/03/2024,Categoria3,Arma3,false,4,10,10,10,5

@@ -436,7 +436,7 @@ public class ProFencer {
 
 
 
-	
+
 	//__popolo per prove
 	public void caricaDati() {
 		//Inserimento dati per una prova iniziale
@@ -458,13 +458,13 @@ public class ProFencer {
 	                Date data = sdf.parse(parts[3]);
 	                String categoria = parts[4];
 	                String arma = parts[5];
-	                int codFormula = Integer.parseInt(parts[6]);
+	                boolean genere = Boolean.parseBoolean(parts[6]);
 	                int numeroStoccateGironi = Integer.parseInt(parts[7]);
 	                int percEliminati = Integer.parseInt(parts[8]);
 	                int numeroStoccateDirette = Integer.parseInt(parts[9]);
 	                int maxDimGirone = Integer.parseInt(parts[10]);
 	                FormulaDiGara formulaDiGara = new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
-	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara));
+	                Competizioni.add(new Competizione(codCompetizione, nome, descrizione, data, categoria, arma, formulaDiGara, genere));
 	            	}
 	            }
 	            catch(ParseException e) {
