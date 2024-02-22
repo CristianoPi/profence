@@ -343,7 +343,15 @@ public class ProFencer {
 			throw new Exception("Competizione non selezionata");
 		}
 		try {
-			competizioneCorrente.CreaRanking();
+
+			List<Atleta> la=competizioneCorrente.CreaRanking();
+			for (Atleta a : la) {
+				for (Atleta atleta : tesserati) {
+					if(a.getCodFIS()==atleta.getCodFIS()){
+						atleta.setRanking(a.getRanking());
+					}
+				}
+			}
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 			// TODO: handle exception

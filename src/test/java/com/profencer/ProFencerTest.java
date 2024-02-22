@@ -216,6 +216,7 @@ public class ProFencerTest {
             proFencer.getCompetizioneCorrente();
             proFencer.ConfermaED();
             proFencer.SelezionaED(3);
+            System.out.println(proFencer.getCompetizioneCorrente().getDirettaCorrente());
            
         } catch (Exception e) {
             System.out.println(e.getMessage());
