@@ -103,6 +103,11 @@ public class ProFencer {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
+		if(percEliminati<0 || numeroStoccateDirette<=0 || numeroStoccateGironi<=0||maxDimGirone<=0)
+   			throw new Exception("Errore hai inserito dei dati non permessi");
+   		if(percEliminati>100)
+   			throw new Exception("Errore non si può inserire una percentuale del genere");
+	
 		FormulaDiGara f=new FormulaDiGara(numeroStoccateGironi, percEliminati, numeroStoccateDirette, maxDimGirone);
 		competizioneCorrente.setFormulaDiGara(f);
 	}
@@ -173,7 +178,7 @@ public class ProFencer {
 				throw new Exception("Atleta già iscritto");
 		}
 		if(c.isGenere()!=a.isGenere())
-			throw new Exception("L'atleta non puo' iscirversi ad un'altra competizione");
+			throw new Exception("Questo atleta non puo' iscriversi a questa competizione");
 	
 		try {
 			c.Iscrizione(a);
@@ -214,6 +219,10 @@ public class ProFencer {
 		if(competizioneCorrente==null){
 			throw new Exception("Competizone non selezionata");
 		}
+		if(percEliminati<0 || numeroStoccateDirette<=0 || numeroStoccateGironi<=0||maxDimGironi<=0)
+   			throw new Exception("Errore hai inserito dei dati non permessi");
+   		if(percEliminati>100)
+   			throw new Exception("Errore non si può inserire una percentuale del genere");
 		competizioneCorrente.getFormulaDiGara().setPercEliminati(percEliminati);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateDirette(numeroStoccateDirette);
 		competizioneCorrente.getFormulaDiGara().setNumeroStoccateGironi(numeroStoccateGironi);
@@ -249,14 +258,12 @@ public class ProFencer {
 
 		if (competizioneCorrente==null) {
 			//BISOGNA SELEZIONARE UNA COMPETIZIONE!!
-			System.out.println("ERRORE");
 			throw new Exception("Nessuna competizione corrente");
 		}
 		try {
 			competizioneCorrente.CreazioneGironi();
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
-			// TODO: handle exceptions
 		}
 		
 	
@@ -282,7 +289,6 @@ public class ProFencer {
 			competizioneCorrente.InserimentoSpecifiche(codGirone, dataOra, pedana);
 		} catch (Exception e) {
 			throw new Exception("Il girone non esiste");
-			// TODO: handle exception
 		}
 	}
 	//__________________

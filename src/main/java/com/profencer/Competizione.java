@@ -253,7 +253,7 @@ public Competizione(int codCompetizione, String nome, String descrizione, Date d
                 return;
             }
         }
-        throw new Exception("nessun atleta con quel codice");
+        throw new Exception("Nessun atleta iscritto con quel codice");
     }
 
     private static int gironi(int a, int d) {//funzione privata per calcolare il numero di gironi in base alla FDG e il n Atleti
@@ -278,6 +278,9 @@ public Competizione(int codCompetizione, String nome, String descrizione, Date d
     }
 
     public void CreazioneGironi() throws Exception{
+        if(this.accettazioni.size()<=1)
+            throw new Exception("impossibile creare i gironi perchè non sono presenti almeno due atleti accettati");
+
         this.gironi.clear();
         //oridno gli atleti e prendo i valori che mi servono dalla formula di gara
         OrdinaAlteti();
@@ -342,7 +345,6 @@ public Competizione(int codCompetizione, String nome, String descrizione, Date d
                 girone.setAssalti(assalti);
             } catch (Exception e) {
                 throw new Exception("errore add");
-                // TODO: handle exception
             }
         }
 
@@ -683,9 +685,9 @@ public Competizione(int codCompetizione, String nome, String descrizione, Date d
 
     @Override
     public String toString() {
-        return "Competizione [codCompetizione=" + codCompetizione + ", nome=" + nome + ", descrizione=" + descrizione
+        return "___________________Competizione___________________\n [codCompetizione=" + codCompetizione + ", nome=" + nome + ", descrizione=" + descrizione
                 + ", data=" + data + ", categoria=" + categoria + ", arma=" + arma + ", formulaDiGara=" + formulaDiGara
-                + ", gironi=" + gironi + ", iscritti=" + iscritti + ", accettazioni=" + accettazioni + ", tr=" + tr
+                +", genere="+genere+", gironi=" + gironi + ", iscritti=" + iscritti + ", accettazioni=" + accettazioni + ", tr=" + tr
                 + "]";
     }
 
