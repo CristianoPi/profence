@@ -264,7 +264,7 @@ public Competizione(int codCompetizione, String nome, String descrizione, Date d
         }
     }
 
-    public void OrdinaAlteti(){//ordina in base al ranking decrescente l'atleta col ranking più alto è il primo
+    private void OrdinaAlteti(){//ordina in base al ranking decrescente l'atleta col ranking più alto è il primo
        Collections.sort(this.accettazioni, new Comparator<Atleta>() {
             @Override
             public int compare(Atleta a1, Atleta a2) {
@@ -509,7 +509,6 @@ public Competizione(int codCompetizione, String nome, String descrizione, Date d
         direttaCorrente.setAssaltiED(assalti);
         return direttaCorrente;
     }
-
 
     public void ConfermaED()throws Exception{
         if (direttaCorrente==null) {
