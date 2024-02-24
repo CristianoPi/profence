@@ -238,7 +238,7 @@ public class ProFencer {
    				throw new Exception("Atleta già iscritto");
    		}
    		if(c.isGenere()!=a.isGenere())
-   			throw new Exception("L'atleta non puo' iscirversi ad un'altra competizione");
+   			throw new Exception("L'atleta non puo' iscirversi a questa competizione");
    	
    		try {
    			c.Iscrizione(a);
