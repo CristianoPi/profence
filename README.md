@@ -3,7 +3,7 @@
 
 1. Scaricare eclipse
 
-2.  Importare su eclipse il progetto Profencer (la cartella con la P maiscola)
+2.  Importare su eclipse il progetto Profencer (la cartella con la P maiuscola)
 
 3.   Una volta importato il progetto corettamente  click destro sul progetto --> properties -->Libreries e in modulepath procedere all'aggiunta del file jcalendar-1.4.jar , 
      esso si troverà nella cartella lib contenuta nella cartella jcalendar-1.4 a sua volta contenuta in Profencer (cioè la cartella del progetto)
