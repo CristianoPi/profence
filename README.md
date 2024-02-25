@@ -11,3 +11,11 @@
      chiudere la scheramta cliccando apply and close.
 
 4.   A questo punto si può avviare l'applicazione facendo click su run
+   
+## Chiarimenti sulla struttura del progetto:
+
+1. Il progetto da importare su eclipse è quello contenuto dalla cartella Profencer
+   
+2. Sotto la cartella Profencer accedendo alla cartella src si potranno esplorare i file scritti, in particolaare  dentro la cartella Main ci sarà una divisione tra "ui" e "domain" per distinguere il codice relativo alla sola parte Grafica contenuto in ui, userInterface, e il codice in cui sono scritte le classi in java contenute in domain.
+
+3. Per visionare i test invece bisognerà uscire dalla cartella relativa al progetto eclipse e accedere alla cartella src che presenterà una divisone tra test e main, in test si troverà il file in cui sono stati svolti.
