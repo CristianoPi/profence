@@ -19,3 +19,5 @@
 2. Sotto la cartella Profencer accedendo alla cartella src si potranno esplorare i file scritti, in particolaare  dentro la cartella Main ci sarà una divisione tra "ui" e "domain" per distinguere il codice relativo alla sola parte Grafica contenuto in ui, userInterface, e il codice in cui sono scritte le classi in java contenute in domain. (./Profencer/src/Main)
 
 3. Per visionare i test invece bisognerà uscire dalla cartella relativa al progetto eclipse e accedere alla cartella src che presenterà una divisone tra test e main, in test si troverà il file in cui sono stati svolti. (./src)
+
+4. Nella cartella _Documenti_finali sono presnti il file Asta finale, la relazione e una cartella contente il lavoro svolto per ogni iterazione.
