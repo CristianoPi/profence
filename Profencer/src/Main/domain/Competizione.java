@@ -246,7 +246,7 @@ public class Competizione {
                   return;
               }
           }
-          throw new Exception("nessun atleta con quel codice");
+          throw new Exception("nessun atleta iscritto con quel codice");
       }
 
       private static int gironi(int a, int d) {//funzione privata per calcolare il numero di gironi in base alla FDG e il n Atleti
