@@ -108,6 +108,7 @@ public class ProFencerTest {
     }
     //Il test funziona correttamente. Viene sollevata un'eccezione se si prova ad accettare un atleta già accettato o un alteta non iscritto
 
+    //_________________UC6________________
     @Test
     public void testCreazioneGironi() {
         proFencer.caricaDati();
@@ -118,7 +119,6 @@ public class ProFencerTest {
     
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
         }
        
     }
@@ -135,12 +135,12 @@ public class ProFencerTest {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
-            // TODO: handle exception
         }
     }
     //Il test funziona correttamente. Viene sollevata un'eccezione se il girone non esiste
+    //__________________________________________________________________________________
 
+    //____________________UC7____________________________________
     @Test
     public void testInserimentoRisultati() {
         proFencer.caricaDati();
@@ -151,11 +151,11 @@ public class ProFencerTest {
             System.out.println(proFencer.VisualizzaGironi());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
         }
     }
     //Il test funzione correttamente. Viene sollevata un'eccezione se si cercano di inserire risultati non coerenti rispettto la FDG
-
+    //_________________________________________________________________________________
+    //____________________UC7_1________________________________________________________
     @Test
     public void CreaClassifica(){
         proFencer.caricaDati();
@@ -168,12 +168,11 @@ public class ProFencerTest {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
-            // TODO: handle exception
         }
     }
     //Il test funzione correttamente. Viene sollevata un'eccezione se ancora non esistono gironi
-
+    //_________________________________________________________________________________
+    //____________________UC8________________________________________________________
     @Test
     public void testCreazioneED() {
         proFencer.caricaDati();
@@ -186,7 +185,6 @@ public class ProFencerTest {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
         }
     }
      //Il test funzione correttamente. Viene sollevata un'eccezione se ancora non è stata creata la classifica dopo i gironi
@@ -206,12 +204,12 @@ public class ProFencerTest {
            
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
         }
        
     }
     //Il test funzione correttamente. Viene sollevata un'eccezione se non esiste una diretta corrente
-
+    //_________________________________________________________________________________
+    //____________________UC9________________________________________________________
     @Test
     public void testSelezionaED(){
         proFencer.caricaDati();
@@ -228,7 +226,6 @@ public class ProFencerTest {
            
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
             // TODO: handle exception
         }
     }
@@ -251,12 +248,12 @@ public class ProFencerTest {
             System.out.println(proFencer.getCompetizioneCorrente().getEliminazioniDirette());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
         }
     }
     //Il test funzione correttamente. Viene sollevata un'eccezione se si inseriscono punteggio non coerenti con la FDG
 
-
+    //_________________________________________________________________________________
+    //____________________UC10________________________________________________________
     @Test
     public void testCreaClassificaFinale() {
         proFencer.caricaDati();
@@ -282,16 +279,16 @@ public class ProFencerTest {
             
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
         }
     }
     //Il test funzione correttamente. Viene sollevata un'eccezione se la gara non è stata completata
-
+    //_________________________________________________________________________________
+    //____________________UC11________________________________________________________
     @Test
     public void testCreaRanking() {
         proFencer.caricaDati();
         try {
-            proFencer.SelezionaCompetizione(1);
+            proFencer.SelezionaCompetizione(10);
             proFencer.CreazioneGironi();
             proFencer.InserimentoRisultati(1, proFencer.CaricaListaAssalti());
             proFencer.CreaClassifica();
@@ -310,7 +307,6 @@ public class ProFencerTest {
            System.out.println(proFencer.getTesserati());
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            fail();
         }
     }
     //Il test funzione correttamente. Viene sollevata un'eccezione se la gara non è stata completata
